@@ -1,0 +1,43 @@
+Este es solo de información para saber de que trata cada archivo a la hora de tener que modificarlo.
+
+App.jsx: Enrutador principal. Define todas las rutas de la aplicación y renderiza el componente Nav y el contenido de la página actual (<Routes>). Maneja el estado de carga inicial del usuario.
+
+Nav.jsx: Barra de Navegación. Muestra enlaces de navegación, el logo, el formulario de búsqueda y gestiona las opciones de sesión (Mi perfil, Cerrar sesión, Ingresar/Registrarse) basándose en el estado de useAuthContext.
+
+AuthContext.jsx: Gestión de la Autenticación. Provee el estado global de la sesión (user, token, loading) y funciones para manipularla (login, logout). Se encarga de validar el token en localStorage al iniciar la app.
+
+SocketContext.jsx: Gestión de Conexión en Tiempo Real. Establece y mantiene la conexión con el servidor Socket.io, enviando el userId al conectarse. Provee el objeto socket y la lista de onlineUsers a cualquier componente.
+
+ChatPage.jsx: Vista principal del Chat. Carga la lista de conversaciones del backend y gestiona qué conversación está actualmente seleccionada (selectedConversation). Renderiza la lista de conversaciones y la ventana de chat.
+
+ConversationList.jsx: Lista de Chats. Muestra un listado de conversaciones activas, permitiendo al usuario seleccionar una. Se encarga de identificar al "otro usuario" en cada conversación para mostrar su nombre y avatar.
+
+ChatWindow.jsx: Ventana de Chat Activa. Carga los mensajes de la conversación seleccionada, gestiona el envío de nuevos mensajes (optimista + persistencia en DB + socket) y, crucialmente, decide la alineación de cada mensaje (isMyMessage) con la ayuda del loggedInUser.
+
+ApplyButton.jsx: Lógica de Postulación. Componente de formulario utilizado en la vista de detalle de un trabajo. Maneja el estado de la postulación, recopila un mensaje y un archivo de CV, y envía una solicitud POST con FormData al backend.
+
+CreatePost.jsx: Formulario para crear una nueva publicación de trabajo.
+
+EditPost.jsx: Formulario para editar una publicación existente.
+
+Home.jsx: Página de inicio estática, con un llamado a la acción.
+
+Login.jsx: Formulario para que el usuario inicie sesión.
+
+OwnerPostView.jsx: Vista privada para el dueño de un post, permitiendo ver y gestionar postulantes.
+
+UserProfile.jsx (perfil de otro usuario): Muestra el perfil público de cualquier usuario, utilizando el ID del usuario de la URL. Muestra la información básica (nombre, bio, rating) y lista todas las publicaciones activas de ese usuario, con un enfoque en la visualización pública.
+
+People.jsx: Muestra un listado de perfiles de usuarios que buscan trabajo. Permite filtrar la lista por nombre, profesión/habilidad y ubicación. Al hacer clic en un usuario, muestra un panel lateral con información detallada y opciones de contacto (teléfono, email).
+
+PostDetail.jsx: Muestra la información completa de un anuncio de trabajo o servicio (post) específico. Contiene lógica condicional: muestra el botón "Ver Postulantes y Gestionar" si el usuario logueado es el dueño del post, o un botón ApplyButton (Postularse) si es un usuario que no es el dueño.
+
+Profile.jsx (mi perfil): Muestra el perfil del usuario autenticado. Permite editar la información del perfil (nombre, biografía, ubicación, avatar) y lista las publicaciones activas creadas por ese usuario, ofreciendo opciones para editar y eliminar cada publicación.
+
+Register.jsx: Componente simple que maneja el registro de nuevos usuarios. Recopila el nombre, correo electrónico y contraseña, y envía la solicitud a la API para crear una nueva cuenta.
+
+Works.jsx: Muestra todos los anuncios de trabajo/servicio disponibles en la plataforma. Permite a los usuarios:
+* Filtrar la lista por título, categoría y ubicación.
+* Al hacer clic en una publicación, se abre un panel lateral (sidebar) con el resumen, la descripción y los detalles del post.
+* Si el usuario logueado no es el creador del post, se muestra el botón ApplyButton para postularse al trabajo.
+* Incluye la función handleApplySuccess para actualizar el estado del componente inmediatamente después de una postulación exitosa.
