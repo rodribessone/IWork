@@ -13,6 +13,8 @@ import UserProfile from './pages/UserProfile';
 import Search from './search/search';
 import CreatePost from './pages/CreatePost';
 import Chat from './pages/ChatPage';
+import NotFound from './pages/NotFound'; // 👈 Importamos 404
+import ProtectedRoute from './components/ProtectedRoute'; // 👈 Importamos protección
 import { Toaster } from 'react-hot-toast';
 import MyApplications from './pages/MyApplications';
 
@@ -58,21 +60,29 @@ function App() {
       />
       <Nav />
       <Routes>
+        {/* Rutas Públicas */}
         <Route path="/" element={<Home />} />
-        <Route path="/newPost" element={<CreatePost user={user} />} />
-        <Route path="/works" element={<Works />} />
-        <Route path="/people" element={<People />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/ownerPostView/:id" element={<OwnerPostView user={user} />} />
-        <Route path="/editar/:id" element={<EditPost />} />
+        <Route path="/works" element={<Works />} />
+        <Route path="/people" element={<People />} />
         <Route path="/post/:id" element={<PostDetail />} />
         <Route path="/users/:userId" element={<UserProfile />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/chat" element={<Chat />} />
-        <Route path="/chat/:conversationId" element={<Chat />} />
-        <Route path="/myApplications" element={<MyApplications />} />
+
+        {/* Rutas Protegidas (Solo usuarios logueados) */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/newPost" element={<CreatePost user={user} />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/ownerPostView/:id" element={<OwnerPostView user={user} />} />
+          <Route path="/editar/:id" element={<EditPost />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/chat/:conversationId" element={<Chat />} />
+          <Route path="/myApplications" element={<MyApplications />} />
+        </Route>
+
+        {/* Ruta 404 - Siempre al final */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );

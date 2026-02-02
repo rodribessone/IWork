@@ -23,12 +23,13 @@ const app = express();
 // 🚨 1. CREAR SERVIDOR HTTP Y ENLAZAR EXPRESS A ÉL
 const httpServer = createServer(app);
 const PORT = process.env.PORT || 5000;
+const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
 
 // 🚨 2. CONFIGURAR SOCKET.IO EN EL SERVIDOR HTTP
 const io = new Server(httpServer, {
   cors: {
     // Asegúrate de que este sea el puerto de tu Frontend (normalmente 5173 o 3000)
-    origin: "http://localhost:5173",
+    origin: CLIENT_URL,
     methods: ["GET", "POST"]
   }
 });
@@ -37,7 +38,7 @@ const io = new Server(httpServer, {
 app.use(express.json());
 // 🚨 Configuración de CORS más específica para el Frontend
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: CLIENT_URL,
   credentials: true
 }));
 
