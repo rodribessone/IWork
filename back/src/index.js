@@ -123,9 +123,10 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ Conectado a MongoDB");
-    // 🚨 3. ESCUCHAR EN EL SERVIDOR HTTP, NO EN LA APP DE EXPRESS
-    httpServer.listen(PORT, () => {
-      console.log(`🚀 Servidor Express & Socket.io corriendo en puerto ${PORT}`);
-    });
   })
   .catch((err) => console.log("❌ Error al conectar a MongoDB:", err));
+
+// 🚨 ARRANCAR EL SERVIDOR YA (No esperar a Mongo)
+httpServer.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
+});
