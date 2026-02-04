@@ -69,7 +69,7 @@ export default function People() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/users?lookingForWork=true", {
+        const res = await fetch(import.meta.env.VITE_API_URL + "/api/users?lookingForWork=true", {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         });
         const data = await res.json();
@@ -102,7 +102,7 @@ export default function People() {
       return;
     }
     try {
-      const res = await fetch("http://localhost:5000/api/chats", {
+      const res = await fetch(import.meta.env.VITE_API_URL + "/api/chats", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

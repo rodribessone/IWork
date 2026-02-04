@@ -58,7 +58,7 @@ export default function Works() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/posts");
+        const res = await fetch(import.meta.env.VITE_API_URL + "/api/posts");
         const data = await res.json();
         setPosts(data);
       } catch (error) {

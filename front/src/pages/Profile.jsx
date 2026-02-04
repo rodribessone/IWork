@@ -72,7 +72,7 @@ export default function Profile() {
     const data = new FormData();
     data.append("image", file);
     try {
-      const res = await fetch("http://localhost:5000/api/users/upload-avatar", {
+      const res = await fetch(import.meta.env.VITE_API_URL + "/api/users/upload-avatar", {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: data,
@@ -93,7 +93,7 @@ export default function Profile() {
     const data = new FormData();
     files.forEach(file => data.append("images", file));
     try {
-      const res = await fetch("http://localhost:5000/api/users/portfolio", {
+      const res = await fetch(import.meta.env.VITE_API_URL + "/api/users/portfolio", {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: data,
@@ -108,7 +108,7 @@ export default function Profile() {
   const executeDeletePhoto = async () => {
     const loadingToast = toast.loading("Eliminando...");
     try {
-      const res = await fetch("http://localhost:5000/api/users/portfolio", {
+      const res = await fetch(import.meta.env.VITE_API_URL + "/api/users/portfolio", {
         method: "DELETE",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ imageUrl: photoToDelete }),

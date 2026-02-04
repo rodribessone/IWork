@@ -26,7 +26,7 @@ export default function ChatPage() {
 
         const fetchConversations = async () => {
             try {
-                const res = await fetch("http://localhost:5000/api/chats", {
+                const res = await fetch(import.meta.env.VITE_API_URL + "/api/chats", {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (!res.ok) throw new Error("Error al cargar las conversaciones");

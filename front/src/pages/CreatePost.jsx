@@ -65,7 +65,7 @@ export default function CreatePost() {
             });
             dataToSend.append("image", image);
 
-            const res = await fetch("http://localhost:5000/api/posts", {
+            const res = await fetch(import.meta.env.VITE_API_URL + "/api/posts", {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,
