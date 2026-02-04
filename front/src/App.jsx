@@ -10,7 +10,7 @@ import Profile from "./pages/Profile";
 import EditPost from "./pages/EditPost";
 import PostDetail from "./pages/PostDetail";
 import UserProfile from './pages/UserProfile';
-import Search from './search/search';
+import Search from './search/Search';
 import CreatePost from './pages/CreatePost';
 import Chat from './pages/ChatPage';
 import NotFound from './pages/NotFound'; // 👈 Importamos 404
