@@ -33,7 +33,7 @@ export default function ChatWindow({ conversation, token }) {
         const fetchMessages = async () => {
             setLoading(true);
             try {
-                const res = await fetch(`http://localhost:5000/api/chats/${conversation._id}/messages`, {
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chats/${conversation._id}/messages`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -100,7 +100,7 @@ export default function ChatWindow({ conversation, token }) {
 
         try {
             // 2. 🚨 Paso de Persistencia: Llamada a Express/MongoDB
-            const res = await fetch(`http://localhost:5000/api/chats/message`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chats/message`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

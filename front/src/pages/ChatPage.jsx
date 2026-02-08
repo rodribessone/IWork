@@ -56,7 +56,7 @@ export default function ChatPage() {
 
     const handleDeleteConversation = async (id) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/chats/${id}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chats/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -87,7 +87,7 @@ export default function ChatPage() {
 
         if (conv.unreadBy?.includes(user._id)) {
             try {
-                await fetch(`http://localhost:5000/api/chats/${conv._id}/read`, {
+                await fetch(`${import.meta.env.VITE_API_URL}/api/chats/${conv._id}/read`, {
                     method: 'PATCH',
                     headers: { 'Authorization': `Bearer ${token}` }
                 });

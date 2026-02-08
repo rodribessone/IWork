@@ -40,7 +40,7 @@ export default function Profile() {
 
     const fetchProfile = async () => {
       try {
-        const resUser = await fetch(`http://localhost:5000/api/users/${userId}`);
+        const resUser = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${userId}`);
         const dataUser = await resUser.json();
         setUser(dataUser);
         setFormData({
@@ -53,7 +53,7 @@ export default function Profile() {
           bio: dataUser.bio || ""
         });
 
-        const resPosts = await fetch(`http://localhost:5000/api/posts/user/${userId}`);
+        const resPosts = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/user/${userId}`);
         const dataPosts = await resPosts.json();
         setPosts(dataPosts);
       } catch (err) {
@@ -123,7 +123,7 @@ export default function Profile() {
   const handleSaveProfile = async () => {
     try {
       const cleanedSkills = formData.skills.map(s => s.trim()).filter(s => s !== "");
-      const res = await fetch(`http://localhost:5000/api/users/${user._id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${user._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ ...formData, skills: cleanedSkills }),
@@ -146,7 +146,7 @@ export default function Profile() {
   // --- LOGICA DE POSTS ---
   const deletePost = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/posts/${postToDelete}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${postToDelete}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

@@ -35,7 +35,7 @@ export default function ApplyButton({ postId, user, token, hasApplied, onApplySu
         formData.append('cv', cvFile);
 
         try {
-            const res = await fetch(`http://localhost:5000/api/posts/${postId}/apply`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${postId}/apply`, {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
                 body: formData,

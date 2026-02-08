@@ -17,7 +17,7 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/users/${userId}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${userId}`);
         const data = await res.json();
         setUser(data);
       } catch (err) {

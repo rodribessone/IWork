@@ -20,7 +20,7 @@ export default function EditPost() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/posts/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${id}`);
         if (!res.ok) throw new Error("Error al cargar el post");
         const data = await res.json();
         setPost(data);
@@ -48,7 +48,7 @@ export default function EditPost() {
     const loadingToast = toast.loading("Sincronizando cambios...");
 
     try {
-      const res = await fetch(`http://localhost:5000/api/posts/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

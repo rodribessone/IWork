@@ -12,7 +12,7 @@ export default function Search() {
   useEffect(() => {
     async function fetchResults() {
       setLoading(true);
-      const res = await fetch(`http://localhost:5000/api/search?q=${q}`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/search?q=${q}`);
       const data = await res.json();
       setUsers(data.users);
       setPosts(data.posts);

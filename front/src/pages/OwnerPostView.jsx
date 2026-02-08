@@ -26,7 +26,7 @@ export default function OwnerPostView() {
         setLoading(true);
 
         // 1. Obtener post
-        const res = await fetch(`http://localhost:5000/api/posts/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${id}`);
         if (!res.ok) throw new Error("No se pudo cargar el anuncio");
         const data = await res.json();
 
@@ -45,7 +45,7 @@ export default function OwnerPostView() {
         setPost(data);
 
         // 2. Obtener postulantes solo si la verificación pasó
-        const resApp = await fetch(`http://localhost:5000/api/posts/${id}/applicants`, {
+        const resApp = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${id}/applicants`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!resApp.ok) throw new Error("Error al cargar la lista de candidatos");
@@ -67,7 +67,7 @@ export default function OwnerPostView() {
     const loadingToast = toast.loading("Actualizando estado...");
     try {
       const res = await fetch(
-        `http://localhost:5000/api/posts/${id}/applicants/${applicantId}/status`,
+        `${import.meta.env.VITE_API_URL}/api/posts/${id}/applicants/${applicantId}/status`,
         {
           method: "PUT",
           headers: {
