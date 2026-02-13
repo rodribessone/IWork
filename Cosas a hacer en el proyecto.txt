@@ -1,0 +1,5 @@
+Cosas a hacer en el proyecto
+- Pagina que muestre el seguimiento de la postulación, si queda fuera, pendiente, si han descargado el cv, etc.
+- Acomodar el punto rojo de los mensajes
+- Crear parte de reseñas y valoraciones de otros usuarios
+- Al editar perfil, la parte de si tiene seguro o licencia y si tiene herramientas propias, figuran como un tilde de entrada, pero al quitarlo y guardarlo, cuando se vuelve a ir al perfil vuelve a aparecer con tilde.

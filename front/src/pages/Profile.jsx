@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuthContext } from '../Context/AuthContext';
 import {
   User, MapPin, Briefcase, Plus, Trash2, Edit3,
-  Check, X, Camera, Image as ImageIcon, LayoutGrid, Settings, Megaphone
+  Check, X, Camera, Image as ImageIcon, LayoutGrid, Settings, Megaphone,
+  ShieldCheck, Wrench, Truck
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -26,7 +27,11 @@ export default function Profile() {
     location: "",
     avatar: "",
     skills: [],
-    bio: ""
+    bio: "",
+    phone: "",
+    hasTools: false,
+    hasInsurance: false,
+    coverageArea: ""
   });
 
   const navigate = useNavigate();
@@ -50,7 +55,11 @@ export default function Profile() {
           location: dataUser.location || "",
           avatar: dataUser.avatar || "",
           skills: dataUser.skills || [],
-          bio: dataUser.bio || ""
+          bio: dataUser.bio || "",
+          phone: dataUser.phone || "",
+          hasTools: dataUser.hasTools || false,
+          hasInsurance: dataUser.hasInsurance || false,
+          coverageArea: dataUser.coverageArea || ""
         });
 
         const resPosts = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/user/${userId}`);
@@ -128,6 +137,8 @@ export default function Profile() {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ ...formData, skills: cleanedSkills }),
       });
+      if (!res.ok) throw new Error("Error al actualizar");
+
       const updatedUser = await res.json();
       setUser(updatedUser);
       setFormData(prev => ({ ...prev, skills: cleanedSkills }));
@@ -212,16 +223,20 @@ export default function Profile() {
               {editMode ? (
                 <div className="space-y-3 max-w-md">
                   <input className="text-3xl font-black text-zinc-900 border-b-2 border-amber-400 outline-none w-full bg-transparent uppercase tracking-tighter" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
-                  <input className="text-amber-600 font-black uppercase text-[10px] tracking-widest block border-b border-zinc-200 outline-none w-full bg-transparent" placeholder="TU PROFESIÓN" value={formData.profession} onChange={(e) => setFormData({ ...formData, profession: e.target.value })} />
+                  {user.role === 'worker' && (
+                    <input className="text-amber-600 font-black uppercase text-[10px] tracking-widest block border-b border-zinc-200 outline-none w-full bg-transparent" placeholder="TU PROFESIÓN" value={formData.profession} onChange={(e) => setFormData({ ...formData, profession: e.target.value })} />
+                  )}
                   <input className="text-zinc-400 text-xs font-bold block border-b border-zinc-200 outline-none w-full bg-transparent uppercase" placeholder="📍 CIUDAD, PROVINCIA" value={formData.location} onChange={(e) => setFormData({ ...formData, location: e.target.value })} />
                 </div>
               ) : (
                 <div className="mb-2">
                   <h1 className="text-4xl font-black text-zinc-900 tracking-tighter uppercase">{user.name}</h1>
                   <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-2 items-center">
-                    <span className="bg-zinc-900 text-amber-400 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
-                      {user.profession || "Profesional"}
-                    </span>
+                    {user.role === 'worker' && (
+                      <span className="bg-zinc-900 text-amber-400 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
+                        {user.profession || "Profesional"}
+                      </span>
+                    )}
                     <span className="text-zinc-400 font-bold text-xs flex items-center gap-1 uppercase tracking-widest">
                       <MapPin size={14} className="text-amber-500" /> {user.location || "Sin ubicación"}
                     </span>
@@ -235,8 +250,73 @@ export default function Profile() {
         {/* GRID PRINCIPAL */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-10">
 
-          {/* COLUMNA IZQUIERDA (Skills) */}
+          {/* COLUMNA IZQUIERDA (Skills + Credenciales Worker) */}
           <div className="space-y-6">
+            {/* 🚨 NUEVA SECCIÓN: CREDENCIALES (Solo Workers) */}
+            {user.role === 'worker' && (
+              <div className="bg-white p-8 rounded-[2.5rem] border border-zinc-100 shadow-sm">
+                <h3 className="font-black text-zinc-900 uppercase tracking-widest text-[10px] flex items-center gap-2 mb-6">
+                  <ShieldCheck size={16} className="text-amber-500" /> Credenciales
+                </h3>
+
+                <div className="space-y-4">
+                  {/* Herramientas */}
+                  <div className="flex items-center justify-between p-3 bg-zinc-50 rounded-xl">
+                    <div className="flex items-center gap-3">
+                      <Wrench size={18} className="text-zinc-400" />
+                      <span className="text-xs font-bold text-zinc-600">Herramientas Propias</span>
+                    </div>
+                    {editMode ? (
+                      <input
+                        type="checkbox"
+                        checked={formData.hasTools}
+                        onChange={(e) => setFormData({ ...formData, hasTools: e.target.checked })}
+                        className="w-5 h-5 accent-amber-400"
+                      />
+                    ) : (
+                      formData.hasTools ? <Check size={18} className="text-green-500" /> : <X size={18} className="text-red-300" />
+                    )}
+                  </div>
+
+                  {/* Seguro */}
+                  <div className="flex items-center justify-between p-3 bg-zinc-50 rounded-xl">
+                    <div className="flex items-center gap-3">
+                      <ShieldCheck size={18} className="text-zinc-400" />
+                      <span className="text-xs font-bold text-zinc-600">Seguro / Licencia</span>
+                    </div>
+                    {editMode ? (
+                      <input
+                        type="checkbox"
+                        checked={formData.hasInsurance}
+                        onChange={(e) => setFormData({ ...formData, hasInsurance: e.target.checked })}
+                        className="w-5 h-5 accent-amber-400"
+                      />
+                    ) : (
+                      formData.hasInsurance ? <Check size={18} className="text-green-500" /> : <X size={18} className="text-red-300" />
+                    )}
+                  </div>
+
+                  {/* Zona */}
+                  <div className="p-3 bg-zinc-50 rounded-xl">
+                    <div className="flex items-center gap-3 mb-2">
+                      <Truck size={18} className="text-zinc-400" />
+                      <span className="text-xs font-bold text-zinc-600">Zona de Cobertura</span>
+                    </div>
+                    {editMode ? (
+                      <input
+                        className="w-full bg-white border border-zinc-200 rounded-lg px-3 py-2 text-xs font-bold outline-none focus:border-amber-400"
+                        value={formData.coverageArea}
+                        onChange={(e) => setFormData({ ...formData, coverageArea: e.target.value })}
+                        placeholder="Ej. Todo CABA y GBA Norte"
+                      />
+                    ) : (
+                      <p className="text-xs font-bold text-zinc-800 pl-8">{formData.coverageArea || "No especificada"}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+            {/* SECCIÓN SKILLS */}
             <div className="bg-white p-8 rounded-[2.5rem] border border-zinc-100 shadow-sm">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-black text-zinc-900 uppercase tracking-widest text-[10px] flex items-center gap-2">
@@ -271,15 +351,41 @@ export default function Profile() {
               <h3 className="text-xl font-black text-zinc-900 mb-6 uppercase tracking-tighter flex items-center gap-3">
                 <User className="text-amber-500" /> Bio Profesional
               </h3>
+
               {editMode ? (
-                <textarea
-                  className="w-full bg-zinc-50 p-6 rounded-2xl border-2 border-zinc-100 focus:border-amber-400 outline-none text-zinc-600 leading-relaxed h-32 transition-all font-medium"
-                  value={formData.bio}
-                  onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                  placeholder="Describe tu experiencia..."
-                />
+                <div className="space-y-4">
+                  <textarea
+                    className="w-full bg-zinc-50 p-6 rounded-2xl border-2 border-zinc-100 focus:border-amber-400 outline-none text-zinc-600 leading-relaxed h-32 transition-all font-medium"
+                    value={formData.bio}
+                    onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
+                    placeholder="Describe tu experiencia..."
+                  />
+
+                  {/* Campo Teléfono (Solo Workers en Edición) */}
+                  {user.role === 'worker' && (
+                    <div>
+                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 block mb-1">Teléfono de Contacto</label>
+                      <input
+                        className="w-full bg-zinc-50 p-4 rounded-xl border border-zinc-200 font-bold text-zinc-700 outline-none focus:border-amber-400"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        placeholder="+54 9 11..."
+                      />
+                    </div>
+                  )}
+                </div>
               ) : (
-                <p className="text-zinc-600 leading-relaxed text-lg font-medium italic">"{user.bio || "Sin biografía redactada."}"</p>
+                <div>
+                  <p className="text-zinc-600 leading-relaxed text-lg font-medium italic mb-4">"{user.bio || "Sin biografía redactada."}"</p>
+
+                  {/* Mostrar Teléfono si existe */}
+                  {user.phone && (
+                    <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 px-4 py-2 rounded-xl text-xs font-bold border border-green-100">
+                      <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                      WhatsApp: {user.phone}
+                    </div>
+                  )}
+                </div>
               )}
             </section>
 

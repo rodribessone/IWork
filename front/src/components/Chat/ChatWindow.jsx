@@ -33,7 +33,7 @@ export default function ChatWindow({ conversation, token }) {
         const fetchMessages = async () => {
             setLoading(true);
             try {
-                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chats/${conversation._id}/messages`, {
+const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chats/${conversation._id}/messages`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

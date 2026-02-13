@@ -68,6 +68,7 @@ export const AuthContextProvider = ({ children }) => {
     const contextValue = {
         user,
         token,
+        loading,
         login,
         logout,
         // Puedes añadir 'loading' si tu lógica de token lo requiere

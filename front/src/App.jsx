@@ -17,6 +17,7 @@ import NotFound from './pages/NotFound'; // 👈 Importamos 404
 import ProtectedRoute from './components/ProtectedRoute'; // 👈 Importamos protección
 import { Toaster } from 'react-hot-toast';
 import MyApplications from './pages/MyApplications';
+import LeaveReview from './pages/LeaveReview';
 
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -79,6 +80,7 @@ function App() {
           <Route path="/chat" element={<Chat />} />
           <Route path="/chat/:conversationId" element={<Chat />} />
           <Route path="/myApplications" element={<MyApplications />} />
+          <Route path="/leave-review/:postId/:recipientId" element={<LeaveReview />} />
         </Route>
 
         {/* Ruta 404 - Siempre al final */}

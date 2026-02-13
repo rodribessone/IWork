@@ -1,20 +1,17 @@
 import mongoose from "mongoose";
 
-const ratingSchema = new mongoose.Schema({
-  postId: { type: mongoose.Schema.Types.ObjectId, ref: "Post", default: null },
-  fromUser: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  stars: { type: Number, required: true, min: 1, max: 5 },
-  comment: { type: String, default: "" },
-  createdAt: { type: Date, default: Date.now }
-});
-
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
+  role: { type: String, enum: ["client", "worker"], default: "client" }, // Nuevo campo role
   avatar: { type: String, default: "" },
   location: { type: String, default: "" },
   skills: [String],
+  hasTools: { type: Boolean, default: false },
+  hasInsurance: { type: Boolean, default: false },
+  coverageArea: { type: String, default: "" },
+  phone: { type: String, default: "" },
   profession: { type: String, default: "" },  // agregado
   bio: { type: String, default: "" },
   experience: [{
@@ -25,7 +22,9 @@ const userSchema = new mongoose.Schema({
   }],
   portfolio: { type: [String], default: [] },
   lookingForWork: { type: Boolean, default: true }, // agregado
-  ratings: [ratingSchema], // 🔹 Un solo campo de valoraciones
+  rating: { type: Number, default: 0 }, // Promedio (ej: 4.5)
+  reviewsCount: { type: Number, default: 0 }, // Cantidad total (ej: 10)
+
   verified: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
 });

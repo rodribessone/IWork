@@ -11,6 +11,8 @@ const UserProfile = () => {
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [reviews, setReviews] = useState([]);
+
 
   const defaultAvatar = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
@@ -27,6 +29,19 @@ const UserProfile = () => {
       }
     };
     fetchUserProfile();
+  }, [userId]);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/reviews/user/${userId}`);
+        const data = await res.json();
+        setReviews(data);
+      } catch (err) {
+        console.error("Error reviews:", err);
+      }
+    };
+    fetchReviews();
   }, [userId]);
 
   // Función para renderizar estrellas según el puntaje
@@ -117,7 +132,7 @@ const UserProfile = () => {
               <div className="flex items-center justify-center md:justify-start gap-2 bg-zinc-100 px-3 py-1 rounded-full">
                 {renderStars(user.rating || 5)}
                 <span className="text-[10px] font-black text-zinc-500 uppercase tracking-tighter">
-                  ({user.reviews?.length || 0} Reseñas)
+                  ({reviews?.length || 0} Reseñas)
                 </span>
               </div>
             </div>
@@ -240,18 +255,26 @@ const UserProfile = () => {
               LO QUE DICEN LOS CLIENTES <span className="h-[1px] flex-1 bg-zinc-100"></span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {user.reviews?.length > 0 ? user.reviews.map((rev, i) => (
-                <div key={i} className="bg-white p-6 rounded-[2rem] border border-zinc-100 shadow-sm">
-                  <div className="flex justify-between items-start mb-4">
+              {reviews.length > 0 ? reviews.map((rev, i) => (
+                <div key={i} className="...">
+                  {/* Estrellas y Fecha */}
+                  <div className="flex justify-between ...">
                     {renderStars(rev.rating)}
-                    <span className="text-[9px] font-black text-zinc-300 uppercase italic">{new Date(rev.createdAt).toLocaleDateString()}</span>
+                    <span className="...">{new Date(rev.createdAt).toLocaleDateString()}</span>
                   </div>
-                  <p className="text-zinc-600 text-sm font-medium italic mb-4">"{rev.comment}"</p>
+
+                  {/* Comentario */}
+                  <p className="...">"{rev.comment}"</p> {/* <--- Esto debería verse si rev.comment tiene texto */}
+
+                  {/* Autor */}
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center text-[10px] font-black uppercase">
-                      {rev.userName?.charAt(0) || 'C'}
-                    </div>
-                    <span className="text-[10px] font-black text-zinc-900 uppercase tracking-tighter">{rev.userName || 'Cliente Anónimo'}</span>
+                    <img
+                      src={rev.author?.avatar || defaultAvatar}
+                      className="w-8 h-8 rounded-full..."
+                    />
+                    <span className="...">
+                      {rev.author?.name || 'Usuario'} {/* <--- CAMBIO CLAVE */}
+                    </span>
                   </div>
                 </div>
               )) : (

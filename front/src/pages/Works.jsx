@@ -86,9 +86,19 @@ export default function Works() {
   const totalPages = Math.ceil(filteredPosts.length / itemsPerPage);
 
   const handleApplySuccess = (postId, userId) => {
-    setPosts(prev => prev.map(p => p._id === postId ? { ...p, applicants: [...(p.applicants || []), userId] } : p));
+    const newApplicant = { user: userId, status: 'pending' }; // 👈 Estructura de objeto
+
+    setPosts(prev => prev.map(p =>
+      p._id === postId
+        ? { ...p, applicants: [...(p.applicants || []), newApplicant] }
+        : p
+    ));
+
     if (selectedPost?._id === postId) {
-      setSelectedPost(prev => ({ ...prev, applicants: [...(prev.applicants || []), userId] }));
+      setSelectedPost(prev => ({
+        ...prev,
+        applicants: [...(prev.applicants || []), newApplicant]
+      }));
     }
   };
 

@@ -4,7 +4,7 @@ import { useAuthContext } from "../Context/AuthContext";
 import {
   User, Mail, Calendar, FileDown, MessageSquare,
   XCircle, CheckCircle, ChevronLeft, ExternalLink,
-  Users, Loader2, AlertCircle
+  Users, Loader2, AlertCircle, Star
 } from 'lucide-react';
 import toast from "react-hot-toast";
 
@@ -239,6 +239,16 @@ export default function OwnerPostView() {
                       >
                         <CheckCircle size={16} /> Contactar
                       </button>
+                    )}
+
+                    {/* BOTÓN CALIFICAR (Solo si está aceptado) */}
+                    {app.status === "accepted" && (
+                      <Link
+                        to={`/leave-review/${post._id}/${app.user._id}`}
+                        className="flex-1 flex items-center justify-center gap-2 bg-purple-100 hover:bg-purple-200 text-purple-700 px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all"
+                      >
+                        <Star size={16} /> Calificar
+                      </Link>
                     )}
 
                     {app.status !== "rejected" && (

@@ -1,4 +1,4 @@
-// routes/users.js
+import mongoose from "mongoose";
 import express from "express";
 import User from "../models/User.js";
 import Post from "../models/Post.js";
@@ -10,6 +10,35 @@ const router = express.Router();
 
 // Obtener usuarios filtrando por lookingForWork opcional
 router.get("/", getUsers);
+
+// NUEVA RUTA: Obtener las postulaciones del usuario autenticado
+router.get("/me/applications", verifyToken, async (req, res) => {
+  try {
+    // 1. Convertimos el string a un ObjectId real de MongoDB
+    const userObjectId = new mongoose.Types.ObjectId(req.userId);
+
+    const applications = await Post.find({
+      $or: [
+        // Busca si el ID está dentro del campo 'user' de los objetos del array
+        { "applicants.user": userObjectId },
+        // Busca si el ID está directamente en el array (para datos viejos)
+        // Usamos $elemMatch para que Mongoose no intente validar el tipo de dato
+        { "applicants": { $elemMatch: { $eq: userObjectId } } }
+      ]
+    })
+      .select("title category location applicants createdAt user")
+      .populate("user", "name avatar")
+      .sort({ createdAt: -1 });
+
+    res.json(applications);
+  } catch (error) {
+    console.error("ERROR EN GET APPLICATIONS:", error);
+    res.status(500).json({
+      message: "Error interno",
+      error: error.message
+    });
+  }
+});
 
 // Obtener un usuario por ID
 router.get("/:id", async (req, res) => {
@@ -61,5 +90,7 @@ router.delete("/portfolio", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Error al eliminar la foto" });
   }
 });
+
+
 
 export default router;

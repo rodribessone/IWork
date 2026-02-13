@@ -10,7 +10,7 @@ const router = express.Router();
 router.post("/register", async (req, res) => {
   try {
     // 1. Extraemos los campos que enviamos desde el Register.jsx
-    const { name, email, password, bio, location } = req.body;
+    const { name, email, password, bio, location, role, profession, phone } = req.body;
 
     // 2. Validación manual extra (opcional pero recomendada)
     const existingUser = await User.findOne({ email });
@@ -28,6 +28,9 @@ router.post("/register", async (req, res) => {
       password: hashedPassword,
       bio,      // Se guarda en el campo bio del modelo
       location, // Se guarda en el campo location del modelo
+      profession,
+      phone,
+      role: role || "client", // Por defecto client si no viene nada
       // Seteamos valores por defecto para que 'experience' no de error si es requerida
       experience: {
         company: "",

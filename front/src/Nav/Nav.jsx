@@ -2,7 +2,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSocketContext } from '../Context/SocketContext'; // Importamos el socket
 import { useEffect, useState } from 'react';
 import { useAuthContext } from '../Context/AuthContext';
-import { Search, MessageSquare, LogOut, User as UserIcon, PlusCircle } from 'lucide-react';
+import { Search, MessageSquare, LogOut, User as UserIcon, PlusCircle, ClipboardList } from 'lucide-react';
 
 export default function Nav() {
   const navigate = useNavigate();
@@ -109,6 +109,12 @@ export default function Nav() {
                 <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 border-2 border-zinc-950 rounded-full animate-pulse"></span>
               )}
             </Link>
+
+            {user.role === 'worker' && (
+              <Link to="/my-applications" className={`text-zinc-400 hover:text-amber-400 transition ${isActive('/my-applications')}`} title="Mis Postulaciones">
+                <ClipboardList size={22} />
+              </Link>
+            )}
 
             <Link to="/newPost" className="text-zinc-400 hover:text-amber-400 transition" title="Publicar">
               <PlusCircle size={22} />
