@@ -5,9 +5,10 @@ import {
   MessageSquare, User, Star, ArrowRight, Award
 } from 'lucide-react';
 import { useAuthContext } from '../Context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 // Sub-componente para la tarjeta de profesional
-const UserCard = ({ u, onClick }) => (
+const UserCard = ({ u, onClick, t }) => (
   <div
     onClick={() => onClick(u)}
     className="group bg-white rounded-[2rem] shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 cursor-pointer border border-zinc-100 overflow-hidden flex flex-col h-full"
@@ -46,7 +47,7 @@ const UserCard = ({ u, onClick }) => (
           {u.location || "Ubicación N/A"}
         </span>
         <span className="text-zinc-900 text-xs font-black uppercase tracking-widest flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all">
-          Perfil <ArrowRight size={14} />
+          {t('people.view_profile')} <ArrowRight size={14} />
         </span>
       </div>
     </div>
@@ -54,6 +55,7 @@ const UserCard = ({ u, onClick }) => (
 );
 
 export default function People() {
+  const { t } = useTranslation();
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState("");
@@ -124,12 +126,12 @@ export default function People() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
         <div>
-          <h1 className="text-5xl font-black text-zinc-950 tracking-tighter mb-3 uppercase">Directorio de Expertos</h1>
-          <p className="text-zinc-500 text-lg">Conecta con los profesionales más calificados de tu zona.</p>
+          <h1 className="text-5xl font-black text-zinc-950 tracking-tighter mb-3 uppercase">{t('people.title')}</h1>
+          <p className="text-zinc-500 text-lg">{t('home.hero_subtitle')}</p>
         </div>
         <div className="bg-white px-6 py-3 rounded-2xl border border-zinc-200 shadow-sm">
-          <span className="text-zinc-900 font-black">{filteredUsers.length} expertos </span>
-          <span className="text-zinc-400 text-sm font-medium">encontrados</span>
+          <span className="text-zinc-900 font-black">{filteredUsers.length} experts </span>
+          <span className="text-zinc-400 text-sm font-medium">found</span>
         </div>
       </div>
 
@@ -140,7 +142,7 @@ export default function People() {
             <User className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-amber-500 transition-colors" size={20} />
             <input
               type="text"
-              placeholder="Nombre del profesional..."
+              placeholder={t('common.search')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-14 pr-6 py-5 bg-transparent rounded-2xl outline-none text-zinc-800 font-medium"
@@ -150,7 +152,7 @@ export default function People() {
             <Briefcase className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-amber-500 transition-colors" size={20} />
             <input
               type="text"
-              placeholder="Oficio o habilidad..."
+              placeholder={t('people.profession')}
               value={profession}
               onChange={(e) => setProfession(e.target.value)}
               className="w-full pl-14 pr-6 py-5 bg-transparent rounded-2xl outline-none text-zinc-800 font-medium"
@@ -160,7 +162,7 @@ export default function People() {
             <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-amber-500 transition-colors" size={20} />
             <input
               type="text"
-              placeholder="Ciudad"
+              placeholder={t('works.filter_location')}
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               className="w-full pl-14 pr-6 py-5 bg-transparent rounded-2xl outline-none text-zinc-800 font-medium"
@@ -171,7 +173,7 @@ export default function People() {
               onClick={() => { setSearch(""); setLocation(""); setProfession(""); }}
               className="w-full h-full bg-zinc-900 text-white rounded-2xl font-bold hover:bg-zinc-800 transition-all flex items-center justify-center gap-2"
             >
-              <Filter size={18} /> Limpiar
+              <Filter size={18} /> {t('common.filter')}
             </button>
           </div>
         </div>
@@ -185,12 +187,12 @@ export default function People() {
       ) : filteredUsers.length === 0 ? (
         <div className="text-center py-32 bg-white rounded-[3rem] border-2 border-dashed border-zinc-200">
           <User size={48} className="mx-auto text-zinc-200 mb-4" />
-          <p className="text-zinc-500 font-bold">No se encontraron perfiles para tu búsqueda.</p>
+          <p className="text-zinc-500 font-bold">{t('people.no_people')}</p>
         </div>
       ) : (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {currentUsers.map((u) => <UserCard key={u._id} u={u} onClick={setSelectedUser} />)}
+            {currentUsers.map((u) => <UserCard key={u._id} u={u} onClick={setSelectedUser} t={t} />)}
           </div>
 
           {/* Paginación */}
@@ -201,7 +203,7 @@ export default function People() {
                 onClick={() => setCurrentPage(prev => prev - 1)}
                 className="px-6 py-3 rounded-2xl font-bold bg-white border border-zinc-200 disabled:opacity-20 transition-all flex items-center gap-2"
               >
-                ← Anterior
+                ⬅ {t('common.back')}
               </button>
               <div className="flex gap-2">
                 {[...Array(totalPages)].map((_, i) => (
@@ -219,7 +221,7 @@ export default function People() {
                 onClick={() => setCurrentPage(prev => prev + 1)}
                 className="px-6 py-3 rounded-2xl font-bold bg-white border border-zinc-200 disabled:opacity-20 transition-all flex items-center gap-2"
               >
-                Siguiente →
+                Next ➡
               </button>
             </div>
           )}
@@ -273,7 +275,7 @@ export default function People() {
 
                 {/* Sobre mí */}
                 <div className="mb-10 p-6 bg-zinc-50 rounded-[2rem] border border-zinc-100">
-                  <h4 className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em] mb-3">Resumen profesional</h4>
+                  <h4 className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em] mb-3">{t('profile.about')}</h4>
                   <p className="text-zinc-600 leading-relaxed italic">
                     "{selectedUser.bio || "Este profesional aún no ha redactado su biografía, pero está disponible para nuevos proyectos."}"
                   </p>
@@ -281,7 +283,7 @@ export default function People() {
 
                 {/* Habilidades */}
                 <div className="mb-10">
-                  <h4 className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em] mb-4">Habilidades destacadas</h4>
+                  <h4 className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em] mb-4">{t('people.skills')}</h4>
                   <div className="flex flex-wrap gap-2">
                     {selectedUser.skills?.map((skill, i) => (
                       <span key={i} className="bg-white border border-zinc-200 text-zinc-700 px-4 py-2 rounded-xl text-xs font-bold shadow-sm">
@@ -298,7 +300,7 @@ export default function People() {
                       onClick={() => handleContactUser(selectedUser._id)}
                       className="w-full py-5 bg-amber-400 text-black rounded-[2rem] font-black uppercase tracking-widest hover:bg-amber-300 transition-all flex items-center justify-center gap-3 shadow-xl shadow-amber-400/20"
                     >
-                      <MessageSquare size={20} /> Enviar Mensaje
+                      <MessageSquare size={20} /> {t('profile.contact_me')}
                     </button>
                   )}
 
@@ -306,7 +308,7 @@ export default function People() {
                     to={`/users/${selectedUser._id}`}
                     className="w-full py-5 bg-zinc-950 text-white rounded-[2rem] font-black uppercase tracking-widest hover:bg-zinc-800 transition-all flex items-center justify-center gap-3"
                   >
-                    Ver Perfil Completo
+                    {t('people.view_profile')}
                   </Link>
                 </div>
               </div>

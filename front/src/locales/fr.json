@@ -1,0 +1,180 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "back": "Retour",
+    "next": "Suivant",
+    "send": "Envoyer",
+    "error": "Erreur",
+    "success": "Succès",
+    "required": "Requis",
+    "hide": "Masquer",
+    "status": {
+      "pending": "En attente",
+      "accepted": "Accepté",
+      "rejected": "Rejeté",
+      "active": "Actif",
+      "online": "En ligne",
+      "offline": "Déconnecté"
+    }
+  },
+  "nav": {
+    "search_placeholder": "Rechercher des services, professionnels...",
+    "jobs": "Emplois",
+    "professionals": "Professionnels",
+    "my_applications": "Mes Candidatures",
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "logout": "Déconnexion",
+    "profile": "Profil",
+    "post_job": "Publier"
+  },
+  "home": {
+    "badge": "Le plus grand réseau professionnel des métiers",
+    "hero_title": "Trouvez le professionnel idéal pour votre projet",
+    "hero_subtitle": "Connectez-vous avec des travailleurs qualifiés de votre région rapidement et en toute sécurité.",
+    "cta_find_work": "Trouver du Travail",
+    "cta_hire": "Recruter des Talents",
+    "stats_users": "Utilisateurs",
+    "stats_projects": "Projets",
+    "stats_secure": "Sécurisé",
+    "stats_support": "Support",
+    "how_it_works": "Comment ça marche ?",
+    "how_it_works_sub": "Connectez-vous, collaborez et terminez le travail en trois étapes simples.",
+    "card_work_title": "Trouver du Travail",
+    "card_work_desc": "Parcourez des milliers d'opportunités d'emploi. Filtrez par compétences et postulez en quelques secondes.",
+    "view_jobs": "Voir les Emplois",
+    "card_hire_title": "Embaucher des Talents",
+    "card_hire_desc": "Connectez-vous avec des professionnels qualifiés. Consultez les portfolios et recrutez les meilleurs.",
+    "find_expert": "Trouver un Expert"
+  },
+  "auth": {
+    "email": "Adresse E-mail",
+    "password": "Mot de passe",
+    "name": "Nom Complet",
+    "forgot_password": "Mot de passe oublié ?",
+    "no_account": "Pas de compte ?",
+    "have_account": "Vous avez déjà un compte ?",
+    "login_button": "Se connecter",
+    "register_button": "Créer un compte",
+    "register_title": "Rejoignez iWork",
+    "register_subtitle": "Commencez votre voyage aujourd'hui"
+  },
+  "works": {
+    "title": "Emplois Disponibles",
+    "filter_category": "Catégorie",
+    "filter_location": "Lieu",
+    "no_jobs": "Aucun emploi trouvé selon vos critères.",
+    "apply": "Postuler",
+    "posted_by": "Publié par",
+    "salary": "Budget/Salaire",
+    "details": "Voir Détails"
+  },
+  "profile": {
+    "loading_panel": "Chargement du Tableau de Bord...",
+    "edit_profile": "Modifier le Profil",
+    "profession_placeholder": "VOTRE PROFESSION",
+    "location_placeholder": "📍 VILLE, ÉTAT",
+    "no_location": "Emplacement non défini",
+    "credentials": "Informations d'Identification",
+    "coverage_area": "Zone de Couverture",
+    "coverage_placeholder": "Ex: Tout Sydney et ses environs",
+    "not_specified": "Non spécifié",
+    "my_skills": "Mes Compétences",
+    "control_panel": "Tableau de Bord",
+    "panel_description": "Gérez vos publications, mettez à jour votre portfolio et gardez votre profil à jour.",
+    "bio_title": "Bio Professionnelle",
+    "bio_placeholder": "Décrivez votre expérience...",
+    "phone_label": "Téléphone de Contact",
+    "no_bio": "Aucune biographie rédigée.",
+    "add_photos": "Ajouter des Photos",
+    "active_posts": "Mes Annonces Actives",
+    "manage": "Gérer",
+    "no_posts": "Vous n'avez aucune annonce active",
+    "delete_confirm_title": "Supprimer l'Annonce ?",
+    "delete_photo_confirm_title": "Supprimer la photo ?",
+    "saved_success": "Profil enregistré",
+    "post_deleted": "Annonce supprimée",
+    "completed_jobs": "Travaux Terminés",
+    "member_since": "Membre depuis",
+    "verified": "Vérifié"
+  },
+  "userProfile": {
+    "loading": "Chargement du Profil...",
+    "notFound": "Utilisateur non trouvé",
+    "defaultProfession": "Spécialiste",
+    "contactNow": "Contacter Maintenant",
+    "aboutProfessional": "À propos du Professionnel",
+    "defaultBio": "Ce professionnel préfère laisser son travail parler pour lui.",
+    "workHistory": "Expérience Professionnelle",
+    "portfolio": "Projets Réalisés",
+    "noImages": "Aucune image disponible",
+    "clientReviews": "Ce que disent les clients",
+    "noReviews": "Aucun avis pour le moment"
+  },
+  "post": {
+    "create_title": "Publier un Emploi",
+    "edit_title": "Modifier l'Emploi",
+    "title_label": "Titre de l'Emploi",
+    "desc_label": "Description",
+    "category_label": "Catégorie",
+    "location_label": "Lieu",
+    "budget_label": "Budget",
+    "publish": "Publier",
+    "update": "Mettre à jour",
+    "applicants": "Candidats",
+    "notFound": "Annonce non trouvée",
+    "keyInfo": "Informations Clés",
+    "ownPostTitle": "Ceci est votre publication",
+    "ownPostDesc": "Gérez les candidats depuis le tableau de bord."
+  },
+  "apply": {
+    "button": "Postuler maintenant",
+    "sending": "Envoi de la candidature...",
+    "success": "Candidature envoyée avec succès !",
+    "already_applied": "Vous êtes déjà dans le processus",
+    "message_label": "Message de présentation",
+    "cv_label": "Curriculum Vitae (PDF/DOCX)",
+    "errors": {
+      "loginRequired": "Vous devez vous connecter pour postuler.",
+      "messageShort": "Veuillez écrire un message plus détaillé.",
+      "cvRequired": "L'envoi de votre CV est obligatoire."
+    }
+  },
+  "ownerView": {
+    "title": "Gestion des Candidats",
+    "empty_title": "Aucune candidature pour le moment",
+    "acceptedSuccess": "Candidat accepté ! Ouverture du chat...",
+    "rejectedMsg": "Candidat rejeté",
+    "actions": {
+      "contact": "Contacter",
+      "review": "Évaluer",
+      "reject": "Écarter"
+    }
+  },
+  "chat": {
+    "sidebarTitle": "Conversations",
+    "loading": "Chargement des chats...",
+    "noSelected": "Sélectionnez un chat pour commencer",
+    "newConversation": "Nouvelle conversation...",
+    "inputPlaceholder": "Écrivez un message...",
+    "modal": {
+      "title": "Masquer le chat ?",
+      "description": "Il disparaîtra de votre liste jusqu'à ce qu'un nouveau message arrive."
+    },
+    "errors": {
+      "loadConversations": "Erreur lors du chargement des conversations",
+      "loadMessages": "Erreur lors du chargement des messages"
+    }
+  },
+  "not_found": {
+    "subtitle": "Oups, vous êtes perdu...",
+    "description": "La page n'existe pas ou a été déplacée.",
+    "back_home": "Retour à l'Accueil"
+  }
+}

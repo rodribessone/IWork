@@ -1,16 +1,20 @@
+// src/pages/PostDetail.jsx
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next"; // <-- Importamos i18next
 import {
   MapPin, Tag, Calendar, ChevronLeft,
   Share2, ShieldCheck, Clock, ArrowRight,
   Briefcase, Loader2, AlertCircle
-} from 'lucide-react';
+} from 'lucide-react'; // Nota: Verifica si es 'lucide-react', en tu código decía 'lucide-center' o 'lucide-react'
+import { Star, MapPin as MapPinIcon, Briefcase as BriefcaseIcon, User, MessageCircle, Calendar as CalendarIcon, ArrowLeft, Award, Image as ImageIcon } from "lucide-react";
 import ApplyButton from "../components/ApplyButton";
 import { useAuthContext } from '../Context/AuthContext';
 
 export default function PostDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation(); // <-- Hook de traducción
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const { user, token } = useAuthContext();
@@ -47,8 +51,10 @@ export default function PostDetail() {
   if (!post) return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-50">
       <AlertCircle size={48} className="text-zinc-300 mb-4" />
-      <p className="text-zinc-500 font-bold">Anuncio no encontrado</p>
-      <Link to="/works" className="mt-4 text-amber-600 font-black uppercase text-xs tracking-widest">Volver al listado</Link>
+      <p className="text-zinc-500 font-bold">{t('postDetail.notFound')}</p>
+      <Link to="/works" className="mt-4 text-amber-600 font-black uppercase text-xs tracking-widest">
+        {t('postDetail.backToList')}
+      </Link>
     </div>
   );
 
@@ -64,7 +70,7 @@ export default function PostDetail() {
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-zinc-400 hover:text-zinc-950 transition-colors font-black uppercase text-[10px] tracking-[0.2em]"
         >
-          <ChevronLeft size={16} /> Volver a la búsqueda
+          <ChevronLeft size={16} /> {t('postDetail.backToSearch')}
         </button>
       </div>
 
@@ -72,7 +78,7 @@ export default function PostDetail() {
 
         {/* COLUMNA PRINCIPAL (Izquierda) */}
         <div className="lg:col-span-8">
-          {/* Imagen Principal Artística */}
+          {/* Imagen Principal */}
           <div className="relative h-[400px] w-full rounded-[3rem] overflow-hidden shadow-2xl mb-10 group">
             <img
               src={post.imageUrl || "https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2070&auto=format&fit=crop"}
@@ -93,7 +99,7 @@ export default function PostDetail() {
           {/* Contenido del Anuncio */}
           <div className="bg-white rounded-[3rem] p-10 shadow-sm border border-zinc-100">
             <h3 className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.3em] mb-6 flex items-center gap-2">
-              <Briefcase size={14} className="text-amber-500" /> Descripción del proyecto
+              <Briefcase size={14} className="text-amber-500" /> {t('postDetail.projectDescription')}
             </h3>
             <div className="text-zinc-600 text-lg leading-relaxed space-y-4 whitespace-pre-line font-medium">
               {post.description}
@@ -102,10 +108,10 @@ export default function PostDetail() {
             {/* Tags o Detalles Extras */}
             <div className="mt-12 pt-8 border-t border-zinc-100 flex flex-wrap gap-4">
               <div className="flex items-center gap-2 px-5 py-3 bg-zinc-50 rounded-2xl text-zinc-500 text-sm font-bold">
-                <ShieldCheck size={18} className="text-green-500" /> Verificado por la plataforma
+                <ShieldCheck size={18} className="text-green-500" /> {t('postDetail.verified')}
               </div>
               <div className="flex items-center gap-2 px-5 py-3 bg-zinc-50 rounded-2xl text-zinc-500 text-sm font-bold">
-                <Clock size={18} className="text-amber-500" /> Respuesta rápida
+                <Clock size={18} className="text-amber-500" /> {t('postDetail.fastResponse')}
               </div>
             </div>
           </div>
@@ -114,7 +120,7 @@ export default function PostDetail() {
         {/* SIDEBAR DE ACCIONES (Derecha) */}
         <div className="lg:col-span-4 space-y-6">
           <div className="bg-zinc-950 rounded-[2.5rem] p-8 text-white shadow-xl shadow-zinc-200 sticky top-10">
-            <h4 className="text-[10px] font-black text-amber-400 uppercase tracking-[0.2em] mb-8">Información Clave</h4>
+            <h4 className="text-[10px] font-black text-amber-400 uppercase tracking-[0.2em] mb-8">{t('postDetail.keyInfo')}</h4>
 
             <div className="space-y-6 mb-10">
               <div className="flex items-start gap-4">
@@ -122,7 +128,7 @@ export default function PostDetail() {
                   <MapPin size={20} className="text-amber-400" />
                 </div>
                 <div>
-                  <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Ubicación</p>
+                  <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">{t('postDetail.location')}</p>
                   <p className="text-white font-bold">{post.location}</p>
                 </div>
               </div>
@@ -132,8 +138,10 @@ export default function PostDetail() {
                   <Calendar size={20} className="text-amber-400" />
                 </div>
                 <div>
-                  <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Publicado</p>
-                  <p className="text-white font-bold">{new Date(post.createdAt).toLocaleDateString("es-ES", { day: 'numeric', month: 'long' })}</p>
+                  <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">{t('postDetail.published')}</p>
+                  <p className="text-white font-bold">
+                    {new Date(post.createdAt).toLocaleDateString(i18n.language === 'es' ? "es-ES" : "en-US", { day: 'numeric', month: 'long' })}
+                  </p>
                 </div>
               </div>
 
@@ -142,7 +150,7 @@ export default function PostDetail() {
                   <Tag size={20} className="text-amber-400" />
                 </div>
                 <div>
-                  <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Categoría</p>
+                  <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">{t('postDetail.category')}</p>
                   <p className="text-white font-bold">{post.category}</p>
                 </div>
               </div>
@@ -151,29 +159,26 @@ export default function PostDetail() {
             {/* BOTONES DE ACCIÓN */}
             <div className="space-y-4 pt-6 border-t border-white/10">
               {isPostOwner ? (
-                /* CASO 1: ES MI PROPIO ANUNCIO */
                 <div className="space-y-4">
                   <div className="bg-amber-400/10 border border-amber-400/20 p-6 rounded-[2rem] text-center">
                     <Briefcase className="mx-auto text-amber-400 mb-2" size={24} />
                     <p className="text-amber-400 text-[10px] font-black uppercase tracking-widest">
-                      Esta es tu publicación
+                      {t('postDetail.ownPostTitle')}
                     </p>
                     <p className="text-zinc-400 text-xs mt-1 font-medium italic">
-                      Gestiona a los candidatos desde el panel de control.
+                      {t('postDetail.ownPostDesc')}
                     </p>
                   </div>
                   <Link
                     to={`/ownerPostView/${post._id}`}
                     className="flex items-center justify-center gap-3 w-full bg-white text-black py-5 rounded-[2rem] font-black uppercase text-xs tracking-[0.2em] hover:bg-zinc-200 transition-all shadow-lg"
                   >
-                    Gestionar Candidatos <ArrowRight size={16} />
+                    {t('postDetail.manageApplicants')} <ArrowRight size={16} />
                   </Link>
                 </div>
               ) : (
-                /* CASO 2: NO ES MI ANUNCIO */
                 <>
                   {user ? (
-                    /* Si estoy logueado y no soy el dueño, muestro el botón de aplicar */
                     <ApplyButton
                       postId={post._id}
                       user={user}
@@ -184,17 +189,16 @@ export default function PostDetail() {
                       onApplySuccess={handleApplySuccess}
                     />
                   ) : (
-                    /* Si no estoy logueado */
                     <Link
                       to="/login"
                       className="flex items-center justify-center gap-3 w-full bg-amber-400 text-black py-5 rounded-[2rem] font-black uppercase text-xs tracking-[0.2em] hover:bg-amber-300 transition-all"
                     >
-                      Login para Postular
+                      {t('postDetail.loginToApply')}
                     </Link>
                   )}
 
                   <button className="flex items-center justify-center gap-3 w-full bg-white/5 text-white py-5 rounded-[2rem] font-black uppercase text-xs tracking-[0.2em] hover:bg-white/10 transition-all border border-white/10">
-                    <Share2 size={16} /> Compartir Anuncio
+                    <Share2 size={16} /> {t('postDetail.share')}
                   </button>
                 </>
               )}

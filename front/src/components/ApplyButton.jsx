@@ -1,9 +1,11 @@
 // src/components/ApplyButton.jsx
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next"; // <-- Importamos el hook
 import { Send, FileText, CheckCircle2, Loader2, AlertCircle, UploadCloud } from "lucide-react";
 import toast from "react-hot-toast";
 
 export default function ApplyButton({ postId, user, token, hasApplied, onApplySuccess }) {
+    const { t } = useTranslation(); // <-- Inicializamos t
     const [applyMessage, setApplyMessage] = useState("");
     const [cvFile, setCvFile] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -12,39 +14,39 @@ export default function ApplyButton({ postId, user, token, hasApplied, onApplySu
     const handleApply = async (e) => {
         e.preventDefault();
         if (!user || !token) {
-            setError("Debes iniciar sesión para postularte.");
+            setError(t('applyButton.errors.loginRequired'));
             return;
         }
 
         if (applyMessage.trim().length < 5) {
-            setError("Por favor, escribe un mensaje un poco más detallado.");
+            setError(t('applyButton.errors.messageShort'));
             return;
         }
 
         if (!cvFile) {
-            setError("Es obligatorio adjuntar tu CV para esta posición.");
+            setError(t('applyButton.errors.cvRequired'));
             return;
         }
 
         setError("");
         setIsSubmitting(true);
-        const loadingToast = toast.loading("Enviando postulación...");
+        const loadingToast = toast.loading(t('applyButton.status.sending'));
 
         const formData = new FormData();
         formData.append('message', applyMessage);
         formData.append('cv', cvFile);
 
         try {
-const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${postId}/apply`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${postId}/apply`, {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
                 body: formData,
             });
 
             const data = await res.json();
-            if (!res.ok) throw new Error(data.message || "Error al postularse.");
+            if (!res.ok) throw new Error(data.message || t('common.error'));
 
-            toast.success("¡Postulación enviada con éxito!", { id: loadingToast });
+            toast.success(t('applyButton.status.success'), { id: loadingToast });
             setApplyMessage("");
             setCvFile(null);
             onApplySuccess(user._id);
@@ -57,15 +59,18 @@ const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${postId}/app
         }
     };
 
-    // Si ya se postuló, mostramos un estado de éxito permanente en esta vista
     if (hasApplied) {
         return (
             <div className="bg-zinc-900 rounded-[2rem] p-8 border border-zinc-800 text-center animate-in fade-in zoom-in duration-500">
                 <div className="w-16 h-16 bg-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-amber-400/20">
                     <CheckCircle2 size={32} className="text-black" />
                 </div>
-                <h3 className="text-white font-black uppercase tracking-tighter text-xl mb-2">¡Ya estás en el proceso!</h3>
-                <p className="text-zinc-400 text-sm">Tu postulación ha sido recibida correctamente por el empleador.</p>
+                <h3 className="text-white font-black uppercase tracking-tighter text-xl mb-2">
+                    {t('common.success')}
+                </h3>
+                <p className="text-zinc-400 text-sm">
+                    {t('apply.already_applied')}
+                </p>
             </div>
         );
     }
@@ -76,7 +81,9 @@ const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${postId}/app
                 <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
                     <Send size={16} className="text-amber-600" />
                 </div>
-                <h3 className="text-zinc-900 font-black uppercase tracking-widest text-xs">Postularme ahora</h3>
+                <h3 className="text-zinc-900 font-black uppercase tracking-widest text-xs">
+                    {t('apply.button')}
+                </h3>
             </div>
 
             {error && (
@@ -88,10 +95,10 @@ const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${postId}/app
             {/* Área de Mensaje */}
             <div>
                 <label className="block text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em] mb-3 ml-2">
-                    Mensaje de presentación
+                    {t('apply.message_label')}
                 </label>
                 <textarea
-                    placeholder="Cuéntale al empleador por qué eres el candidato ideal..."
+                    placeholder={t('apply.message_label')}
                     value={applyMessage}
                     onChange={(e) => setApplyMessage(e.target.value)}
                     className="w-full bg-zinc-50 border border-zinc-100 rounded-[1.5rem] px-5 py-4 focus:ring-2 focus:ring-amber-400 outline-none transition-all font-medium text-zinc-800 text-sm min-h-[120px] resize-none"
@@ -99,10 +106,10 @@ const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${postId}/app
                 />
             </div>
 
-            {/* Área de Carga de CV mejorada */}
+            {/* Área de Carga de CV */}
             <div>
                 <label className="block text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em] mb-3 ml-2">
-                    Curriculum Vitae (PDF/DOCX)
+                    {t('apply.cv_label')}
                 </label>
                 <div className="relative group">
                     <input
@@ -123,13 +130,19 @@ const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${postId}/app
                                 <span className="text-zinc-800 font-bold text-xs truncate max-w-[200px]">
                                     {cvFile.name}
                                 </span>
-                                <span className="text-amber-600 text-[10px] font-black uppercase">Cambiar archivo</span>
+                                <span className="text-amber-600 text-[10px] font-black uppercase">
+                                    {t('common.edit')}
+                                </span>
                             </>
                         ) : (
                             <>
                                 <UploadCloud className="text-zinc-400" size={32} />
-                                <span className="text-zinc-500 font-bold text-xs">Click para subir o arrastra tu archivo</span>
-                                <span className="text-zinc-400 text-[10px] uppercase">PDF o Word</span>
+                                <span className="text-zinc-500 font-bold text-xs">
+                                    {t('common.search')}
+                                </span>
+                                <span className="text-zinc-400 text-[10px] uppercase">
+                                    PDF, DOC, DOCX
+                                </span>
                             </>
                         )}
                     </div>
@@ -148,23 +161,22 @@ const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${postId}/app
             >
                 {isSubmitting ? (
                     <>
-                        <Loader2 className="animate-spin" size={18} /> Procesando...
+                        <Loader2 className="animate-spin" size={18} /> {t('apply.sending')}
                     </>
                 ) : (
                     <>
-                        Confirmar Postulación <ArrowRight size={16} />
+                        {t('apply.button')} <ArrowRight size={16} />
                     </>
                 )}
             </button>
 
-            <p className="text-center text-zinc-400 text-[9px] uppercase tracking-widest font-medium">
-                Tu información será compartida solo con el dueño del anuncio.
-            </p>
+            {/* <p className="text-center text-zinc-400 text-[9px] uppercase tracking-widest font-medium">
+                {t('apply.sending')}
+            </p> */}
         </form>
     );
 }
 
-// Icono extra necesario
 const ArrowRight = ({ size }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
         <path d="M5 12h14M12 5l7 7-7 7" />

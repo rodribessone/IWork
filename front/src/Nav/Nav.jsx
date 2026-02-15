@@ -2,9 +2,12 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSocketContext } from '../Context/SocketContext'; // Importamos el socket
 import { useEffect, useState } from 'react';
 import { useAuthContext } from '../Context/AuthContext';
-import { Search, MessageSquare, LogOut, User as UserIcon, PlusCircle, ClipboardList } from 'lucide-react';
+import { Search, MessageSquare, LogOut, PlusCircle, ClipboardList } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import LanguageSelector from '../components/LanguageSelector';
 
 export default function Nav() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation(); // Para saber en qué página estamos
   const [search, setSearch] = useState("");
@@ -50,19 +53,17 @@ export default function Nav() {
     checkUnreadMessages();
 
     if (socket) {
-      // 1. Cuando recibo un mensaje nuevo: punto rojo ON
-      socket.on('refreshConversations', () => {
-        console.log("Nuevo mensaje recibido, activando punto rojo...");
-        setHasUnread(true); // <--- Lo activamos sin esperar al fetch
-
-        // Opcionalmente refrescamos los datos de fondo para estar sincronizados
-        setTimeout(checkUnreadMessages, 1000);
+      socket.on('refreshConversations', (data) => {
+        // 🚨 MEJORA: Si ya estoy en el chat de esa persona, no actives el punto rojo
+        // Esto evita que el punto parpadee si ya estás leyendo el mensaje
+        if (location.pathname.includes(`/chat/${data.conversationId}`)) {
+          return;
+        }
+        setHasUnread(true);
       });
 
-      // 2. Cuando yo mismo leo un mensaje (desde ChatPage): punto rojo OFF
       socket.on('updateUnreadCounters', () => {
-        // Aquí sí hacemos el fetch para ver si quedan OTROS chats sin leer
-        checkUnreadMessages();
+        checkUnreadMessages(); // Esto ahora sí traerá la realidad de la DB
       });
 
       return () => {
@@ -70,7 +71,7 @@ export default function Nav() {
         socket.off('updateUnreadCounters');
       };
     }
-  }, [socket, user?._id, token]);
+  }, [socket, user?._id, token, location.pathname]);
 
   return (
     <nav className="bg-zinc-950 text-white flex justify-between items-center px-8 py-3 w-full shadow-lg sticky top-0 z-50">
@@ -88,7 +89,7 @@ export default function Nav() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onKeyDown={handleSearch}
-          placeholder="Buscar servicios, personas..."
+          placeholder={t('nav.search_placeholder')}
           className="bg-transparent border-none outline-none px-3 text-sm w-full placeholder:text-zinc-600"
         />
       </div>
@@ -96,8 +97,8 @@ export default function Nav() {
       {/* Enlaces y Acciones */}
       <div className="flex items-center gap-8">
         <div className="hidden lg:flex items-center gap-6 text-sm font-medium">
-          <Link to="/works" className={`${isActive('/works')} hover:text-amber-400 transition`}>Trabajos</Link>
-          <Link to="/people" className={`${isActive('/people')} hover:text-amber-400 transition`}>Profesionales</Link>
+          <Link to="/works" className={`${isActive('/works')} hover:text-amber-400 transition`}>{t('nav.jobs')}</Link>
+          <Link to="/people" className={`${isActive('/people')} hover:text-amber-400 transition`}>{t('nav.professionals')}</Link>
         </div>
 
         {user ? (
@@ -110,19 +111,19 @@ export default function Nav() {
               )}
             </Link>
 
+            <Link to="/newPost" className="text-zinc-400 hover:text-amber-400 transition" title={t('post.create_title')}>
+              <PlusCircle size={22} />
+            </Link>
+
             {user.role === 'worker' && (
-              <Link to="/my-applications" className={`text-zinc-400 hover:text-amber-400 transition ${isActive('/my-applications')}`} title="Mis Postulaciones">
+              <Link to="/myApplications" className={`text-zinc-400 hover:text-amber-400 transition ${isActive('/myApplications')}`} title={t('nav.my_applications')}>
                 <ClipboardList size={22} />
               </Link>
             )}
 
-            <Link to="/newPost" className="text-zinc-400 hover:text-amber-400 transition" title="Publicar">
-              <PlusCircle size={22} />
-            </Link>
-
             {/* Avatar del Usuario */}
             <div className="flex items-center gap-3 group cursor-pointer relative">
-              <Link to="/profile" className="flex items-center gap-2">
+              <Link to="/profile" className="flex items-center gap-2" title={t('nav.profile')}>
                 <img
                   src={user.avatar || `https://ui-avatars.com/api/?name=${user.name}`}
                   className="w-8 h-8 rounded-full object-cover border border-zinc-700 group-hover:border-amber-400 transition"
@@ -134,7 +135,7 @@ export default function Nav() {
               <button
                 onClick={handleLogout}
                 className="text-zinc-500 hover:text-red-400 transition ml-2"
-                title="Cerrar Sesión"
+                title={t('nav.logout')}
               >
                 <LogOut size={18} />
               </button>
@@ -143,16 +144,18 @@ export default function Nav() {
         ) : (
           <div className="flex items-center gap-4">
             <Link to="/login" className="text-sm font-medium hover:text-amber-400 transition">
-              Ingresar
+              {t('nav.login')}
             </Link>
             <Link
               to="/register"
               className="bg-amber-400 text-black text-sm px-5 py-2 rounded-full font-bold hover:bg-amber-300 transition shadow-lg shadow-amber-400/10"
             >
-              Registrarse
+              {t('nav.register')}
             </Link>
           </div>
         )}
+
+        <LanguageSelector />
       </div>
     </nav>
   );

@@ -7,8 +7,10 @@ import {
   ShieldCheck, Wrench, Truck
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 export default function Profile() {
+  const { t } = useTranslation();
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -66,7 +68,7 @@ export default function Profile() {
         const dataPosts = await resPosts.json();
         setPosts(dataPosts);
       } catch (err) {
-        console.error("Error al cargar perfil:", err);
+        console.error("Error loading profile:", err);
       }
     };
 
@@ -77,7 +79,7 @@ export default function Profile() {
   const handleAvatarUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const loadingToast = toast.loading("Actualizando foto...");
+    const loadingToast = toast.loading(t('profile.updating_photo'));
     const data = new FormData();
     data.append("image", file);
     try {
@@ -90,14 +92,14 @@ export default function Profile() {
       const result = await res.json();
       setFormData(prev => ({ ...prev, avatar: result.imageUrl }));
       setUser(prev => ({ ...prev, avatar: result.imageUrl }));
-      toast.success("Foto actualizada", { id: loadingToast });
-    } catch (err) { toast.error("Error al subir", { id: loadingToast }); }
+      toast.success(t('profile.photo_updated'), { id: loadingToast });
+    } catch (err) { toast.error(t('common.error'), { id: loadingToast }); }
   };
 
   const handlePortfolioUpload = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
-    const loadingToast = toast.loading("Subiendo imágenes...");
+    const loadingToast = toast.loading(t('profile.uploading_images'));
     setUploading(true);
     const data = new FormData();
     files.forEach(file => data.append("images", file));
@@ -109,13 +111,13 @@ export default function Profile() {
       });
       const result = await res.json();
       setUser({ ...user, portfolio: result.portfolio });
-      toast.success("Galería actualizada", { id: loadingToast });
-    } catch (err) { toast.error("Error al subir", { id: loadingToast }); }
+      toast.success(t('profile.gallery_updated'), { id: loadingToast });
+    } catch (err) { toast.error(t('common.error'), { id: loadingToast }); }
     finally { setUploading(false); }
   };
 
   const executeDeletePhoto = async () => {
-    const loadingToast = toast.loading("Eliminando...");
+    const loadingToast = toast.loading(t('common.loading'));
     try {
       const res = await fetch(import.meta.env.VITE_API_URL + "/api/users/portfolio", {
         method: "DELETE",
@@ -123,9 +125,9 @@ export default function Profile() {
         body: JSON.stringify({ imageUrl: photoToDelete }),
       });
       setUser({ ...user, portfolio: user.portfolio.filter(img => img !== photoToDelete) });
-      toast.success("Eliminada", { id: loadingToast });
+      toast.success(t('common.success'), { id: loadingToast });
       closePhotoModal();
-    } catch (err) { toast.error("Error"); }
+    } catch (err) { toast.error(t('common.error')); }
   };
 
   // --- LOGICA DE PERFIL Y SKILLS ---
@@ -137,14 +139,14 @@ export default function Profile() {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ ...formData, skills: cleanedSkills }),
       });
-      if (!res.ok) throw new Error("Error al actualizar");
+      if (!res.ok) throw new Error("Error updating");
 
       const updatedUser = await res.json();
       setUser(updatedUser);
       setFormData(prev => ({ ...prev, skills: cleanedSkills }));
       setEditMode(false);
-      toast.success("Perfil guardado");
-    } catch (err) { toast.error("Error al guardar"); }
+      toast.success(t('profile.saved_success'));
+    } catch (err) { toast.error(t('common.error')); }
   };
 
   const addSkill = () => setFormData({ ...formData, skills: [...formData.skills, ""] });
@@ -163,9 +165,9 @@ export default function Profile() {
       });
       if (!res.ok) throw new Error();
       setPosts(posts.filter((p) => p._id !== postToDelete));
-      toast.success("Anuncio eliminado");
+      toast.success(t('profile.post_deleted'));
       closeModal();
-    } catch (err) { toast.error("Error al eliminar"); }
+    } catch (err) { toast.error(t('common.error')); }
   };
 
   const confirmDelete = (id) => { setPostToDelete(id); setShowConfirm(true); setTimeout(() => setAnimate(true), 10); };
@@ -173,7 +175,7 @@ export default function Profile() {
   const confirmDeletePhoto = (url) => { setPhotoToDelete(url); setShowPhotoConfirm(true); setTimeout(() => setAnimatePhoto(true), 10); };
   const closePhotoModal = () => { setAnimatePhoto(false); setTimeout(() => setShowPhotoConfirm(false), 300); };
 
-  if (!user) return <div className="min-h-screen flex items-center justify-center font-black text-zinc-400 uppercase tracking-widest text-xs">Cargando Panel...</div>;
+  if (!user) return <div className="min-h-screen flex items-center justify-center font-black text-zinc-400 uppercase tracking-widest text-xs">{t('profile.loading_panel')}</div>;
 
   return (
     <div className="min-h-screen bg-zinc-50/50 pb-20 px-4 pt-8">
@@ -186,15 +188,15 @@ export default function Profile() {
             <div className="absolute top-6 right-8 flex gap-3">
               {!editMode ? (
                 <button onClick={() => setEditMode(true)} className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-6 py-2.5 rounded-2xl border border-white/20 font-black text-[10px] uppercase tracking-widest transition-all flex items-center gap-2">
-                  <Edit3 size={14} /> Editar Perfil
+                  <Edit3 size={14} /> {t('profile.edit_profile')}
                 </button>
               ) : (
                 <div className="flex gap-2">
                   <button onClick={handleSaveProfile} className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-2.5 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg transition-all flex items-center gap-2">
-                    <Check size={14} /> Guardar
+                    <Check size={14} /> {t('common.save')}
                   </button>
                   <button onClick={() => setEditMode(false)} className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-6 py-2.5 rounded-2xl border border-white/20 font-black text-[10px] uppercase tracking-widest transition-all">
-                    Cancelar
+                    {t('common.cancel')}
                   </button>
                 </div>
               )}
@@ -224,9 +226,9 @@ export default function Profile() {
                 <div className="space-y-3 max-w-md">
                   <input className="text-3xl font-black text-zinc-900 border-b-2 border-amber-400 outline-none w-full bg-transparent uppercase tracking-tighter" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
                   {user.role === 'worker' && (
-                    <input className="text-amber-600 font-black uppercase text-[10px] tracking-widest block border-b border-zinc-200 outline-none w-full bg-transparent" placeholder="TU PROFESIÓN" value={formData.profession} onChange={(e) => setFormData({ ...formData, profession: e.target.value })} />
+                    <input className="text-amber-600 font-black uppercase text-[10px] tracking-widest block border-b border-zinc-200 outline-none w-full bg-transparent" placeholder={t('profile.profession_placeholder')} value={formData.profession} onChange={(e) => setFormData({ ...formData, profession: e.target.value })} />
                   )}
-                  <input className="text-zinc-400 text-xs font-bold block border-b border-zinc-200 outline-none w-full bg-transparent uppercase" placeholder="📍 CIUDAD, PROVINCIA" value={formData.location} onChange={(e) => setFormData({ ...formData, location: e.target.value })} />
+                  <input className="text-zinc-400 text-xs font-bold block border-b border-zinc-200 outline-none w-full bg-transparent uppercase" placeholder={t('profile.location_placeholder')} value={formData.location} onChange={(e) => setFormData({ ...formData, location: e.target.value })} />
                 </div>
               ) : (
                 <div className="mb-2">
@@ -234,11 +236,11 @@ export default function Profile() {
                   <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-2 items-center">
                     {user.role === 'worker' && (
                       <span className="bg-zinc-900 text-amber-400 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
-                        {user.profession || "Profesional"}
+                        {user.profession || t('people.profession')}
                       </span>
                     )}
                     <span className="text-zinc-400 font-bold text-xs flex items-center gap-1 uppercase tracking-widest">
-                      <MapPin size={14} className="text-amber-500" /> {user.location || "Sin ubicación"}
+                      <MapPin size={14} className="text-amber-500" /> {user.location || t('profile.no_location')}
                     </span>
                   </div>
                 </div>
@@ -252,19 +254,17 @@ export default function Profile() {
 
           {/* COLUMNA IZQUIERDA (Skills + Credenciales Worker) */}
           <div className="space-y-6">
-            {/* 🚨 NUEVA SECCIÓN: CREDENCIALES (Solo Workers) */}
             {user.role === 'worker' && (
               <div className="bg-white p-8 rounded-[2.5rem] border border-zinc-100 shadow-sm">
                 <h3 className="font-black text-zinc-900 uppercase tracking-widest text-[10px] flex items-center gap-2 mb-6">
-                  <ShieldCheck size={16} className="text-amber-500" /> Credenciales
+                  <ShieldCheck size={16} className="text-amber-500" /> {t('profile.credentials')}
                 </h3>
 
                 <div className="space-y-4">
-                  {/* Herramientas */}
                   <div className="flex items-center justify-between p-3 bg-zinc-50 rounded-xl">
                     <div className="flex items-center gap-3">
                       <Wrench size={18} className="text-zinc-400" />
-                      <span className="text-xs font-bold text-zinc-600">Herramientas Propias</span>
+                      <span className="text-xs font-bold text-zinc-600">{t('profile.tools')}</span>
                     </div>
                     {editMode ? (
                       <input
@@ -278,11 +278,10 @@ export default function Profile() {
                     )}
                   </div>
 
-                  {/* Seguro */}
                   <div className="flex items-center justify-between p-3 bg-zinc-50 rounded-xl">
                     <div className="flex items-center gap-3">
                       <ShieldCheck size={18} className="text-zinc-400" />
-                      <span className="text-xs font-bold text-zinc-600">Seguro / Licencia</span>
+                      <span className="text-xs font-bold text-zinc-600">{t('profile.insurance')}</span>
                     </div>
                     {editMode ? (
                       <input
@@ -296,31 +295,30 @@ export default function Profile() {
                     )}
                   </div>
 
-                  {/* Zona */}
                   <div className="p-3 bg-zinc-50 rounded-xl">
                     <div className="flex items-center gap-3 mb-2">
                       <Truck size={18} className="text-zinc-400" />
-                      <span className="text-xs font-bold text-zinc-600">Zona de Cobertura</span>
+                      <span className="text-xs font-bold text-zinc-600">{t('profile.coverage_area')}</span>
                     </div>
                     {editMode ? (
                       <input
                         className="w-full bg-white border border-zinc-200 rounded-lg px-3 py-2 text-xs font-bold outline-none focus:border-amber-400"
                         value={formData.coverageArea}
                         onChange={(e) => setFormData({ ...formData, coverageArea: e.target.value })}
-                        placeholder="Ej. Todo CABA y GBA Norte"
+                        placeholder={t('profile.coverage_placeholder')}
                       />
                     ) : (
-                      <p className="text-xs font-bold text-zinc-800 pl-8">{formData.coverageArea || "No especificada"}</p>
+                      <p className="text-xs font-bold text-zinc-800 pl-8">{formData.coverageArea || t('profile.not_specified')}</p>
                     )}
                   </div>
                 </div>
               </div>
             )}
-            {/* SECCIÓN SKILLS */}
+
             <div className="bg-white p-8 rounded-[2.5rem] border border-zinc-100 shadow-sm">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-black text-zinc-900 uppercase tracking-widest text-[10px] flex items-center gap-2">
-                  <LayoutGrid size={16} className="text-amber-500" /> Mis Habilidades
+                  <LayoutGrid size={16} className="text-amber-500" /> {t('profile.my_skills')}
                 </h3>
                 {editMode && <button onClick={addSkill} className="text-amber-500 hover:scale-110 transition-transform"><Plus size={20} /></button>}
               </div>
@@ -338,18 +336,15 @@ export default function Profile() {
 
             <div className="bg-amber-400 p-8 rounded-[2.5rem] shadow-lg shadow-amber-200/50 relative overflow-hidden group">
               <Settings className="absolute -right-4 -bottom-4 text-amber-500/20 w-32 h-32 group-hover:rotate-45 transition-transform duration-700" />
-              <h3 className="font-black text-zinc-900 uppercase tracking-widest text-[10px] mb-2">Panel de Control</h3>
-              <p className="text-zinc-800 text-xs font-bold leading-relaxed relative z-10">Gestiona tus publicaciones, actualiza tu portafolio y mantén tu perfil al día para atraer más clientes.</p>
+              <h3 className="font-black text-zinc-900 uppercase tracking-widest text-[10px] mb-2">{t('profile.control_panel')}</h3>
+              <p className="text-zinc-800 text-xs font-bold leading-relaxed relative z-10">{t('profile.panel_description')}</p>
             </div>
           </div>
 
-          {/* COLUMNA DERECHA (Bio, Experiencia, Portafolio, Anuncios) */}
           <div className="lg:col-span-2 space-y-8">
-
-            {/* SOBRE MI */}
             <section className="bg-white p-10 rounded-[3rem] border border-zinc-100 shadow-sm relative">
               <h3 className="text-xl font-black text-zinc-900 mb-6 uppercase tracking-tighter flex items-center gap-3">
-                <User className="text-amber-500" /> Bio Profesional
+                <User className="text-amber-500" /> {t('profile.bio_title')}
               </h3>
 
               {editMode ? (
@@ -358,27 +353,23 @@ export default function Profile() {
                     className="w-full bg-zinc-50 p-6 rounded-2xl border-2 border-zinc-100 focus:border-amber-400 outline-none text-zinc-600 leading-relaxed h-32 transition-all font-medium"
                     value={formData.bio}
                     onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                    placeholder="Describe tu experiencia..."
+                    placeholder={t('profile.bio_placeholder')}
                   />
-
-                  {/* Campo Teléfono (Solo Workers en Edición) */}
                   {user.role === 'worker' && (
                     <div>
-                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 block mb-1">Teléfono de Contacto</label>
+                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 block mb-1">{t('profile.phone_label')}</label>
                       <input
                         className="w-full bg-zinc-50 p-4 rounded-xl border border-zinc-200 font-bold text-zinc-700 outline-none focus:border-amber-400"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        placeholder="+54 9 11..."
+                        placeholder="+61 4..."
                       />
                     </div>
                   )}
                 </div>
               ) : (
                 <div>
-                  <p className="text-zinc-600 leading-relaxed text-lg font-medium italic mb-4">"{user.bio || "Sin biografía redactada."}"</p>
-
-                  {/* Mostrar Teléfono si existe */}
+                  <p className="text-zinc-600 leading-relaxed text-lg font-medium italic mb-4">"{user.bio || t('profile.no_bio')}"</p>
                   {user.phone && (
                     <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 px-4 py-2 rounded-xl text-xs font-bold border border-green-100">
                       <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
@@ -389,14 +380,13 @@ export default function Profile() {
               )}
             </section>
 
-            {/* PORTAFOLIO */}
             <section className="bg-white p-10 rounded-[3rem] border border-zinc-100 shadow-sm">
               <div className="flex items-center justify-between mb-8">
                 <h3 className="text-xl font-black text-zinc-900 uppercase tracking-tighter flex items-center gap-3">
-                  <ImageIcon className="text-amber-500" /> Galería de Trabajos
+                  <ImageIcon className="text-amber-500" /> {t('profile.portfolio')}
                 </h3>
                 <label className="cursor-pointer bg-zinc-900 text-amber-400 px-6 py-2.5 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-zinc-800 transition-all">
-                  {uploading ? "Subiendo..." : "Añadir Fotos"}
+                  {uploading ? t('common.loading') : t('profile.add_photos')}
                   <input type="file" multiple hidden onChange={handlePortfolioUpload} disabled={uploading} accept="image/*" />
                 </label>
               </div>
@@ -412,11 +402,10 @@ export default function Profile() {
               </div>
             </section>
 
-            {/* ANUNCIOS ACTIVOS */}
             <section className="bg-white p-10 rounded-[3rem] border border-zinc-100 shadow-sm">
               <div className="flex items-center justify-between mb-8">
                 <h3 className="text-xl font-black text-zinc-900 uppercase tracking-tighter flex items-center gap-3">
-                  <Megaphone className="text-amber-500" /> Mis Anuncios Activos
+                  <Megaphone className="text-amber-500" /> {t('profile.active_posts')}
                 </h3>
                 <button onClick={() => navigate('/newPost')} className="bg-amber-400 text-zinc-900 p-2.5 rounded-xl hover:scale-105 transition-transform shadow-lg shadow-amber-200">
                   <Plus size={20} />
@@ -436,14 +425,14 @@ export default function Profile() {
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <button onClick={() => navigate(`/ownerPostView/${post._id}`)} className="flex-[2] bg-zinc-900 text-white text-[10px] font-black uppercase py-3 rounded-xl tracking-widest hover:bg-zinc-800 transition-colors">Gestionar</button>
+                      <button onClick={() => navigate(`/ownerPostView/${post._id}`)} className="flex-[2] bg-zinc-900 text-white text-[10px] font-black uppercase py-3 rounded-xl tracking-widest hover:bg-zinc-800 transition-colors">{t('profile.manage')}</button>
                       <button onClick={() => navigate(`/editar/${post._id}`)} className="flex-1 bg-white border border-zinc-200 text-zinc-600 p-2 rounded-xl hover:bg-zinc-100 transition-colors flex items-center justify-center"><Edit3 size={16} /></button>
                       <button onClick={() => confirmDelete(post._id)} className="flex-1 bg-red-50 text-red-500 p-2 rounded-xl hover:bg-red-100 transition-colors flex items-center justify-center"><Trash2 size={16} /></button>
                     </div>
                   </div>
                 )) : (
                   <div className="col-span-full py-12 text-center border-2 border-dashed border-zinc-100 rounded-[2rem]">
-                    <p className="text-zinc-400 font-black uppercase tracking-widest text-[10px]">No tienes anuncios activos</p>
+                    <p className="text-zinc-400 font-black uppercase tracking-widest text-[10px]">{t('profile.no_posts')}</p>
                   </div>
                 )}
               </div>
@@ -456,10 +445,10 @@ export default function Profile() {
       {showConfirm && (
         <div className="fixed inset-0 bg-zinc-950/80 backdrop-blur-md flex items-center justify-center z-[100] p-4">
           <div className={`bg-white p-10 rounded-[3rem] max-w-sm w-full transition-all ${animate ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
-            <h2 className="text-2xl font-black text-zinc-900 text-center uppercase mb-6 tracking-tighter">¿Borrar Anuncio?</h2>
+            <h2 className="text-2xl font-black text-zinc-900 text-center uppercase mb-6 tracking-tighter">{t('profile.delete_confirm_title')}</h2>
             <div className="flex gap-3">
-              <button onClick={deletePost} className="flex-1 bg-red-600 text-white py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest">Eliminar</button>
-              <button onClick={closeModal} className="flex-1 bg-zinc-100 text-zinc-500 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest">Cancelar</button>
+              <button onClick={deletePost} className="flex-1 bg-red-600 text-white py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest">{t('common.delete')}</button>
+              <button onClick={closeModal} className="flex-1 bg-zinc-100 text-zinc-500 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest">{t('common.cancel')}</button>
             </div>
           </div>
         </div>
@@ -468,10 +457,10 @@ export default function Profile() {
       {showPhotoConfirm && (
         <div className="fixed inset-0 bg-zinc-950/80 backdrop-blur-md flex items-center justify-center z-[100] p-4">
           <div className={`bg-white p-10 rounded-[3rem] max-w-sm w-full transition-all ${animatePhoto ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
-            <h2 className="text-2xl font-black text-zinc-900 text-center uppercase mb-6 tracking-tighter">¿Eliminar foto?</h2>
+            <h2 className="text-2xl font-black text-zinc-900 text-center uppercase mb-6 tracking-tighter">{t('profile.delete_photo_confirm_title')}</h2>
             <div className="flex gap-3">
-              <button onClick={executeDeletePhoto} className="flex-1 bg-red-600 text-white py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest">Eliminar</button>
-              <button onClick={closePhotoModal} className="flex-1 bg-zinc-100 text-zinc-500 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest">Cancelar</button>
+              <button onClick={executeDeletePhoto} className="flex-1 bg-red-600 text-white py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest">{t('common.delete')}</button>
+              <button onClick={closePhotoModal} className="flex-1 bg-zinc-100 text-zinc-500 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest">{t('common.cancel')}</button>
             </div>
           </div>
         </div>

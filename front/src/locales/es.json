@@ -1,0 +1,180 @@
+{
+    "common": {
+        "loading": "Cargando...",
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "delete": "Eliminar",
+        "edit": "Editar",
+        "search": "Buscar",
+        "filter": "Filtrar",
+        "back": "Volver",
+        "next": "Siguiente",
+        "send": "Enviar",
+        "error": "Error",
+        "success": "Éxito",
+        "required": "Requerido",
+        "hide": "Ocultar",
+        "status": {
+            "pending": "Pendiente",
+            "accepted": "Aceptado",
+            "rejected": "Rechazado",
+            "active": "Activo",
+            "online": "En línea",
+            "offline": "Desconectado"
+        }
+    },
+    "nav": {
+        "search_placeholder": "Buscar servicios, profesionales...",
+        "jobs": "Trabajos",
+        "professionals": "Profesionales",
+        "my_applications": "Mis Postulaciones",
+        "login": "Ingresar",
+        "register": "Registrarse",
+        "logout": "Cerrar Sesión",
+        "profile": "Perfil",
+        "post_job": "Publicar"
+    },
+    "home": {
+        "badge": "La red profesional de oficios más grande",
+        "hero_title": "Encuentra al profesional perfecto para tu proyecto",
+        "hero_subtitle": "Conecta con trabajadores calificados en tu zona de forma rápida y segura.",
+        "cta_find_work": "Buscar Trabajo",
+        "cta_hire": "Contratar Talento",
+        "stats_users": "Usuarios",
+        "stats_projects": "Proyectos",
+        "stats_secure": "Seguro",
+        "stats_support": "Soporte",
+        "how_it_works": "¿Cómo Funciona?",
+        "how_it_works_sub": "Conecta, colabora y completa el trabajo en tres simples pasos.",
+        "card_work_title": "Buscar Trabajo",
+        "card_work_desc": "Explora miles de oportunidades laborales. Filtra por tus habilidades y postúlate en segundos.",
+        "view_jobs": "Ver Trabajos",
+        "card_hire_title": "Contratar Talento",
+        "card_hire_desc": "Conecta con profesionales calificados. Revisa portafolios y contrata a los mejores.",
+        "find_expert": "Buscar Experto"
+    },
+    "auth": {
+        "email": "Correo Electrónico",
+        "password": "Contraseña",
+        "name": "Nombre Completo",
+        "forgot_password": "¿Olvidaste tu contraseña?",
+        "no_account": "¿No tienes cuenta?",
+        "have_account": "¿Ya tienes una cuenta?",
+        "login_button": "Iniciar Sesión",
+        "register_button": "Crear Cuenta",
+        "register_title": "Únete a iWork",
+        "register_subtitle": "Comienza tu viaje hoy"
+    },
+    "works": {
+        "title": "Trabajos Disponibles",
+        "filter_category": "Categoría",
+        "filter_location": "Ubicación",
+        "no_jobs": "No se encontraron trabajos con tus criterios.",
+        "apply": "Postularme",
+        "posted_by": "Publicado por",
+        "salary": "Presupuesto/Salario",
+        "details": "Ver Detalles"
+    },
+    "profile": {
+        "loading_panel": "Cargando Panel...",
+        "edit_profile": "Editar Perfil",
+        "profession_placeholder": "TU PROFESIÓN",
+        "location_placeholder": "📍 CIUDAD, PROVINCIA",
+        "no_location": "Sin ubicación",
+        "credentials": "Credenciales",
+        "coverage_area": "Zona de Cobertura",
+        "coverage_placeholder": "Ej. Todo Sidney y alrededores",
+        "not_specified": "No especificada",
+        "my_skills": "Mis Habilidades",
+        "control_panel": "Panel de Control",
+        "panel_description": "Gestiona tus publicaciones, actualiza tu portafolio y mantén tu perfil al día.",
+        "bio_title": "Bio Profesional",
+        "bio_placeholder": "Describe tu experiencia...",
+        "phone_label": "Teléfono de Contacto",
+        "no_bio": "Sin biografía redactada.",
+        "add_photos": "Añadir Fotos",
+        "active_posts": "Mis Anuncios Activos",
+        "manage": "Gestionar",
+        "no_posts": "No tienes anuncios activos",
+        "delete_confirm_title": "¿Borrar Anuncio?",
+        "delete_photo_confirm_title": "¿Eliminar foto?",
+        "saved_success": "Perfil guardado",
+        "post_deleted": "Anuncio eliminado",
+        "completed_jobs": "Trabajos Completados",
+        "member_since": "Miembro desde",
+        "verified": "Verificado"
+    },
+    "userProfile": {
+        "loading": "Cargando Perfil...",
+        "notFound": "Usuario no encontrado",
+        "defaultProfession": "Especialista",
+        "contactNow": "Contactar Ahora",
+        "aboutProfessional": "Sobre el Profesional",
+        "defaultBio": "Este profesional prefiere dejar que su trabajo hable por él.",
+        "workHistory": "Trayectoria Laboral",
+        "portfolio": "Trabajos Realizados",
+        "noImages": "Sin imágenes disponibles",
+        "clientReviews": "Lo que dicen los clientes",
+        "noReviews": "Aún no hay reseñas"
+    },
+    "post": {
+        "create_title": "Publicar Trabajo",
+        "edit_title": "Editar Trabajo",
+        "title_label": "Título del Trabajo",
+        "desc_label": "Descripción",
+        "category_label": "Categoría",
+        "location_label": "Ubicación",
+        "budget_label": "Presupuesto",
+        "publish": "Publicar",
+        "update": "Actualizar",
+        "applicants": "Postulantes",
+        "notFound": "Anuncio no encontrado",
+        "keyInfo": "Información Clave",
+        "ownPostTitle": "Esta es tu publicación",
+        "ownPostDesc": "Gestiona a los candidatos desde el panel."
+    },
+    "apply": {
+        "button": "Postularme ahora",
+        "sending": "Enviando postulación...",
+        "success": "¡Postulación enviada con éxito!",
+        "already_applied": "Ya estás en el proceso",
+        "message_label": "Mensaje de presentación",
+        "cv_label": "Curriculum Vitae (PDF/DOCX)",
+        "errors": {
+            "loginRequired": "Debes iniciar sesión para postularte.",
+            "messageShort": "Escribe un mensaje más detallado.",
+            "cvRequired": "Es obligatorio adjuntar tu CV."
+        }
+    },
+    "ownerView": {
+        "title": "Gestión de Candidatos",
+        "empty_title": "Aún no hay postulaciones",
+        "acceptedSuccess": "¡Candidato aceptado! Iniciando chat...",
+        "rejectedMsg": "Candidato rechazado",
+        "actions": {
+            "contact": "Contactar",
+            "review": "Calificar",
+            "reject": "Descartar"
+        }
+    },
+    "chat": {
+        "sidebarTitle": "Conversaciones",
+        "loading": "Cargando chats...",
+        "noSelected": "Selecciona un chat para comenzar",
+        "newConversation": "Nueva conversación...",
+        "inputPlaceholder": "Escribe un mensaje...",
+        "modal": {
+            "title": "¿Ocultar chat?",
+            "description": "Desaparecerá de tu lista hasta que haya un nuevo mensaje."
+        },
+        "errors": {
+            "loadConversations": "Error al cargar conversaciones",
+            "loadMessages": "Error al cargar mensajes"
+        }
+    },
+    "not_found": {
+        "subtitle": "Ups, te perdiste...",
+        "description": "La página no existe o ha sido movida.",
+        "back_home": "Volver al Inicio"
+    }
+}

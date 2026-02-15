@@ -1,5 +1,7 @@
+// src/pages/OwnerPostView.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next"; // <-- Importamos i18next
 import { useAuthContext } from "../Context/AuthContext";
 import {
   User, Mail, Calendar, FileDown, MessageSquare,
@@ -11,6 +13,7 @@ import toast from "react-hot-toast";
 export default function OwnerPostView() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { t } = useTranslation(); // <-- Hook de traducción
   const { user, token } = useAuthContext();
   const [post, setPost] = useState(null);
   const [applicants, setApplicants] = useState([]);
@@ -18,21 +21,17 @@ export default function OwnerPostView() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Evitamos ejecutar si no hay usuario o token aún
     if (!token || !user?._id) return;
 
     const fetchPostAndApplicants = async () => {
       try {
         setLoading(true);
 
-        // 1. Obtener post
         const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${id}`);
-        if (!res.ok) throw new Error("No se pudo cargar el anuncio");
+        if (!res.ok) throw new Error(t('ownerView.errors.loadPost'));
         const data = await res.json();
 
-        // --- LA CORRECCIÓN CRÍTICA AQUÍ ---
-        // Usamos .toString() y .trim() para asegurar que comparamos strings puros
-        const ownerId = data.user?._id || data.user; // Por si el backend mandó el objeto poblado o solo el ID
+        const ownerId = data.user?._id || data.user;
         const currentUserId = user._id;
 
         if (String(ownerId).trim() !== String(currentUserId).trim()) {
@@ -40,15 +39,13 @@ export default function OwnerPostView() {
           navigate(`/post/${id}`, { replace: true });
           return;
         }
-        // ----------------------------------
 
         setPost(data);
 
-        // 2. Obtener postulantes solo si la verificación pasó
         const resApp = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${id}/applicants`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        if (!resApp.ok) throw new Error("Error al cargar la lista de candidatos");
+        if (!resApp.ok) throw new Error(t('ownerView.errors.loadApplicants'));
         const dataApp = await resApp.json();
         setApplicants(dataApp);
 
@@ -61,10 +58,10 @@ export default function OwnerPostView() {
     };
 
     fetchPostAndApplicants();
-  }, [id, user?._id, token, navigate]);
+  }, [id, user?._id, token, navigate, t]);
 
   const updateStatus = async (applicantId, status) => {
-    const loadingToast = toast.loading("Actualizando estado...");
+    const loadingToast = toast.loading(t('ownerView.status.updating'));
     try {
       const res = await fetch(
         `${import.meta.env.VITE_API_URL}/api/posts/${id}/applicants/${applicantId}/status`,
@@ -79,13 +76,14 @@ export default function OwnerPostView() {
       );
 
       const data = await res.json();
-      if (!res.ok) throw new Error("No se pudo actualizar el estado");
+      if (!res.ok) throw new Error(t('ownerView.errors.updateStatus'));
 
       if (status === "accepted" && data.conversationId) {
-        toast.success("¡Candidato aceptado! Iniciando chat...", { id: loadingToast });
+        toast.success(t('ownerView.status.acceptedSuccess'), { id: loadingToast });
         setTimeout(() => navigate("/chat"), 1500);
       } else {
-        toast.success(`Candidato ${status === 'rejected' ? 'rechazado' : 'actualizado'}`, { id: loadingToast });
+        const msg = status === 'rejected' ? t('ownerView.status.rejectedMsg') : t('ownerView.status.updatedMsg');
+        toast.success(msg, { id: loadingToast });
       }
 
       setApplicants((prev) =>
@@ -121,20 +119,20 @@ export default function OwnerPostView() {
     <div className="min-h-screen bg-zinc-50/50 py-12 px-6">
       <div className="max-w-5xl mx-auto">
 
-        {/* Header con navegación rápida */}
+        {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
             <button
               onClick={() => navigate(-1)}
               className="flex items-center gap-2 text-zinc-400 hover:text-zinc-950 transition-colors font-black uppercase text-[10px] tracking-[0.2em] mb-4"
             >
-              <ChevronLeft size={16} /> Volver al panel
+              <ChevronLeft size={16} /> {t('ownerView.backToPanel')}
             </button>
             <h1 className="text-3xl font-black tracking-tighter uppercase text-zinc-900 flex items-center gap-3">
-              Gestión de Candidatos
+              {t('ownerView.title')}
             </h1>
             <p className="text-zinc-500 font-medium text-sm mt-1 flex items-center gap-2">
-              Anuncio: <span className="text-zinc-900 font-bold">{post.title}</span>
+              {t('ownerView.postLabel')}: <span className="text-zinc-900 font-bold">{post.title}</span>
               <Link to={`/post/${id}`} className="text-amber-600 hover:text-amber-700">
                 <ExternalLink size={14} />
               </Link>
@@ -143,13 +141,13 @@ export default function OwnerPostView() {
 
           <div className="bg-white px-6 py-4 rounded-[2rem] border border-zinc-100 shadow-sm flex items-center gap-6">
             <div className="text-center">
-              <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Postulantes</p>
+              <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">{t('ownerView.stats.applicants')}</p>
               <p className="text-xl font-black text-zinc-900">{applicants.length}</p>
             </div>
             <div className="h-8 w-[1px] bg-zinc-100"></div>
             <div className="text-center">
-              <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Estado</p>
-              <p className="text-sm font-bold text-emerald-600 uppercase tracking-tighter">Activo</p>
+              <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">{t('ownerView.stats.status')}</p>
+              <p className="text-sm font-bold text-emerald-600 uppercase tracking-tighter">{t('ownerView.stats.active')}</p>
             </div>
           </div>
         </div>
@@ -159,8 +157,8 @@ export default function OwnerPostView() {
           {applicants.length === 0 ? (
             <div className="bg-white rounded-[3rem] p-20 text-center border border-dashed border-zinc-200">
               <Users className="mx-auto text-zinc-200 mb-4" size={48} />
-              <h3 className="text-zinc-400 font-bold">Aún no hay postulaciones para este anuncio.</h3>
-              <p className="text-zinc-300 text-sm">Aparecerán aquí en cuanto los usuarios apliquen.</p>
+              <h3 className="text-zinc-400 font-bold">{t('ownerView.empty.title')}</h3>
+              <p className="text-zinc-300 text-sm">{t('ownerView.empty.desc')}</p>
             </div>
           ) : (
             applicants.map((app) => (
@@ -169,17 +167,11 @@ export default function OwnerPostView() {
 
                   {/* Avatar y Datos Básicos */}
                   <div className="flex items-center gap-4 min-w-[240px]">
-                    <Link
-                      to={`/users/${app.user._id}`}
-                      className="flex items-center gap-4 group/author"
-                    >
-                      {/* Avatar con efecto de escala al hacer hover */}
+                    <Link to={`/users/${app.user._id}`} className="flex items-center gap-4 group/author">
                       <div className="w-16 h-16 bg-zinc-900 rounded-2xl flex items-center justify-center text-amber-400 font-black text-xl shadow-lg transition-transform group-hover/author:scale-105">
                         {app.user.name.charAt(0)}
                       </div>
-
                       <div>
-                        {/* Nombre con subrayado animado al hacer hover */}
                         <h3 className="font-black text-zinc-900 uppercase tracking-tighter text-lg group-hover/author:text-amber-600 transition-colors">
                           {app.user.name}
                         </h3>
@@ -195,72 +187,50 @@ export default function OwnerPostView() {
                     </Link>
                   </div>
 
-                  {/* Mensaje y Skills */}
+                  {/* Mensaje */}
                   <div className="flex-1 space-y-4">
                     <div className={`inline-block px-3 py-1 rounded-full border text-[10px] font-black uppercase tracking-widest ${getStatusStyle(app.status)}`}>
-                      {app.status === 'pending' ? 'Pendiente de Revisión' : app.status}
+                      {app.status === 'pending' ? t('ownerView.status.pending') : t(`ownerView.status.${app.status}`)}
                     </div>
-
                     <div className="bg-zinc-50 rounded-2xl p-4 border border-zinc-100 relative">
                       <MessageSquare className="absolute -top-2 -right-2 text-zinc-200" size={20} />
                       <p className="text-zinc-600 text-sm italic leading-relaxed">
-                        "{app.message || "Sin mensaje de presentación."}"
+                        "{app.message || t('ownerView.noMessage')}"
                       </p>
                     </div>
-
-                    {app.user.skills?.length > 0 && (
-                      <div className="flex flex-wrap gap-2">
-                        {app.user.skills.map((skill, i) => (
-                          <span key={i} className="text-[10px] bg-white border border-zinc-200 text-zinc-500 px-3 py-1 rounded-full font-bold uppercase tracking-wider">
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    )}
                   </div>
 
-                  {/* Acciones Verticales */}
+                  {/* Acciones */}
                   <div className="flex flex-row lg:flex-col gap-3 w-full lg:w-auto pt-4 lg:pt-0 border-t lg:border-t-0 lg:border-l border-zinc-100 lg:pl-8">
                     {app.cvUrl && (
-                      <a
-                        href={app.cvUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <a href={app.cvUrl} target="_blank" rel="noopener noreferrer"
                         className="flex-1 flex items-center justify-center gap-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-colors"
                       >
                         <FileDown size={16} /> CV
                       </a>
                     )}
-
                     {app.status !== "accepted" && (
-                      <button
-                        onClick={() => updateStatus(app._id, "accepted")}
+                      <button onClick={() => updateStatus(app._id, "accepted")}
                         className="flex-1 flex items-center justify-center gap-2 bg-amber-400 hover:bg-amber-500 text-black px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg shadow-amber-400/10"
                       >
-                        <CheckCircle size={16} /> Contactar
+                        <CheckCircle size={16} /> {t('ownerView.actions.contact')}
                       </button>
                     )}
-
-                    {/* BOTÓN CALIFICAR (Solo si está aceptado) */}
                     {app.status === "accepted" && (
-                      <Link
-                        to={`/leave-review/${post._id}/${app.user._id}`}
+                      <Link to={`/leave-review/${post._id}/${app.user._id}`}
                         className="flex-1 flex items-center justify-center gap-2 bg-purple-100 hover:bg-purple-200 text-purple-700 px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all"
                       >
-                        <Star size={16} /> Calificar
+                        <Star size={16} /> {t('ownerView.actions.review')}
                       </Link>
                     )}
-
                     {app.status !== "rejected" && (
-                      <button
-                        onClick={() => updateStatus(app._id, "rejected")}
+                      <button onClick={() => updateStatus(app._id, "rejected")}
                         className="flex-1 flex items-center justify-center gap-2 bg-white border border-zinc-200 text-zinc-400 hover:text-red-500 hover:border-red-200 px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all"
                       >
-                        <XCircle size={16} /> Descartar
+                        <XCircle size={16} /> {t('ownerView.actions.reject')}
                       </button>
                     )}
                   </div>
-
                 </div>
               </div>
             ))

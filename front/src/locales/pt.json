@@ -1,0 +1,180 @@
+{
+  "common": {
+    "loading": "Carregando...",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "send": "Enviar",
+    "error": "Erro",
+    "success": "Sucesso",
+    "required": "Obrigatório",
+    "hide": "Ocultar",
+    "status": {
+      "pending": "Pendente",
+      "accepted": "Aceito",
+      "rejected": "Rejeitado",
+      "active": "Ativo",
+      "online": "Online",
+      "offline": "Offline"
+    }
+  },
+  "nav": {
+    "search_placeholder": "Buscar serviços, profissionais...",
+    "jobs": "Vagas",
+    "professionals": "Profissionais",
+    "my_applications": "Minhas Candidaturas",
+    "login": "Entrar",
+    "register": "Cadastrar",
+    "logout": "Sair",
+    "profile": "Perfil",
+    "post_job": "Publicar"
+  },
+  "home": {
+    "badge": "A maior rede profissional de ofícios",
+    "hero_title": "Encontre o profissional perfeito para o seu projeto",
+    "hero_subtitle": "Conecte-se com trabalhadores qualificados na sua área de forma rápida e segura.",
+    "cta_find_work": "Buscar Trabalho",
+    "cta_hire": "Contratar Talento",
+    "stats_users": "Usuários",
+    "stats_projects": "Projetos",
+    "stats_secure": "Seguro",
+    "stats_support": "Suporte",
+    "how_it_works": "Como Funciona?",
+    "how_it_works_sub": "Conecte-se, colabore e realize o trabalho em três passos simples.",
+    "card_work_title": "Buscar Trabalho",
+    "card_work_desc": "Explore milhares de oportunidades de trabalho. Filtre por suas habilidades e candidate-se em segundos.",
+    "view_jobs": "Ver Vagas",
+    "card_hire_title": "Contratar Talento",
+    "card_hire_desc": "Conecte-se com profissionais qualificados. Analise portfólios e contrate os melhores.",
+    "find_expert": "Encontrar Especialista"
+  },
+  "auth": {
+    "email": "E-mail",
+    "password": "Senha",
+    "name": "Nome Completo",
+    "forgot_password": "Esqueceu sua senha?",
+    "no_account": "Não tem uma conta?",
+    "have_account": "Já tem uma conta?",
+    "login_button": "Entrar",
+    "register_button": "Criar Conta",
+    "register_title": "Junte-se ao iWork",
+    "register_subtitle": "Comece sua jornada hoje"
+  },
+  "works": {
+    "title": "Vagas Disponíveis",
+    "filter_category": "Categoria",
+    "filter_location": "Localização",
+    "no_jobs": "Nenhuma vaga encontrada com seus critérios.",
+    "apply": "Candidatar-se",
+    "posted_by": "Publicado por",
+    "salary": "Orçamento/Salário",
+    "details": "Ver Detalhes"
+  },
+  "profile": {
+    "loading_panel": "Carregando Painel...",
+    "edit_profile": "Editar Perfil",
+    "profession_placeholder": "SUA PROFISSÃO",
+    "location_placeholder": "📍 CIDADE, ESTADO",
+    "no_location": "Sem localização",
+    "credentials": "Credenciais",
+    "coverage_area": "Área de Cobertura",
+    "coverage_placeholder": "Ex: Toda Sydney e arredores",
+    "not_specified": "Não especificado",
+    "my_skills": "Minhas Habilidades",
+    "control_panel": "Painel de Controle",
+    "panel_description": "Gerencie suas publicações, atualize seu portfólio e mantenha seu perfil em dia.",
+    "bio_title": "Bio Profissional",
+    "bio_placeholder": "Descreva sua experiência...",
+    "phone_label": "Telefone de Contato",
+    "no_bio": "Sem biografia redigida.",
+    "add_photos": "Adicionar Fotos",
+    "active_posts": "Meus Anúncios Ativos",
+    "manage": "Gerenciar",
+    "no_posts": "Você não tem anúncios ativos",
+    "delete_confirm_title": "Excluir Anúncio?",
+    "delete_photo_confirm_title": "Excluir foto?",
+    "saved_success": "Perfil salvo",
+    "post_deleted": "Anúncio excluído",
+    "completed_jobs": "Trabalhos Concluídos",
+    "member_since": "Membro desde",
+    "verified": "Verificado"
+  },
+  "userProfile": {
+    "loading": "Carregando Perfil...",
+    "notFound": "Usuário não encontrado",
+    "defaultProfession": "Especialista",
+    "contactNow": "Contactar Agora",
+    "aboutProfessional": "Sobre o Profissional",
+    "defaultBio": "Este profissional prefere deixar que seu trabalho fale por ele.",
+    "workHistory": "Experiência Profissional",
+    "portfolio": "Projetos Realizados",
+    "noImages": "Sem imagens disponíveis",
+    "clientReviews": "O que dizem os clientes",
+    "noReviews": "Ainda não há avaliações"
+  },
+  "post": {
+    "create_title": "Publicar Vaga",
+    "edit_title": "Editar Vaga",
+    "title_label": "Título da Vaga",
+    "desc_label": "Descrição",
+    "category_label": "Categoria",
+    "location_label": "Localização",
+    "budget_label": "Orçamento",
+    "publish": "Publicar",
+    "update": "Atualizar",
+    "applicants": "Candidatos",
+    "notFound": "Anúncio não encontrado",
+    "keyInfo": "Informações Importantes",
+    "ownPostTitle": "Esta é sua publicação",
+    "ownPostDesc": "Gerencie os candidatos pelo painel de controle."
+  },
+  "apply": {
+    "button": "Candidatar-me agora",
+    "sending": "Enviando candidatura...",
+    "success": "Candidatura enviada com sucesso!",
+    "already_applied": "Você já está no processo",
+    "message_label": "Mensagem de apresentação",
+    "cv_label": "Curriculum Vitae (PDF/DOCX)",
+    "errors": {
+      "loginRequired": "Você deve entrar para se candidatar.",
+      "messageShort": "Escreva uma mensagem mais detalhada.",
+      "cvRequired": "É obrigatório anexar seu currículo."
+    }
+  },
+  "ownerView": {
+    "title": "Gestão de Candidatos",
+    "empty_title": "Ainda não há candidaturas",
+    "acceptedSuccess": "Candidato aceito! Abrindo chat...",
+    "rejectedMsg": "Candidato rejeitado",
+    "actions": {
+      "contact": "Contactar",
+      "review": "Avaliar",
+      "reject": "Descartar"
+    }
+  },
+  "chat": {
+    "sidebarTitle": "Conversas",
+    "loading": "Carregando chats...",
+    "noSelected": "Selecione um chat para começar",
+    "newConversation": "Nova conversa...",
+    "inputPlaceholder": "Escreva uma mensagem...",
+    "modal": {
+      "title": "Ocultar chat?",
+      "description": "Ele desaparecerá da sua lista até que haja uma nova mensagem."
+    },
+    "errors": {
+      "loadConversations": "Erro ao carregar conversas",
+      "loadMessages": "Erro ao carregar mensagens"
+    }
+  },
+  "not_found": {
+    "subtitle": "Ops, você se perdeu...",
+    "description": "A página não existe ou foi movida.",
+    "back_home": "Voltar ao Início"
+  }
+}

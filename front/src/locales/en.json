@@ -1,0 +1,180 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "filter": "Filter",
+    "back": "Back",
+    "next": "Next",
+    "send": "Send",
+    "error": "Error",
+    "success": "Success",
+    "required": "Required",
+    "hide": "Hide",
+    "status": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "active": "Active",
+      "online": "Online",
+      "offline": "Offline"
+    }
+  },
+  "nav": {
+    "search_placeholder": "Search services, professionals...",
+    "jobs": "Jobs",
+    "professionals": "Professionals",
+    "my_applications": "My Applications",
+    "login": "Log In",
+    "register": "Register",
+    "logout": "Log Out",
+    "profile": "Profile",
+    "post_job": "Post"
+  },
+  "home": {
+    "badge": "The largest professional trade network",
+    "hero_title": "Find the perfect professional for your project",
+    "hero_subtitle": "Connect with skilled workers in your area quickly and safely.",
+    "cta_find_work": "Find Work",
+    "cta_hire": "Hire Talent",
+    "stats_users": "Users",
+    "stats_projects": "Projects",
+    "stats_secure": "Secure",
+    "stats_support": "Support",
+    "how_it_works": "How it Works?",
+    "how_it_works_sub": "Connect, collaborate, and get the job done in three simple steps.",
+    "card_work_title": "Find Work",
+    "card_work_desc": "Explore thousands of job opportunities. Filter by your skills and apply in seconds.",
+    "view_jobs": "View Jobs",
+    "card_hire_title": "Hire Talent",
+    "card_hire_desc": "Connect with qualified professionals. Review portfolios and hire the best.",
+    "find_expert": "Find Expert"
+  },
+  "auth": {
+    "email": "Email Address",
+    "password": "Password",
+    "name": "Full Name",
+    "forgot_password": "Forgot your password?",
+    "no_account": "Don't have an account?",
+    "have_account": "Already have an account?",
+    "login_button": "Log In",
+    "register_button": "Create Account",
+    "register_title": "Join iWork",
+    "register_subtitle": "Start your journey today"
+  },
+  "works": {
+    "title": "Available Jobs",
+    "filter_category": "Category",
+    "filter_location": "Location",
+    "no_jobs": "No jobs found with your criteria.",
+    "apply": "Apply Now",
+    "posted_by": "Posted by",
+    "salary": "Budget/Salary",
+    "details": "View Details"
+  },
+  "profile": {
+    "loading_panel": "Loading Dashboard...",
+    "edit_profile": "Edit Profile",
+    "profession_placeholder": "YOUR PROFESSION",
+    "location_placeholder": "📍 CITY, STATE",
+    "no_location": "No location",
+    "credentials": "Credentials",
+    "coverage_area": "Coverage Area",
+    "coverage_placeholder": "e.g. All Sydney and surroundings",
+    "not_specified": "Not specified",
+    "my_skills": "My Skills",
+    "control_panel": "Control Panel",
+    "panel_description": "Manage your posts, update your portfolio, and keep your profile up to date.",
+    "bio_title": "Professional Bio",
+    "bio_placeholder": "Describe your experience...",
+    "phone_label": "Contact Phone",
+    "no_bio": "No bio written.",
+    "add_photos": "Add Photos",
+    "active_posts": "My Active Ads",
+    "manage": "Manage",
+    "no_posts": "You have no active ads",
+    "delete_confirm_title": "Delete Ad?",
+    "delete_photo_confirm_title": "Delete photo?",
+    "saved_success": "Profile saved",
+    "post_deleted": "Ad deleted",
+    "completed_jobs": "Completed Jobs",
+    "member_since": "Member since",
+    "verified": "Verified"
+  },
+  "userProfile": {
+    "loading": "Loading Profile...",
+    "notFound": "User not found",
+    "defaultProfession": "Specialist",
+    "contactNow": "Contact Now",
+    "aboutProfessional": "About the Professional",
+    "defaultBio": "This professional prefers to let their work speak for them.",
+    "workHistory": "Work Experience",
+    "portfolio": "Completed Projects",
+    "noImages": "No images available",
+    "clientReviews": "What clients are saying",
+    "noReviews": "No reviews yet"
+  },
+  "post": {
+    "create_title": "Post a Job",
+    "edit_title": "Edit Job",
+    "title_label": "Job Title",
+    "desc_label": "Description",
+    "category_label": "Category",
+    "location_label": "Location",
+    "budget_label": "Budget",
+    "publish": "Publish",
+    "update": "Update",
+    "applicants": "Applicants",
+    "notFound": "Job post not found",
+    "keyInfo": "Key Information",
+    "ownPostTitle": "This is your post",
+    "ownPostDesc": "Manage candidates from the dashboard."
+  },
+  "apply": {
+    "button": "Apply now",
+    "sending": "Sending application...",
+    "success": "Application sent successfully!",
+    "already_applied": "You are already in the process",
+    "message_label": "Cover message",
+    "cv_label": "Curriculum Vitae (PDF/DOCX)",
+    "errors": {
+      "loginRequired": "You must log in to apply.",
+      "messageShort": "Please write a more detailed message.",
+      "cvRequired": "Attaching a CV is mandatory."
+    }
+  },
+  "ownerView": {
+    "title": "Candidate Management",
+    "empty_title": "No applications yet",
+    "acceptedSuccess": "Candidate accepted! Opening chat...",
+    "rejectedMsg": "Candidate rejected",
+    "actions": {
+      "contact": "Contact",
+      "review": "Rate",
+      "reject": "Discard"
+    }
+  },
+  "chat": {
+    "sidebarTitle": "Conversations",
+    "loading": "Loading chats...",
+    "noSelected": "Select a chat to start",
+    "newConversation": "New conversation...",
+    "inputPlaceholder": "Type a message...",
+    "modal": {
+      "title": "Hide chat?",
+      "description": "It will disappear from your list until a new message arrives."
+    },
+    "errors": {
+      "loadConversations": "Error loading conversations",
+      "loadMessages": "Error loading messages"
+    }
+  },
+  "not_found": {
+    "subtitle": "Oops, you're lost...",
+    "description": "The page doesn't exist or has been moved.",
+    "back_home": "Back to Home"
+  }
+}

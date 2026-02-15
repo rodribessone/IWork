@@ -1,8 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { useSocketContext } from '../../Context/SocketContext';
 import { Trash2, AlertCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next'; // <-- Importación necesaria
 
 export default function ConversationList({ conversations, onSelectConversation, onDeleteConversation, selectedId, loggedInUserId }) {
+    const { t } = useTranslation(); // <-- Hook de traducción
     const { onlineUsers } = useSocketContext();
     const [idToDelete, setIdToDelete] = useState(null);
 
@@ -12,9 +14,8 @@ export default function ConversationList({ conversations, onSelectConversation, 
                 p => p && String(p._id) !== String(loggedInUserId)
             );
             return { ...conv, otherUser };
-        }).filter(c => c.otherUser); // Eliminamos chats sin usuario válido
+        }).filter(c => c.otherUser);
     }, [conversations, loggedInUserId]);
-
 
     return (
         <div className="flex flex-col">
@@ -43,7 +44,7 @@ export default function ConversationList({ conversations, onSelectConversation, 
                             <div className="overflow-hidden">
                                 <p className="font-semibold text-gray-800 truncate">{conv.otherUser.name}</p>
                                 <p className="text-sm text-gray-500 truncate w-32 sm:w-48">
-                                    {conv.lastMessage || 'Nueva conversación...'}
+                                    {conv.lastMessage || t('chat.newConversation')}
                                 </p>
                             </div>
                         </div>
@@ -61,23 +62,23 @@ export default function ConversationList({ conversations, onSelectConversation, 
                 );
             })}
 
-            {/* MODAL DE CONFIRMACIÓN PROFESIONAL */}
+            {/* MODAL DE CONFIRMACIÓN */}
             {idToDelete && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm p-4 animate-in fade-in duration-200">
                     <div className="bg-white rounded-xl shadow-2xl p-6 max-w-sm w-full transform transition-all scale-100 animate-in zoom-in-95 duration-200">
                         <div className="flex items-center space-x-3 text-amber-500 mb-4">
                             <AlertCircle size={24} />
-                            <h3 className="text-lg font-bold text-gray-900">¿Ocultar chat?</h3>
+                            <h3 className="text-lg font-bold text-gray-900">{t('chat.modal.title')}</h3>
                         </div>
                         <p className="text-gray-600 mb-6 text-sm">
-                            Esta conversación desaparecerá de tu lista. Volverá a aparecer si recibes o envías un nuevo mensaje a este usuario.
+                            {t('chat.modal.description')}
                         </p>
                         <div className="flex space-x-3">
                             <button
                                 onClick={() => setIdToDelete(null)}
                                 className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors"
                             >
-                                Cancelar
+                                {t('common.cancel')}
                             </button>
                             <button
                                 onClick={() => {
@@ -86,7 +87,7 @@ export default function ConversationList({ conversations, onSelectConversation, 
                                 }}
                                 className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 font-medium transition-colors"
                             >
-                                Ocultar
+                                {t('common.hide')}
                             </button>
                         </div>
                     </div>

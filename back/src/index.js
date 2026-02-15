@@ -46,7 +46,7 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
 
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
 
@@ -119,7 +119,8 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('markRead', ({ conversationId }) => {
+  socket.on('markMessagesAsRead', ({ conversationId, userId }) => {
+    // Le avisamos AL MISMO USUARIO (socket) que actualice su navbar
     socket.emit('updateUnreadCounters');
   });
 

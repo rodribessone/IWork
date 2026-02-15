@@ -6,8 +6,10 @@ import {
   Layers, MapPin, Phone, Mail, AlertCircle, Loader2
 } from 'lucide-react';
 import toast from "react-hot-toast";
+import { useTranslation } from 'react-i18next';
 
 export default function EditPost() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
@@ -20,18 +22,18 @@ export default function EditPost() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-const res = await fetch(`${API_URL}/api/posts/${id}`);
-        if (!res.ok) throw new Error("Error al cargar el post");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${id}`);
+        if (!res.ok) throw new Error("Error loading post");
         const data = await res.json();
         setPost(data);
       } catch (err) {
-        setError("No se pudo cargar la información del anuncio.");
+        setError(t('common.error'));
       } finally {
         setLoading(false);
       }
     };
     fetchPost();
-  }, [id]);
+  }, [id, t]);
 
   const handleChange = (e) => {
     setPost({ ...post, [e.target.name]: e.target.value });
@@ -40,15 +42,15 @@ const res = await fetch(`${API_URL}/api/posts/${id}`);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!token) {
-      toast.error("Tu sesión ha expirado.");
+      toast.error(t('common.error'));
       return;
     }
 
     setSaving(true);
-    const loadingToast = toast.loading("Sincronizando cambios...");
+    const loadingToast = toast.loading(t('common.loading'));
 
     try {
-      const res = await fetch(`${API_URL}/api/posts/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -57,12 +59,12 @@ const res = await fetch(`${API_URL}/api/posts/${id}`);
         body: JSON.stringify(post),
       });
 
-      if (!res.ok) throw new Error("Error al actualizar");
+      if (!res.ok) throw new Error("Error updating");
 
-      toast.success("Publicación actualizada correctamente", { id: loadingToast });
+      toast.success(t('common.success'), { id: loadingToast });
       setTimeout(() => navigate("/profile"), 1500);
     } catch (err) {
-      toast.error("No tienes permisos o hubo un error de red", { id: loadingToast });
+      toast.error(t('common.error'), { id: loadingToast });
     } finally {
       setSaving(false);
     }
@@ -79,7 +81,7 @@ const res = await fetch(`${API_URL}/api/posts/${id}`);
       <AlertCircle className="text-red-500 mb-4" size={48} />
       <p className="text-zinc-800 font-bold text-xl">{error}</p>
       <button onClick={() => navigate(-1)} className="mt-4 text-amber-600 font-bold flex items-center gap-2">
-        <ArrowLeft size={18} /> Volver atrás
+        <ArrowLeft size={18} /> {t('common.back')}
       </button>
     </div>
   );
@@ -94,7 +96,7 @@ const res = await fetch(`${API_URL}/api/posts/${id}`);
           className="group mb-8 flex items-center gap-2 text-zinc-400 hover:text-zinc-950 transition-colors font-bold uppercase text-[10px] tracking-[0.2em]"
         >
           <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-          Volver al panel
+          {t('common.back')}
         </button>
 
         <div className="bg-white rounded-[2.5rem] shadow-xl shadow-zinc-200/50 border border-zinc-100 overflow-hidden">
@@ -103,8 +105,8 @@ const res = await fetch(`${API_URL}/api/posts/${id}`);
           <div className="bg-zinc-950 p-10 text-white relative">
             <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
             <div className="relative z-10">
-              <h1 className="text-4xl font-black tracking-tighter uppercase mb-2">Editar Anuncio</h1>
-              <p className="text-zinc-400 font-medium">Actualiza la información de tu servicio para atraer más clientes.</p>
+              <h1 className="text-4xl font-black tracking-tighter uppercase mb-2">{t('post.edit_title')}</h1>
+              <p className="text-zinc-400 font-medium">Update your service information to attract more clients.</p>
             </div>
           </div>
 
@@ -113,26 +115,26 @@ const res = await fetch(`${API_URL}/api/posts/${id}`);
 
               {/* Columna Izquierda: Info Principal */}
               <div className="space-y-6">
-                <h3 className="text-xs font-black text-amber-600 uppercase tracking-widest border-b border-zinc-100 pb-2">Información General</h3>
+                <h3 className="text-xs font-black text-amber-600 uppercase tracking-widest border-b border-zinc-100 pb-2">General Info</h3>
 
                 <div className="space-y-4">
                   <div>
                     <label className="flex items-center gap-2 text-[11px] font-black text-zinc-400 uppercase tracking-wider mb-2">
-                      <Type size={14} /> Título del anuncio
+                      <Type size={14} /> {t('post.title_label')}
                     </label>
                     <input
                       type="text"
                       name="title"
                       value={post.title || ""}
                       onChange={handleChange}
-                      placeholder="Ej: Gasfitería Profesional 24/7"
+                      placeholder="Ex: Professional Service"
                       className="w-full bg-zinc-50 border border-zinc-200 rounded-2xl px-4 py-3.5 focus:ring-2 focus:ring-amber-400 outline-none transition-all font-medium text-zinc-800"
                     />
                   </div>
 
                   <div>
                     <label className="flex items-center gap-2 text-[11px] font-black text-zinc-400 uppercase tracking-wider mb-2">
-                      <Layers size={14} /> Categoría / Oficio
+                      <Layers size={14} /> {t('post.category_label')}
                     </label>
                     <input
                       type="text"
@@ -145,7 +147,7 @@ const res = await fetch(`${API_URL}/api/posts/${id}`);
 
                   <div>
                     <label className="flex items-center gap-2 text-[11px] font-black text-zinc-400 uppercase tracking-wider mb-2">
-                      <AlignLeft size={14} /> Descripción del servicio
+                      <AlignLeft size={14} /> {t('post.desc_label')}
                     </label>
                     <textarea
                       name="description"
@@ -160,12 +162,12 @@ const res = await fetch(`${API_URL}/api/posts/${id}`);
 
               {/* Columna Derecha: Contacto y Ubicación */}
               <div className="space-y-6">
-                <h3 className="text-xs font-black text-amber-600 uppercase tracking-widest border-b border-zinc-100 pb-2">Detalles de Contacto</h3>
+                <h3 className="text-xs font-black text-amber-600 uppercase tracking-widest border-b border-zinc-100 pb-2">{t('profile.contact')}</h3>
 
                 <div className="space-y-4">
                   <div>
                     <label className="flex items-center gap-2 text-[11px] font-black text-zinc-400 uppercase tracking-wider mb-2">
-                      <MapPin size={14} /> Ubicación
+                      <MapPin size={14} /> {t('post.location_label')}
                     </label>
                     <input
                       type="text"
@@ -178,7 +180,7 @@ const res = await fetch(`${API_URL}/api/posts/${id}`);
 
                   <div>
                     <label className="flex items-center gap-2 text-[11px] font-black text-zinc-400 uppercase tracking-wider mb-2">
-                      <Phone size={14} /> WhatsApp (Sin +)
+                      <Phone size={14} /> WhatsApp
                     </label>
                     <input
                       type="text"
@@ -191,7 +193,7 @@ const res = await fetch(`${API_URL}/api/posts/${id}`);
 
                   <div>
                     <label className="flex items-center gap-2 text-[11px] font-black text-zinc-400 uppercase tracking-wider mb-2">
-                      <Mail size={14} /> Email Público
+                      <Mail size={14} /> {t('auth.email')}
                     </label>
                     <input
                       type="email"
@@ -207,7 +209,7 @@ const res = await fetch(`${API_URL}/api/posts/${id}`);
                 <div className="p-4 bg-amber-50 rounded-2xl border border-amber-100 flex gap-3 mt-6">
                   <AlertCircle size={20} className="text-amber-600 shrink-0" />
                   <p className="text-[11px] text-amber-800 leading-relaxed">
-                    Mantener tu información actualizada mejora tu posicionamiento en el directorio y genera más confianza en los clientes.
+                    Updating your info helps you get more clients.
                   </p>
                 </div>
               </div>
@@ -220,7 +222,7 @@ const res = await fetch(`${API_URL}/api/posts/${id}`);
                 onClick={() => navigate(-1)}
                 className="px-8 py-4 rounded-2xl font-black uppercase text-xs tracking-widest text-zinc-400 hover:text-zinc-950 transition-all"
               >
-                Descartar cambios
+                {t('common.cancel')}
               </button>
               <button
                 type="submit"
@@ -232,7 +234,7 @@ const res = await fetch(`${API_URL}/api/posts/${id}`);
                 ) : (
                   <Save size={18} />
                 )}
-                Sincronizar Publicación
+                {t('post.update')}
               </button>
             </div>
           </form>

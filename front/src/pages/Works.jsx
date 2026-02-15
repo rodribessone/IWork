@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { Search, MapPin, Tag, Filter, X, ArrowRight, Briefcase, Info, AlertCircle } from 'lucide-react';
 import ApplyButton from "../components/ApplyButton";
 import { useAuthContext } from '../Context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
-const PostCard = ({ post, onClick }) => (
+const PostCard = ({ post, onClick, t }) => (
   <div
     onClick={() => onClick(post)}
     className="group bg-white rounded-3xl shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 cursor-pointer border border-zinc-100 flex flex-col h-full overflow-hidden"
@@ -36,7 +37,7 @@ const PostCard = ({ post, onClick }) => (
           {post.location}
         </span>
         <span className="text-amber-500 text-xs font-black uppercase tracking-widest flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-          Detalles <ArrowRight size={14} />
+          {t('works.details')} <ArrowRight size={14} />
         </span>
       </div>
     </div>
@@ -44,6 +45,7 @@ const PostCard = ({ post, onClick }) => (
 );
 
 export default function Works() {
+  const { t } = useTranslation();
   const [posts, setPosts] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
@@ -86,7 +88,7 @@ export default function Works() {
   const totalPages = Math.ceil(filteredPosts.length / itemsPerPage);
 
   const handleApplySuccess = (postId, userId) => {
-    const newApplicant = { user: userId, status: 'pending' }; // 👈 Estructura de objeto
+    const newApplicant = { user: userId, status: 'pending' };
 
     setPosts(prev => prev.map(p =>
       p._id === postId
@@ -108,12 +110,12 @@ export default function Works() {
       {/* Header con Contador */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
         <div>
-          <h1 className="text-5xl font-black text-zinc-950 tracking-tighter mb-3">TRABAJOS DISPONIBLES</h1>
-          <p className="text-zinc-500 text-lg">Encuentra proyectos que se ajusten a tus habilidades.</p>
+          <h1 className="text-5xl font-black text-zinc-950 tracking-tighter mb-3">{t('works.title')}</h1>
+          <p className="text-zinc-500 text-lg">{t('home.hero_subtitle')}</p>
         </div>
         <div className="bg-white px-6 py-3 rounded-2xl border border-zinc-200 shadow-sm self-start">
-          <span className="text-zinc-400 text-sm font-medium italic">Mostrando </span>
-          <span className="text-zinc-900 font-black">{filteredPosts.length} resultados</span>
+          <span className="text-zinc-400 text-sm font-medium italic">Showing </span>
+          <span className="text-zinc-900 font-black">{filteredPosts.length} results</span>
         </div>
       </div>
 
@@ -124,7 +126,7 @@ export default function Works() {
             <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-amber-500 transition-colors" size={20} />
             <input
               type="text"
-              placeholder="¿Qué buscas?"
+              placeholder={t('common.search')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-14 pr-6 py-5 bg-transparent rounded-2xl outline-none text-zinc-800 placeholder:text-zinc-400 font-medium"
@@ -137,7 +139,7 @@ export default function Works() {
               onChange={(e) => setCategory(e.target.value)}
               className="w-full pl-14 pr-6 py-5 bg-transparent rounded-2xl outline-none appearance-none cursor-pointer text-zinc-800 font-medium"
             >
-              <option value="">Categorías</option>
+              <option value="">{t('works.filter_category')}</option>
               {["Carpintería", "Pintura", "Jardinería", "Mudanza", "Electricidad", "Limpieza"].map(cat => (
                 <option key={cat} value={cat.toLowerCase()}>{cat}</option>
               ))}
@@ -147,7 +149,7 @@ export default function Works() {
             <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-amber-500 transition-colors" size={20} />
             <input
               type="text"
-              placeholder="Ubicación"
+              placeholder={t('works.filter_location')}
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               className="w-full pl-14 pr-6 py-5 bg-transparent rounded-2xl outline-none text-zinc-800 placeholder:text-zinc-400 font-medium"
@@ -158,7 +160,7 @@ export default function Works() {
               onClick={() => { setSearch(""); setCategory(""); setLocation(""); }}
               className="w-full h-full bg-zinc-900 text-white rounded-2xl font-bold hover:bg-zinc-800 transition-all flex items-center justify-center gap-2"
             >
-              <Filter size={18} /> Limpiar
+              <Filter size={18} /> {t('common.filter')}
             </button>
           </div>
         </div>
@@ -178,15 +180,15 @@ export default function Works() {
       ) : filteredPosts.length === 0 ? (
         <div className="text-center py-32 bg-white rounded-[3rem] border-2 border-dashed border-zinc-200">
           <AlertCircle size={48} className="mx-auto text-zinc-300 mb-6" />
-          <h3 className="text-2xl font-bold text-zinc-900 mb-2">No hay resultados</h3>
-          <p className="text-zinc-400 mb-8">Intenta ajustar los filtros de búsqueda.</p>
-          <button onClick={() => { setSearch(""); setCategory(""); setLocation(""); }} className="text-amber-600 font-black uppercase tracking-widest text-sm hover:text-amber-700 transition-colors">Resetear filtros</button>
+          <h3 className="text-2xl font-bold text-zinc-900 mb-2">{t('works.no_jobs')}</h3>
+          <p className="text-zinc-400 mb-8">Try adjusting your search.</p>
+          <button onClick={() => { setSearch(""); setCategory(""); setLocation(""); }} className="text-amber-600 font-black uppercase tracking-widest text-sm hover:text-amber-700 transition-colors">{t('common.cancel')}</button>
         </div>
       ) : (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {currentPosts.map((post) => (
-              <PostCard key={post._id} post={post} onClick={setSelectedPost} />
+              <PostCard key={post._id} post={post} onClick={setSelectedPost} t={t} />
             ))}
           </div>
 
@@ -198,7 +200,7 @@ export default function Works() {
                 onClick={() => setCurrentPage(prev => prev - 1)}
                 className="px-6 py-3 rounded-2xl font-bold hover:bg-white border border-zinc-200 disabled:opacity-20 transition-all flex items-center gap-2"
               >
-                ← Anterior
+                {t('common.back')}
               </button>
               <div className="flex gap-2">
                 {[...Array(totalPages)].map((_, i) => (
@@ -216,7 +218,7 @@ export default function Works() {
                 onClick={() => setCurrentPage(prev => prev + 1)}
                 className="px-6 py-3 rounded-2xl font-bold hover:bg-white border border-zinc-200 disabled:opacity-20 transition-all flex items-center gap-2"
               >
-                Siguiente →
+                {t('common.next')}
               </button>
             </div>
           )}
@@ -254,25 +256,25 @@ export default function Works() {
                     {selectedPost.user?.name?.charAt(0).toUpperCase() || "?"}
                   </div>
                   <div>
-                    <p className="text-xs font-black text-zinc-400 uppercase tracking-widest mb-0.5">Publicado por</p>
+                    <p className="text-xs font-black text-zinc-400 uppercase tracking-widest mb-0.5">{t('works.posted_by')}</p>
                     <p className="font-bold text-zinc-900 text-lg">{selectedPost.user?.name || "Usuario de la plataforma"}</p>
                   </div>
                 </div>
 
                 <div className="mb-10">
                   <h4 className="text-xs font-black text-zinc-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                    <Info size={14} /> Descripción del trabajo
+                    <Info size={14} /> {t('post.desc_label')}
                   </h4>
                   <p className="text-zinc-600 leading-relaxed text-lg">{selectedPost.description}</p>
                 </div>
 
                 <div className="flex items-center gap-6 mb-12">
                   <div className="flex flex-col">
-                    <span className="text-[10px] font-black text-zinc-400 uppercase">Ubicación</span>
+                    <span className="text-[10px] font-black text-zinc-400 uppercase">{t('works.filter_location')}</span>
                     <span className="font-bold text-zinc-900 flex items-center gap-1.5"><MapPin size={16} className="text-amber-500" /> {selectedPost.location}</span>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[10px] font-black text-zinc-400 uppercase">Habilidades</span>
+                    <span className="text-[10px] font-black text-zinc-400 uppercase">{t('people.skills')}</span>
                     <span className="font-bold text-zinc-900 flex items-center gap-1.5"><Briefcase size={16} className="text-amber-500" /> Profesionales</span>
                   </div>
                 </div>
@@ -280,7 +282,7 @@ export default function Works() {
                 <div className="space-y-4 pt-6">
                   {!user && (
                     <Link to="/login" className="w-full py-5 bg-amber-400 text-black rounded-[2rem] text-center font-black uppercase tracking-widest hover:bg-amber-300 transition-all block shadow-xl shadow-amber-400/20">
-                      Inicia sesión para aplicar
+                      {t('auth.login_button')}
                     </Link>
                   )}
 
@@ -304,7 +306,7 @@ export default function Works() {
                     to={`/post/${selectedPost._id}`}
                     className="w-full py-5 bg-zinc-100 text-zinc-900 rounded-[2rem] text-center font-black uppercase tracking-widest hover:bg-zinc-200 transition-all block"
                   >
-                    Ver hilo completo
+                    {t('works.details')}
                   </Link>
                 </div>
               </div>

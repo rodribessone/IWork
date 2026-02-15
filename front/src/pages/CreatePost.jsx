@@ -2,10 +2,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../Context/AuthContext";
-import { Camera, MapPin, Tag, MessageSquare, Mail, Type, Image as ImageIcon, X } from 'lucide-react';
+import { Camera, MapPin, Tag, MessageSquare, Mail, Type, X } from 'lucide-react';
 import toast from "react-hot-toast";
+import { useTranslation } from 'react-i18next';
 
 export default function CreatePost() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { user, token } = useAuthContext();
     const fileInputRef = useRef(null);
@@ -33,7 +35,7 @@ export default function CreatePost() {
         const file = e.target.files[0];
         if (file) {
             if (file.size > 5 * 1024 * 1024) {
-                return toast.error("La imagen es muy pesada (máx 5MB)");
+                return toast.error("Max 5MB");
             }
             setImage(file);
             setPreview(URL.createObjectURL(file));
@@ -52,11 +54,11 @@ export default function CreatePost() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!token) return toast.error("Debes iniciar sesión");
-        if (!image) return toast.error("Por favor, sube una imagen para tu anuncio");
+        if (!token) return toast.error(t('common.error'));
+        if (!image) return toast.error(t('common.required'));
 
         setLoading(true);
-        const loadingToast = toast.loading("Publicando tu anuncio...");
+        const loadingToast = toast.loading(t('common.loading'));
 
         try {
             const dataToSend = new FormData();
@@ -74,9 +76,9 @@ export default function CreatePost() {
             });
 
             const data = await res.json();
-            if (!res.ok) throw new Error(data.message || "Error al crear el post");
+            if (!res.ok) throw new Error(data.message || "Error");
 
-            toast.success("¡Anuncio publicado con éxito!", { id: loadingToast });
+            toast.success(t('common.success'), { id: loadingToast });
             navigate(`/ownerPostView/${data.post._id}`);
 
         } catch (err) {
@@ -93,9 +95,9 @@ export default function CreatePost() {
                     <div className="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                         <Mail size={32} />
                     </div>
-                    <h2 className="text-xl font-black text-zinc-900 uppercase tracking-tighter mb-2">Acceso Requerido</h2>
-                    <p className="text-zinc-500 text-sm font-medium mb-6">Debes iniciar sesión para publicar y gestionar tus servicios profesionales.</p>
-                    <button onClick={() => navigate("/login")} className="w-full bg-zinc-900 text-amber-400 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-zinc-800 transition-all">Ir al Login</button>
+                    <h2 className="text-xl font-black text-zinc-900 uppercase tracking-tighter mb-2">{t('auth.login_button')}</h2>
+                    <p className="text-zinc-500 text-sm font-medium mb-6">Required access.</p>
+                    <button onClick={() => navigate("/login")} className="w-full bg-zinc-900 text-amber-400 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-zinc-800 transition-all">{t('auth.login_button')}</button>
                 </div>
             </div>
         );
@@ -104,10 +106,10 @@ export default function CreatePost() {
     return (
         <div className="max-w-5xl mx-auto px-4 py-12">
             <div className="mb-12">
-                <h1 className="text-4xl md:text-5xl font-black text-zinc-900 tracking-tighter uppercase italic">Crear Nuevo Anuncio</h1>
+                <h1 className="text-4xl md:text-5xl font-black text-zinc-900 tracking-tighter uppercase italic">{t('post.create_title')}</h1>
                 <p className="text-zinc-500 font-bold text-sm mt-2 uppercase tracking-widest flex items-center gap-2">
                     <span className="w-8 h-[2px] bg-amber-400"></span>
-                    Impulsa tu trabajo hoy mismo
+                    Boost your work today
                 </p>
             </div>
 
@@ -115,7 +117,7 @@ export default function CreatePost() {
 
                 {/* COLUMNA IZQUIERDA: CARGA DE IMAGEN */}
                 <div className="lg:col-span-1">
-                    <label className="block text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-3 ml-2">Imagen de Portada</label>
+                    <label className="block text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-3 ml-2">Cover Image</label>
                     <div
                         onClick={() => !preview && fileInputRef.current.click()}
                         className={`relative aspect-[4/5] rounded-[2.5rem] border-4 border-dashed transition-all overflow-hidden flex flex-col items-center justify-center cursor-pointer
@@ -137,8 +139,8 @@ export default function CreatePost() {
                                 <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mx-auto mb-4 text-zinc-400">
                                     <Camera size={32} />
                                 </div>
-                                <p className="text-zinc-900 font-black text-[10px] uppercase tracking-widest">Click para subir</p>
-                                <p className="text-zinc-400 text-[9px] font-bold mt-1 uppercase">JPG, PNG (Máx 5MB)</p>
+                                <p className="text-zinc-900 font-black text-[10px] uppercase tracking-widest">Click to upload</p>
+                                <p className="text-zinc-400 text-[9px] font-bold mt-1 uppercase">JPG, PNG (Max 5MB)</p>
                             </div>
                         )}
                     </div>
@@ -152,13 +154,13 @@ export default function CreatePost() {
                         {/* Título */}
                         <div className="relative">
                             <label className="flex items-center gap-2 text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-2 ml-2">
-                                <Type size={14} className="text-amber-500" /> Título Profesional
+                                <Type size={14} className="text-amber-500" /> {t('post.title_label')}
                             </label>
                             <input
                                 type="text"
                                 name="title"
                                 required
-                                placeholder="Ej: Servicio de Electricidad Matriculado"
+                                placeholder="Ex: Professional Electrician Service"
                                 className="w-full bg-zinc-50 border-2 border-zinc-50 rounded-2xl px-6 py-4 focus:border-amber-400 focus:bg-white outline-none transition-all font-bold text-zinc-700 placeholder:text-zinc-300"
                                 onChange={handleChange}
                             />
@@ -168,7 +170,7 @@ export default function CreatePost() {
                             {/* Categoría */}
                             <div className="relative">
                                 <label className="flex items-center gap-2 text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-2 ml-2">
-                                    <Tag size={14} className="text-amber-500" /> Categoría
+                                    <Tag size={14} className="text-amber-500" /> {t('post.category_label')}
                                 </label>
                                 <select
                                     name="category"
@@ -176,7 +178,7 @@ export default function CreatePost() {
                                     className="w-full bg-zinc-50 border-2 border-zinc-50 rounded-2xl px-6 py-4 focus:border-amber-400 focus:bg-white outline-none transition-all font-bold text-zinc-700 appearance-none cursor-pointer"
                                     onChange={handleChange}
                                 >
-                                    <option value="">Seleccionar...</option>
+                                    <option value="">Select...</option>
                                     <option value="carpintería">Carpintería</option>
                                     <option value="pintura">Pintura</option>
                                     <option value="jardinería">Jardinería</option>
@@ -189,13 +191,13 @@ export default function CreatePost() {
                             {/* Ubicación */}
                             <div className="relative">
                                 <label className="flex items-center gap-2 text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-2 ml-2">
-                                    <MapPin size={14} className="text-amber-500" /> Ubicación
+                                    <MapPin size={14} className="text-amber-500" /> {t('post.location_label')}
                                 </label>
                                 <input
                                     type="text"
                                     name="location"
                                     required
-                                    placeholder="Ej: Buenos Aires, AR"
+                                    placeholder="Ex: Buenos Aires, AR"
                                     className="w-full bg-zinc-50 border-2 border-zinc-50 rounded-2xl px-6 py-4 focus:border-amber-400 focus:bg-white outline-none transition-all font-bold text-zinc-700 placeholder:text-zinc-300"
                                     onChange={handleChange}
                                 />
@@ -205,13 +207,13 @@ export default function CreatePost() {
                         {/* Descripción */}
                         <div className="relative">
                             <label className="flex items-center gap-2 text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-2 ml-2">
-                                <MessageSquare size={14} className="text-amber-500" /> Descripción del Servicio
+                                <MessageSquare size={14} className="text-amber-500" /> {t('post.desc_label')}
                             </label>
                             <textarea
                                 name="description"
                                 required
                                 rows="4"
-                                placeholder="Explica detalladamente qué servicios ofreces..."
+                                placeholder="..."
                                 className="w-full bg-zinc-50 border-2 border-zinc-50 rounded-2xl px-6 py-4 focus:border-amber-400 focus:bg-white outline-none transition-all font-bold text-zinc-700 placeholder:text-zinc-300 resize-none"
                                 onChange={handleChange}
                             ></textarea>
@@ -232,7 +234,7 @@ export default function CreatePost() {
 
                             {/* Email */}
                             <div className="relative">
-                                <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-2 ml-2 block">Email Público</label>
+                                <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-2 ml-2 block">{t('auth.email')}</label>
                                 <input
                                     type="email"
                                     name="email"
@@ -253,7 +255,7 @@ export default function CreatePost() {
                                     : "bg-amber-400 text-zinc-900 hover:bg-zinc-900 hover:text-amber-400 shadow-amber-200/50"
                                 }`}
                         >
-                            {loading ? "Procesando..." : "Publicar Anuncio Profesional"}
+                            {loading ? t('common.loading') : t('post.publish')}
                         </button>
                     </div>
                 </div>
