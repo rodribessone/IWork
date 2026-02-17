@@ -14,6 +14,7 @@
     "success": "Succès",
     "required": "Requis",
     "hide": "Masquer",
+    "select": "Sélectionner...",
     "status": {
       "pending": "En attente",
       "accepted": "Accepté",
@@ -36,7 +37,8 @@
   },
   "home": {
     "badge": "Le plus grand réseau professionnel des métiers",
-    "hero_title": "Trouvez le professionnel idéal pour votre projet",
+    "hero_title_1": "Où le talent",
+    "hero_title_2": "trouve l'opportunité",
     "hero_subtitle": "Connectez-vous avec des travailleurs qualifiés de votre région rapidement et en toute sécurité.",
     "cta_find_work": "Trouver du Travail",
     "cta_hire": "Recruter des Talents",
@@ -62,8 +64,20 @@
     "have_account": "Vous avez déjà un compte ?",
     "login_button": "Se connecter",
     "register_button": "Créer un compte",
-    "register_title": "Rejoignez iWork",
+    "register_title": "Rejoignez IWork",
     "register_subtitle": "Commencez votre voyage aujourd'hui"
+  },
+  "professions": {
+    "electrician": "Électricien",
+    "plumber": "Plombier / Gazier",
+    "carpenter": "Charpentier",
+    "gardener": "Jardinier",
+    "mason": "Maçon",
+    "painter": "Peintre",
+    "cleaner": "Nettoyage",
+    "mover": "Déménagement",
+    "tech": "Technicien PC",
+    "other": "Autres"
   },
   "works": {
     "title": "Emplois Disponibles",

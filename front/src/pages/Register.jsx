@@ -107,7 +107,7 @@ export default function Register() {
   return (
     <div className="max-w-lg mx-auto px-4 py-12">
       <button onClick={() => setStep(1)} className="mb-6 text-sm text-gray-500 hover:text-black">
-        ⬅ {t('common.back')}
+        ← {t('common.back')}
       </button>
 
       <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
@@ -143,17 +143,12 @@ export default function Register() {
                   required
                   className="w-full px-4 py-2 border rounded-xl bg-white outline-none focus:ring-2 focus:ring-blue-400"
                 >
-                  <option value="">Selecciona...</option>
-                  <option value="Electricista">Electricista</option>
-                  <option value="Plomero">Plomero / Gasista</option>
-                  <option value="Carpintero">Carpintero</option>
-                  <option value="Jardinero">Jardinero</option>
-                  <option value="Albañil">Albañil</option>
-                  <option value="Pintor">Pintor</option>
-                  <option value="Limpieza">Limpieza</option>
-                  <option value="Mudanzas">Mudanzas</option>
-                  <option value="Técnico PC">Técnico PC</option>
-                  <option value="Otros">Otros</option>
+                  <option value="">{t('common.select') || "Selecciona..."}</option>
+                  {['electrician', 'plumber', 'carpenter', 'gardener', 'mason', 'painter', 'cleaner', 'mover', 'tech', 'other'].map(key => (
+                    <option key={key} value={key}>
+                      {t(`professions.${key}`)}
+                    </option>
+                  ))}
                 </select>
               </div>
 

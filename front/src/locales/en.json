@@ -14,6 +14,7 @@
     "success": "Success",
     "required": "Required",
     "hide": "Hide",
+    "select": "Select...",
     "status": {
       "pending": "Pending",
       "accepted": "Accepted",
@@ -36,7 +37,8 @@
   },
   "home": {
     "badge": "The largest professional trade network",
-    "hero_title": "Find the perfect professional for your project",
+    "hero_title_1": "Where talent",
+    "hero_title_2": "finds opportunity",
     "hero_subtitle": "Connect with skilled workers in your area quickly and safely.",
     "cta_find_work": "Find Work",
     "cta_hire": "Hire Talent",
@@ -62,8 +64,20 @@
     "have_account": "Already have an account?",
     "login_button": "Log In",
     "register_button": "Create Account",
-    "register_title": "Join iWork",
+    "register_title": "Join IWork",
     "register_subtitle": "Start your journey today"
+  },
+  "professions": {
+    "electrician": "Electrician",
+    "plumber": "Plumber",
+    "carpenter": "Carpenter",
+    "gardener": "Gardener",
+    "mason": "Mason / Bricklayer",
+    "painter": "Painter",
+    "cleaner": "Cleaning Service",
+    "mover": "Mover",
+    "tech": "IT Technician",
+    "other": "Other"
   },
   "works": {
     "title": "Available Jobs",

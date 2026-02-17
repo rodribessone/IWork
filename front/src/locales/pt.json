@@ -14,6 +14,7 @@
     "success": "Sucesso",
     "required": "Obrigatório",
     "hide": "Ocultar",
+    "select": "Selecionar...",
     "status": {
       "pending": "Pendente",
       "accepted": "Aceito",
@@ -36,7 +37,8 @@
   },
   "home": {
     "badge": "A maior rede profissional de ofícios",
-    "hero_title": "Encontre o profissional perfeito para o seu projeto",
+    "hero_title_1": "Onde o talento",
+    "hero_title_2": "encontra oportunidade",
     "hero_subtitle": "Conecte-se com trabalhadores qualificados na sua área de forma rápida e segura.",
     "cta_find_work": "Buscar Trabalho",
     "cta_hire": "Contratar Talento",
@@ -62,8 +64,20 @@
     "have_account": "Já tem uma conta?",
     "login_button": "Entrar",
     "register_button": "Criar Conta",
-    "register_title": "Junte-se ao iWork",
+    "register_title": "Junte-se ao IWork",
     "register_subtitle": "Comece sua jornada hoje"
+  },
+  "professions": {
+    "electrician": "Eletricista",
+    "plumber": "Encanador / Gasista",
+    "carpenter": "Carpinteiro",
+    "gardener": "Jardineiro",
+    "mason": "Pedreiro",
+    "painter": "Pintor",
+    "cleaner": "Limpeza",
+    "mover": "Mudanças",
+    "tech": "Técnico PC",
+    "other": "Outros"
   },
   "works": {
     "title": "Vagas Disponíveis",

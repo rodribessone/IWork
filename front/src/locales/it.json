@@ -14,6 +14,7 @@
     "success": "Successo",
     "required": "Obbligatorio",
     "hide": "Nascondi",
+    "select": "Seleziona...",
     "status": {
       "pending": "In attesa",
       "accepted": "Accettato",
@@ -36,7 +37,8 @@
   },
   "home": {
     "badge": "La più grande rete professionale di mestieri",
-    "hero_title": "Trova il professionista perfetto per il tuo progetto",
+    "hero_title_1": "Dove il talento",
+    "hero_title_2": "trova opportunità",
     "hero_subtitle": "Connettiti con lavoratori qualificati nella tua zona in modo rapido e sicuro.",
     "cta_find_work": "Trova Lavoro",
     "cta_hire": "Assumi Talenti",
@@ -62,8 +64,20 @@
     "have_account": "Hai già un account?",
     "login_button": "Accedi",
     "register_button": "Crea Account",
-    "register_title": "Unisciti a iWork",
+    "register_title": "Unisciti a IWork",
     "register_subtitle": "Inizia il tuo viaggio oggi"
+  },
+  "professions": {
+    "electrician": "Elettricista",
+    "plumber": "Idraulico / Gasista",
+    "carpenter": "Falegname",
+    "gardener": "Giardiniere",
+    "mason": "Muratore",
+    "painter": "Pittore",
+    "cleaner": "Pulizie",
+    "mover": "Traslochi",
+    "tech": "Tecnico PC",
+    "other": "Altro"
   },
   "works": {
     "title": "Lavori Disponibili",

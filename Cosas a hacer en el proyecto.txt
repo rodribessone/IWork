@@ -1,1 +1,34 @@
 Cosas a hacer en el proyecto
+Flecha para atrás ←
+- Agregar Google Analytics
+- Me dice Gemini de agregar el dato del ABN o de la WhiteCard (no se si es bueno pero a tener en cuenta)
+- Que se pueda cambiar el idioma. 
+   Los que ya están: 
+Nav.jsx		V
+Home.jsx	V
+Login.jsx	V
+Register.jsx	V
+Works.jsx	V
+People.jsx
+CreatePost.jsx
+EditPost.jsx
+NotFound.jsx
+Profile.jsx	V
+UserProfile.jsx
+
+Problemas que vi en cada uno y solucionar después.
+Register.jsx: el iWork esta en minúscula, seria IWork, y para volver atrás hay una flechita fea ahora
+Works.jsx: el showing results esta en ingles nomas, y la flechita para atrás decía anterior, no volver, revisar eso y tenia unas flechitas lindas
+People.jsx: mismo tema del showing, 
+CreatePost.jsx: Boost your job today, sigue en ingles siempre, el click para subir foto también y cover image, y acomodar el tema de la categoría que hay que cambiarlo desde otro lado me dijo Triu.
+EditPost.jsx: Update your service information to attract more clients. queda siempre en ingles
+Profile.jsx: El botón de editar perfil esta raro, el titulo del portfolio, las credenciales de profile.tools, profile.insegurance
+LeaveReview.jsx: Cuando ya se ha enviado la review, aparece un cartel en español que dice que ya se ha enviado.
+
+
+Triu ya reviso:
+Home.jsx
+Nav.jsx
+Login.jsx
+Register.jsx
+Profile.jsx

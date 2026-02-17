@@ -17,12 +17,12 @@ export default function Home() {
 
         <div className="relative max-w-7xl mx-auto px-6 text-center z-10">
           <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-amber-400 uppercase bg-amber-400/10 border border-amber-400/20 rounded-full">
-            La red profesional de oficios más grande
+            {t('home.badge') || "IWORK PLATFORM"}
           </span>
           <h1 className="text-5xl md:text-8xl font-black text-white mb-8 tracking-tighter leading-none">
-            Donde el talento <br />
+            {t('home.hero_title_1')} <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-200">
-              encuentra oportunidad
+              {t('home.hero_title_2')}
             </span>
           </h1>
           <p className="text-lg md:text-xl text-zinc-400 mb-12 max-w-2xl mx-auto leading-relaxed">
@@ -50,19 +50,19 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 pt-10 border-t border-zinc-800/50 text-zinc-500">
             <div>
               <p className="text-3xl font-bold text-white">+10k</p>
-              <p className="text-sm uppercase tracking-widest font-medium">Usuarios</p>
+              <p className="text-sm uppercase tracking-widest font-medium">{t('home.stats_users') || "Users"}</p>
             </div>
             <div>
               <p className="text-3xl font-bold text-white">5k</p>
-              <p className="text-sm uppercase tracking-widest font-medium">Proyectos</p>
+              <p className="text-sm uppercase tracking-widest font-medium">{t('home.stats_projects') || "Projects"}</p>
             </div>
             <div>
               <p className="text-3xl font-bold text-white">100%</p>
-              <p className="text-sm uppercase tracking-widest font-medium">Seguro</p>
+              <p className="text-sm uppercase tracking-widest font-medium">{t('home.stats_secure') || "Secure"}</p>
             </div>
             <div>
               <p className="text-3xl font-bold text-white">24/7</p>
-              <p className="text-sm uppercase tracking-widest font-medium">Soporte</p>
+              <p className="text-sm uppercase tracking-widest font-medium">{t('home.stats_support') || "Support"}</p>
             </div>
           </div>
         </div>
@@ -73,9 +73,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
             <div className="max-w-xl">
-              <h2 className="text-4xl font-black text-zinc-900 mb-4 tracking-tight uppercase">{t('home.how_it_works')}</h2>
+              <h2 className="text-4xl font-black text-zinc-900 mb-4 tracking-tight uppercase">{t('home.how_it_works') || "How it Works"}</h2>
               <p className="text-zinc-500 text-lg leading-relaxed">
-                {t('home.how_it_works_sub')}
+                {t('home.how_it_works_sub') || "Connect, collaborate, and get work done in three simple steps."}
               </p>
             </div>
             <div className="flex gap-2">
@@ -94,15 +94,15 @@ export default function Home() {
               <div className="w-14 h-14 bg-amber-400 flex items-center justify-center rounded-2xl mb-8 group-hover:scale-110 transition-transform">
                 <Briefcase size={28} className="text-black" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-zinc-900">{t('home.card_work_title')}</h3>
+              <h3 className="text-2xl font-bold mb-4 text-zinc-900">{t('home.card_work_title') || "Find Work"}</h3>
               <p className="text-zinc-500 mb-8 text-lg leading-relaxed">
-                {t('home.card_work_desc')}
+                {t('home.card_work_desc') || "Browse thousands of job opportunities. Filter by your skills and apply in seconds."}
               </p>
               <Link
                 to="/works"
                 className="inline-flex items-center gap-2 font-bold text-amber-600 hover:text-amber-700 transition-colors"
               >
-                {t('home.view_jobs')} <ArrowRight size={18} />
+                {t('home.view_jobs') || "View Jobs"} <ArrowRight size={18} />
               </Link>
             </div>
 
@@ -114,15 +114,15 @@ export default function Home() {
               <div className="w-14 h-14 bg-zinc-900 flex items-center justify-center rounded-2xl mb-8 group-hover:scale-110 transition-transform">
                 <Search size={28} className="text-white" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-zinc-900">{t('home.card_hire_title')}</h3>
+              <h3 className="text-2xl font-bold mb-4 text-zinc-900">{t('home.card_hire_title') || "Hire Talent"}</h3>
               <p className="text-zinc-500 mb-8 text-lg leading-relaxed">
-                {t('home.card_hire_desc')}
+                {t('home.card_hire_desc') || "Connect with skilled professionals. Review portfolios and hire the best."}
               </p>
               <Link
                 to="/people"
                 className="inline-flex items-center gap-2 font-bold text-zinc-900 hover:text-amber-600 transition-colors"
               >
-                {t('home.find_expert')} <ArrowRight size={18} />
+                {t('home.find_expert') || "Find Expert"} <ArrowRight size={18} />
               </Link>
             </div>
           </div>

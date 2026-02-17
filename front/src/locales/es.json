@@ -14,6 +14,7 @@
         "success": "Éxito",
         "required": "Requerido",
         "hide": "Ocultar",
+        "select": "Seleccionar...",
         "status": {
             "pending": "Pendiente",
             "accepted": "Aceptado",
@@ -36,7 +37,8 @@
     },
     "home": {
         "badge": "La red profesional de oficios más grande",
-        "hero_title": "Encuentra al profesional perfecto para tu proyecto",
+        "hero_title_1": "Donde el talento",
+        "hero_title_2": "encuentra oportunidad",
         "hero_subtitle": "Conecta con trabajadores calificados en tu zona de forma rápida y segura.",
         "cta_find_work": "Buscar Trabajo",
         "cta_hire": "Contratar Talento",
@@ -62,8 +64,20 @@
         "have_account": "¿Ya tienes una cuenta?",
         "login_button": "Iniciar Sesión",
         "register_button": "Crear Cuenta",
-        "register_title": "Únete a iWork",
+        "register_title": "Únete a IWork",
         "register_subtitle": "Comienza tu viaje hoy"
+    },
+    "professions": {
+        "electrician": "Electricista",
+        "plumber": "Plomero / Gasista",
+        "carpenter": "Carpintero",
+        "gardener": "Jardinero",
+        "mason": "Albañil",
+        "painter": "Pintor",
+        "cleaner": "Limpieza",
+        "mover": "Mudanzas",
+        "tech": "Técnico PC",
+        "other": "Otros"
     },
     "works": {
         "title": "Trabajos Disponibles",
