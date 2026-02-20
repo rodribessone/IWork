@@ -127,7 +127,7 @@ export default function ApplyButton({ postId, user, token, hasApplied, onApplySu
                         {cvFile ? (
                             <>
                                 <FileText className="text-amber-600" size={32} />
-                                <span className="text-zinc-800 font-bold text-xs truncate max-w-[200px]">
+                                <span className="text-zinc-800 font-bold text-xs truncate max-w-[140px] sm:max-w-[200px]">
                                     {cvFile.name}
                                 </span>
                                 <span className="text-amber-600 text-[10px] font-black uppercase">

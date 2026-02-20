@@ -10,11 +10,12 @@
     "back": "Back",
     "next": "Next",
     "send": "Send",
-    "error": "Error",
-    "success": "Success",
+    "error": "An error occurred",
+    "success": "Saved successfully",
     "required": "Required",
     "hide": "Hide",
     "select": "Select...",
+    "contact": "Contact",
     "status": {
       "pending": "Pending",
       "accepted": "Accepted",
@@ -89,6 +90,13 @@
     "salary": "Budget/Salary",
     "details": "View Details"
   },
+  "people": {
+    "title": "Find Professionals",
+    "skills": "Skills",
+    "view_profile": "View Profile",
+    "no_people": "No professionals found.",
+    "profession": "Profession"
+  },
   "profile": {
     "loading_panel": "Loading Dashboard...",
     "edit_profile": "Edit Profile",
@@ -105,6 +113,7 @@
     "bio_title": "Professional Bio",
     "bio_placeholder": "Describe your experience...",
     "phone_label": "Contact Phone",
+    "contact": "Contact & Location",
     "no_bio": "No bio written.",
     "add_photos": "Add Photos",
     "active_posts": "My Active Ads",
@@ -116,7 +125,17 @@
     "post_deleted": "Ad deleted",
     "completed_jobs": "Completed Jobs",
     "member_since": "Member since",
-    "verified": "Verified"
+    "verified": "Verified",
+    "tools": "Has own tools",
+    "insurance": "Has insurance",
+    "no_reviews_yet": "No reviews yet",
+    "client_reviews": "Client Reviews",
+    "portfolio": "Portfolio",
+    "reviews": "Reviews",
+    "about": "About me",
+    "experience": "Experience",
+    "skills": "Skills",
+    "contact_me": "Contact Me"
   },
   "userProfile": {
     "loading": "Loading Profile...",
@@ -147,12 +166,29 @@
     "ownPostTitle": "This is your post",
     "ownPostDesc": "Manage candidates from the dashboard."
   },
+  "postDetail": {
+    "notFound": "Post not found",
+    "backToList": "Back to listings",
+    "backToSearch": "Back to search",
+    "projectDescription": "Project Description",
+    "verified": "Verified Post",
+    "fastResponse": "Fast Response",
+    "keyInfo": "Key Information",
+    "location": "Location",
+    "published": "Published",
+    "category": "Category",
+    "ownPostTitle": "This is your post",
+    "ownPostDesc": "Manage candidates from the dashboard.",
+    "manageApplicants": "Manage Applicants",
+    "loginToApply": "Log in to Apply",
+    "share": "Share"
+  },
   "apply": {
-    "button": "Apply now",
-    "sending": "Sending application...",
+    "button": "Apply Now",
+    "sending": "Sending...",
     "success": "Application sent successfully!",
     "already_applied": "You are already in the process",
-    "message_label": "Cover message",
+    "message_label": "Cover Message",
     "cv_label": "Curriculum Vitae (PDF/DOCX)",
     "errors": {
       "loginRequired": "You must log in to apply.",
@@ -160,15 +196,107 @@
       "cvRequired": "Attaching a CV is mandatory."
     }
   },
+  "applyButton": {
+    "errors": {
+      "loginRequired": "You must log in to apply.",
+      "messageShort": "Please write a more detailed message (at least 5 characters).",
+      "cvRequired": "Attaching a CV is mandatory."
+    },
+    "status": {
+      "sending": "Sending application...",
+      "success": "Application sent successfully!"
+    }
+  },
   "ownerView": {
     "title": "Candidate Management",
-    "empty_title": "No applications yet",
-    "acceptedSuccess": "Candidate accepted! Opening chat...",
-    "rejectedMsg": "Candidate rejected",
+    "backToPanel": "Back to panel",
+    "postLabel": "Post",
+    "noMessage": "No message provided.",
+    "stats": {
+      "applicants": "Applicants",
+      "status": "Status",
+      "active": "Active"
+    },
+    "empty": {
+      "title": "No applications yet",
+      "desc": "Share your post to start receiving candidates."
+    },
+    "status": {
+      "updating": "Updating...",
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "acceptedSuccess": "Candidate accepted! Opening chat...",
+      "rejectedMsg": "Candidate rejected",
+      "updatedMsg": "Status updated"
+    },
     "actions": {
-      "contact": "Contact",
+      "contact": "Accept & Contact",
       "review": "Rate",
       "reject": "Discard"
+    },
+    "errors": {
+      "loadPost": "Error loading post",
+      "loadApplicants": "Error loading applicants",
+      "updateStatus": "Error updating status"
+    }
+  },
+  "myApps": {
+    "title": "My Applications",
+    "subtitle": "Track your proposals and review your finished jobs.",
+    "loading": "Loading applications...",
+    "statusLabel": "Status",
+    "viewOriginal": "View Original Post",
+    "statuses": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected"
+    },
+    "steps": {
+      "applied": {
+        "label": "Applied",
+        "desc": "Your application was sent successfully."
+      },
+      "review": {
+        "label": "Under Review",
+        "desc": "The employer is reviewing your application."
+      },
+      "decision": {
+        "label": "Decision",
+        "desc_pending": "Waiting for the employer's decision.",
+        "desc_accepted": "Congratulations! You've been accepted.",
+        "desc_rejected": "Unfortunately, this application was not selected."
+      }
+    },
+    "empty": {
+      "msg": "You haven't applied to any jobs yet.",
+      "action": "Browse available jobs"
+    },
+    "reviews": {
+      "pendingTitle": "Pending Reviews",
+      "jobBadge": "Completed Job",
+      "action": "Leave a Review",
+      "none": "No pending reviews",
+      "reminder": "Reviews help build trust in the community."
+    },
+    "errors": {
+      "loadError": "Error loading applications"
+    }
+  },
+  "leaveReview": {
+    "title": "Rate Experience",
+    "subtitle": "How was working with this person?",
+    "placeholder": "Write your comment here...",
+    "submitBtn": "Submit Review",
+    "cancelBtn": "Cancel",
+    "status": {
+      "sending": "Submitting...",
+      "success": "Review submitted successfully!"
+    },
+    "errors": {
+      "missingIds": "Missing required information. Please try again.",
+      "ratingRequired": "Please select a star rating.",
+      "generic": "Something went wrong. Please try again."
     }
   },
   "chat": {
@@ -177,18 +305,42 @@
     "noSelected": "Select a chat to start",
     "newConversation": "New conversation...",
     "inputPlaceholder": "Type a message...",
+    "status": {
+      "deleted": "Chat hidden successfully"
+    },
     "modal": {
       "title": "Hide chat?",
       "description": "It will disappear from your list until a new message arrives."
     },
     "errors": {
       "loadConversations": "Error loading conversations",
-      "loadMessages": "Error loading messages"
+      "loadMessages": "Error loading messages",
+      "prefix": "Error",
+      "generic": "Something went wrong",
+      "connection": "Connection error. Please try again."
     }
   },
   "not_found": {
     "subtitle": "Oops, you're lost...",
     "description": "The page doesn't exist or has been moved.",
     "back_home": "Back to Home"
+  },
+  "applications": {
+    "title": "My Applications",
+    "subtitle": "Track your proposals and review your finished jobs.",
+    "status_pending": "Pending",
+    "status_accepted": "Accepted",
+    "status_rejected": "Rejected",
+    "view_original": "View Original Post",
+    "pending_reviews": "Pending Reviews",
+    "leave_review": "Leave Review",
+    "no_applications": "You haven't applied to any jobs yet."
+  },
+  "reviews": {
+    "title": "Rate Experience",
+    "subtitle": "How was working with this person?",
+    "comment_placeholder": "Write your comment here...",
+    "submit": "Submit Review",
+    "client_reviews": "Client Reviews"
   }
 }

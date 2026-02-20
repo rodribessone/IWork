@@ -166,7 +166,7 @@ export default function OwnerPostView() {
                 <div className="flex flex-col lg:flex-row gap-8 items-start">
 
                   {/* Avatar y Datos Básicos */}
-                  <div className="flex items-center gap-4 min-w-[240px]">
+                  <div className="flex items-center gap-4 w-full lg:min-w-[240px] lg:w-auto">
                     <Link to={`/users/${app.user._id}`} className="flex items-center gap-4 group/author">
                       <div className="w-16 h-16 bg-zinc-900 rounded-2xl flex items-center justify-center text-amber-400 font-black text-xl shadow-lg transition-transform group-hover/author:scale-105">
                         {app.user.name.charAt(0)}

@@ -10,25 +10,26 @@
     "back": "Indietro",
     "next": "Avanti",
     "send": "Invia",
-    "error": "Errore",
-    "success": "Successo",
+    "error": "Si è verificato un errore",
+    "success": "Salvato con successo",
     "required": "Obbligatorio",
     "hide": "Nascondi",
     "select": "Seleziona...",
+    "contact": "Contatto",
     "status": {
       "pending": "In attesa",
       "accepted": "Accettato",
       "rejected": "Rifiutato",
       "active": "Attivo",
       "online": "Online",
-      "offline": "Non in linea"
+      "offline": "Offline"
     }
   },
   "nav": {
     "search_placeholder": "Cerca servizi, professionisti...",
     "jobs": "Lavori",
     "professionals": "Professionisti",
-    "my_applications": "Le mie Candidature",
+    "my_applications": "Le Mie Candidature",
     "login": "Accedi",
     "register": "Registrati",
     "logout": "Esci",
@@ -38,7 +39,7 @@
   "home": {
     "badge": "La più grande rete professionale di mestieri",
     "hero_title_1": "Dove il talento",
-    "hero_title_2": "trova opportunità",
+    "hero_title_2": "incontra l'opportunità",
     "hero_subtitle": "Connettiti con lavoratori qualificati nella tua zona in modo rapido e sicuro.",
     "cta_find_work": "Trova Lavoro",
     "cta_hire": "Assumi Talenti",
@@ -47,36 +48,36 @@
     "stats_secure": "Sicuro",
     "stats_support": "Supporto",
     "how_it_works": "Come Funziona?",
-    "how_it_works_sub": "Connettiti, collabora e porta a termine il lavoro in tre semplici passaggi.",
+    "how_it_works_sub": "Connettiti, collabora e porta a termine il lavoro in tre semplici passi.",
     "card_work_title": "Trova Lavoro",
-    "card_work_desc": "Sfoglia migliaia di opportunità di lavoro. Filtra per le tue competenze e candidati in pochi secondi.",
+    "card_work_desc": "Esplora migliaia di opportunità lavorative. Filtra per le tue competenze e candidati in pochi secondi.",
     "view_jobs": "Vedi Lavori",
     "card_hire_title": "Assumi Talenti",
-    "card_hire_desc": "Connettiti con professionisti qualificati. Esamina i portfoli e assumi i migliori.",
+    "card_hire_desc": "Connettiti con professionisti qualificati. Rivedi i portfolio e assumi il migliore.",
     "find_expert": "Trova Esperto"
   },
   "auth": {
     "email": "Indirizzo Email",
     "password": "Password",
     "name": "Nome Completo",
-    "forgot_password": "Password dimenticata?",
+    "forgot_password": "Hai dimenticato la password?",
     "no_account": "Non hai un account?",
     "have_account": "Hai già un account?",
     "login_button": "Accedi",
     "register_button": "Crea Account",
     "register_title": "Unisciti a IWork",
-    "register_subtitle": "Inizia il tuo viaggio oggi"
+    "register_subtitle": "Inizia il tuo percorso oggi"
   },
   "professions": {
     "electrician": "Elettricista",
-    "plumber": "Idraulico / Gasista",
+    "plumber": "Idraulico",
     "carpenter": "Falegname",
     "gardener": "Giardiniere",
     "mason": "Muratore",
-    "painter": "Pittore",
-    "cleaner": "Pulizie",
+    "painter": "Imbianchino",
+    "cleaner": "Servizio di Pulizie",
     "mover": "Traslochi",
-    "tech": "Tecnico PC",
+    "tech": "Tecnico Informatico",
     "other": "Altro"
   },
   "works": {
@@ -84,39 +85,57 @@
     "filter_category": "Categoria",
     "filter_location": "Posizione",
     "no_jobs": "Nessun lavoro trovato con i tuoi criteri.",
-    "apply": "Candidati",
+    "apply": "Candidati Ora",
     "posted_by": "Pubblicato da",
     "salary": "Budget/Stipendio",
     "details": "Vedi Dettagli"
+  },
+  "people": {
+    "title": "Trova Professionisti",
+    "skills": "Competenze",
+    "view_profile": "Vedi Profilo",
+    "no_people": "Nessun professionista trovato.",
+    "profession": "Professione"
   },
   "profile": {
     "loading_panel": "Caricamento Pannello...",
     "edit_profile": "Modifica Profilo",
     "profession_placeholder": "LA TUA PROFESSIONE",
-    "location_placeholder": "📍 CITTÀ, PROVINCIA",
+    "location_placeholder": "📍 CITTÀ, REGIONE",
     "no_location": "Nessuna posizione",
     "credentials": "Credenziali",
     "coverage_area": "Area di Copertura",
-    "coverage_placeholder": "Es: Tutta Sydney e dintorni",
+    "coverage_placeholder": "Es. Tutta Milano e dintorni",
     "not_specified": "Non specificato",
-    "my_skills": "Le Mie Abilità",
+    "my_skills": "Le Mie Competenze",
     "control_panel": "Pannello di Controllo",
-    "panel_description": "Gestisci i tuoi annunci, aggiorna il tuo portfolio e mantieni il tuo profilo aggiornato.",
+    "panel_description": "Gestisci i tuoi annunci, aggiorna il portfolio e mantieni il profilo aggiornato.",
     "bio_title": "Bio Professionale",
     "bio_placeholder": "Descrivi la tua esperienza...",
     "phone_label": "Telefono di Contatto",
-    "no_bio": "Nessuna biografia redatta.",
+    "contact": "Contatto e Posizione",
+    "no_bio": "Nessuna bio scritta.",
     "add_photos": "Aggiungi Foto",
     "active_posts": "I Miei Annunci Attivi",
     "manage": "Gestisci",
     "no_posts": "Non hai annunci attivi",
-    "delete_confirm_title": "Elimina Annuncio?",
-    "delete_photo_confirm_title": "Elimina foto?",
+    "delete_confirm_title": "Eliminare l'annuncio?",
+    "delete_photo_confirm_title": "Eliminare la foto?",
     "saved_success": "Profilo salvato",
     "post_deleted": "Annuncio eliminato",
     "completed_jobs": "Lavori Completati",
-    "member_since": "Membro dal",
-    "verified": "Verificato"
+    "member_since": "Membro da",
+    "verified": "Verificato",
+    "tools": "Ha strumenti propri",
+    "insurance": "Ha assicurazione",
+    "no_reviews_yet": "Ancora nessuna recensione",
+    "client_reviews": "Recensioni dei Clienti",
+    "portfolio": "Portfolio",
+    "reviews": "Recensioni",
+    "about": "Chi sono",
+    "experience": "Esperienza",
+    "skills": "Competenze",
+    "contact_me": "Contattami"
   },
   "userProfile": {
     "loading": "Caricamento Profilo...",
@@ -124,15 +143,15 @@
     "defaultProfession": "Specialista",
     "contactNow": "Contatta Ora",
     "aboutProfessional": "Sul Professionista",
-    "defaultBio": "Questo professionista preferisce lasciare che sia il suo lavoro a parlare.",
+    "defaultBio": "Questo professionista preferisce che sia il suo lavoro a parlare per lui.",
     "workHistory": "Esperienza Lavorativa",
-    "portfolio": "Progetti Realizzati",
+    "portfolio": "Progetti Completati",
     "noImages": "Nessuna immagine disponibile",
     "clientReviews": "Cosa dicono i clienti",
     "noReviews": "Ancora nessuna recensione"
   },
   "post": {
-    "create_title": "Pubblica Lavoro",
+    "create_title": "Pubblica un Lavoro",
     "edit_title": "Modifica Lavoro",
     "title_label": "Titolo del Lavoro",
     "desc_label": "Descrizione",
@@ -145,30 +164,139 @@
     "notFound": "Annuncio non trovato",
     "keyInfo": "Informazioni Chiave",
     "ownPostTitle": "Questo è il tuo annuncio",
-    "ownPostDesc": "Gestisci i candidati dal pannello di controllo."
+    "ownPostDesc": "Gestisci i candidati dal pannello."
+  },
+  "postDetail": {
+    "notFound": "Annuncio non trovato",
+    "backToList": "Torna all'elenco",
+    "backToSearch": "Torna alla ricerca",
+    "projectDescription": "Descrizione del Progetto",
+    "verified": "Annuncio Verificato",
+    "fastResponse": "Risposta Rapida",
+    "keyInfo": "Informazioni Chiave",
+    "location": "Posizione",
+    "published": "Pubblicato",
+    "category": "Categoria",
+    "ownPostTitle": "Questo è il tuo annuncio",
+    "ownPostDesc": "Gestisci i candidati dal pannello.",
+    "manageApplicants": "Gestisci Candidati",
+    "loginToApply": "Accedi per candidarti",
+    "share": "Condividi"
   },
   "apply": {
-    "button": "Candidati ora",
-    "sending": "Invio candidatura...",
+    "button": "Candidati",
+    "sending": "Invio in corso...",
     "success": "Candidatura inviata con successo!",
-    "already_applied": "Sei già nel processo",
-    "message_label": "Messaggio di presentazione",
+    "already_applied": "Sei già in fase di selezione",
+    "message_label": "Lettera di presentazione",
     "cv_label": "Curriculum Vitae (PDF/DOCX)",
     "errors": {
       "loginRequired": "Devi accedere per candidarti.",
-      "messageShort": "Per favore, scrivi un messaggio più dettagliato.",
-      "cvRequired": "È obbligatorio allegare il tuo CV."
+      "messageShort": "Scrivi un messaggio più dettagliato.",
+      "cvRequired": "Allegare un CV è obbligatorio."
+    }
+  },
+  "applyButton": {
+    "errors": {
+      "loginRequired": "Devi accedere per candidarti.",
+      "messageShort": "Scrivi un messaggio più dettagliato (almeno 5 caratteri).",
+      "cvRequired": "Allegare un CV è obbligatorio."
+    },
+    "status": {
+      "sending": "Invio candidatura...",
+      "success": "Candidatura inviata con successo!"
     }
   },
   "ownerView": {
     "title": "Gestione Candidati",
-    "empty_title": "Ancora nessuna candidatura",
-    "acceptedSuccess": "Candidato accettato! Apertura chat...",
-    "rejectedMsg": "Candidato rifiutato",
+    "backToPanel": "Torna al pannello",
+    "postLabel": "Annuncio",
+    "noMessage": "Nessun messaggio allegato.",
+    "stats": {
+      "applicants": "Candidati",
+      "status": "Stato",
+      "active": "Attivo"
+    },
+    "empty": {
+      "title": "Ancora nessuna candidatura",
+      "desc": "Condividi il tuo annuncio per iniziare a ricevere candidati."
+    },
+    "status": {
+      "updating": "Aggiornamento...",
+      "pending": "In attesa",
+      "accepted": "Accettato",
+      "rejected": "Rifiutato",
+      "acceptedSuccess": "Candidato accettato! Apertura chat...",
+      "rejectedMsg": "Candidato rifiutato",
+      "updatedMsg": "Stato aggiornato"
+    },
     "actions": {
-      "contact": "Contatta",
+      "contact": "Accetta e Contatta",
       "review": "Valuta",
       "reject": "Scarta"
+    },
+    "errors": {
+      "loadPost": "Errore nel caricamento dell'annuncio",
+      "loadApplicants": "Errore nel caricamento dei candidati",
+      "updateStatus": "Errore nell'aggiornamento dello stato"
+    }
+  },
+  "myApps": {
+    "title": "Le Mie Candidature",
+    "subtitle": "Segui le tue proposte e rivedi i lavori completati.",
+    "loading": "Caricamento candidature...",
+    "statusLabel": "Stato",
+    "viewOriginal": "Vedi Annuncio Originale",
+    "statuses": {
+      "pending": "In attesa",
+      "accepted": "Accettato",
+      "rejected": "Rifiutato"
+    },
+    "steps": {
+      "applied": {
+        "label": "Candidato",
+        "desc": "La tua candidatura è stata inviata con successo."
+      },
+      "review": {
+        "label": "In Revisione",
+        "desc": "Il datore di lavoro sta esaminando la tua candidatura."
+      },
+      "decision": {
+        "label": "Decisione",
+        "desc_pending": "In attesa della decisione del datore di lavoro.",
+        "desc_accepted": "Congratulazioni! Sei stato accettato.",
+        "desc_rejected": "Purtroppo questa candidatura non è stata selezionata."
+      }
+    },
+    "empty": {
+      "msg": "Non ti sei ancora candidato a nessun lavoro.",
+      "action": "Sfoglia lavori disponibili"
+    },
+    "reviews": {
+      "pendingTitle": "Recensioni in Sospeso",
+      "jobBadge": "Lavoro Completato",
+      "action": "Lascia una Recensione",
+      "none": "Nessuna recensione in sospeso",
+      "reminder": "Le recensioni aiutano a costruire fiducia nella comunità."
+    },
+    "errors": {
+      "loadError": "Errore nel caricamento delle candidature"
+    }
+  },
+  "leaveReview": {
+    "title": "Valuta l'Esperienza",
+    "subtitle": "Com'è stato lavorare con questa persona?",
+    "placeholder": "Scrivi il tuo commento qui...",
+    "submitBtn": "Invia Recensione",
+    "cancelBtn": "Annulla",
+    "status": {
+      "sending": "Invio in corso...",
+      "success": "Recensione inviata con successo!"
+    },
+    "errors": {
+      "missingIds": "Informazioni mancanti. Riprova.",
+      "ratingRequired": "Seleziona una valutazione a stelle.",
+      "generic": "Qualcosa è andato storto. Riprova."
     }
   },
   "chat": {
@@ -177,18 +305,42 @@
     "noSelected": "Seleziona una chat per iniziare",
     "newConversation": "Nuova conversazione...",
     "inputPlaceholder": "Scrivi un messaggio...",
+    "status": {
+      "deleted": "Chat nascosta con successo"
+    },
     "modal": {
       "title": "Nascondere la chat?",
       "description": "Scomparirà dalla tua lista finché non arriverà un nuovo messaggio."
     },
     "errors": {
       "loadConversations": "Errore nel caricamento delle conversazioni",
-      "loadMessages": "Errore nel caricamento dei messaggi"
+      "loadMessages": "Errore nel caricamento dei messaggi",
+      "prefix": "Errore",
+      "generic": "Qualcosa è andato storto",
+      "connection": "Errore di connessione. Riprova."
     }
   },
   "not_found": {
     "subtitle": "Ops, ti sei perso...",
     "description": "La pagina non esiste o è stata spostata.",
     "back_home": "Torna alla Home"
+  },
+  "applications": {
+    "title": "Le Mie Candidature",
+    "subtitle": "Segui le tue proposte e rivedi i lavori completati.",
+    "status_pending": "In attesa",
+    "status_accepted": "Accettato",
+    "status_rejected": "Rifiutato",
+    "view_original": "Vedi Annuncio Originale",
+    "pending_reviews": "Recensioni in Sospeso",
+    "leave_review": "Lascia una Recensione",
+    "no_applications": "Non ti sei ancora candidato a nessun lavoro."
+  },
+  "reviews": {
+    "title": "Valuta l'Esperienza",
+    "subtitle": "Com'è stato lavorare con questa persona?",
+    "comment_placeholder": "Scrivi il tuo commento qui...",
+    "submit": "Invia Recensione",
+    "client_reviews": "Recensioni dei Clienti"
   }
 }

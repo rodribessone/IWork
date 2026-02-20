@@ -79,7 +79,7 @@ export default function PostDetail() {
         {/* COLUMNA PRINCIPAL (Izquierda) */}
         <div className="lg:col-span-8">
           {/* Imagen Principal */}
-          <div className="relative h-[400px] w-full rounded-[3rem] overflow-hidden shadow-2xl mb-10 group">
+          <div className="relative h-[220px] md:h-[400px] w-full rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl mb-10 group">
             <img
               src={post.imageUrl || "https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2070&auto=format&fit=crop"}
               alt={post.title}

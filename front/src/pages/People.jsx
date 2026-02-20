@@ -7,13 +7,11 @@ import {
 import { useAuthContext } from '../Context/AuthContext';
 import { useTranslation } from 'react-i18next';
 
-// Sub-componente para la tarjeta de profesional
 const UserCard = ({ u, onClick, t }) => (
   <div
     onClick={() => onClick(u)}
     className="group bg-white rounded-[2rem] shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 cursor-pointer border border-zinc-100 overflow-hidden flex flex-col h-full"
   >
-    {/* Banner decorativo y Avatar */}
     <div className="relative h-24 bg-zinc-950 shrink-0">
       <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
       <div className="absolute -bottom-10 left-6">
@@ -30,7 +28,7 @@ const UserCard = ({ u, onClick, t }) => (
         <h2 className="text-xl font-black text-zinc-900 leading-none group-hover:text-amber-600 transition-colors uppercase tracking-tighter">
           {u.name}
         </h2>
-        {u.verified && <Award size={18} className="text-amber-500" />}
+        {u.verified && <Award size={18} className="text-amber-500 shrink-0" />}
       </div>
 
       <p className="text-amber-600 font-black text-[10px] uppercase tracking-[0.2em] mb-4">
@@ -42,11 +40,11 @@ const UserCard = ({ u, onClick, t }) => (
       </p>
 
       <div className="pt-5 border-t border-zinc-50 flex items-center justify-between mt-auto">
-        <span className="text-[10px] font-bold text-zinc-400 flex items-center gap-1.5 bg-zinc-100 px-3 py-1.5 rounded-full">
-          <MapPin size={12} className="text-zinc-400" />
-          {u.location || "Ubicación N/A"}
+        <span className="text-[10px] font-bold text-zinc-400 flex items-center gap-1.5 bg-zinc-100 px-3 py-1.5 rounded-full truncate max-w-[60%]">
+          <MapPin size={12} className="text-zinc-400 shrink-0" />
+          {u.location || "N/A"}
         </span>
-        <span className="text-zinc-900 text-xs font-black uppercase tracking-widest flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all">
+        <span className="text-zinc-900 text-xs font-black uppercase tracking-widest flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all shrink-0">
           {t('people.view_profile')} <ArrowRight size={14} />
         </span>
       </div>
@@ -99,17 +97,11 @@ export default function People() {
   }, [users, search, location, profession]);
 
   const handleContactUser = async (recipientId) => {
-    if (!currentUser) {
-      navigate('/login');
-      return;
-    }
+    if (!currentUser) { navigate('/login'); return; }
     try {
       const res = await fetch(import.meta.env.VITE_API_URL + "/api/chats", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ recipientId, postId: null }),
       });
       const data = await res.json();
@@ -121,22 +113,22 @@ export default function People() {
   const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 bg-zinc-50/50 min-h-screen font-sans">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16 bg-zinc-50/50 min-h-screen font-sans">
 
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-4">
         <div>
-          <h1 className="text-5xl font-black text-zinc-950 tracking-tighter mb-3 uppercase">{t('people.title')}</h1>
-          <p className="text-zinc-500 text-lg">{t('home.hero_subtitle')}</p>
+          <h1 className="text-4xl md:text-5xl font-black text-zinc-950 tracking-tighter mb-2 md:mb-3 uppercase">{t('people.title')}</h1>
+          <p className="text-zinc-500 text-base md:text-lg">{t('home.hero_subtitle')}</p>
         </div>
-        <div className="bg-white px-6 py-3 rounded-2xl border border-zinc-200 shadow-sm">
+        <div className="bg-white px-6 py-3 rounded-2xl border border-zinc-200 shadow-sm self-start">
           <span className="text-zinc-900 font-black">{filteredUsers.length} experts </span>
           <span className="text-zinc-400 text-sm font-medium">found</span>
         </div>
       </div>
 
-      {/* Filtros Pro (Igual que en Works) */}
-      <div className="bg-white rounded-[2rem] shadow-xl shadow-zinc-200/50 border border-zinc-100 p-2 mb-12">
+      {/* Filtros */}
+      <div className="bg-white rounded-[2rem] shadow-xl shadow-zinc-200/50 border border-zinc-100 p-2 mb-8 md:mb-12">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-2">
           <div className="md:col-span-4 relative group">
             <User className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-amber-500 transition-colors" size={20} />
@@ -145,33 +137,33 @@ export default function People() {
               placeholder={t('common.search')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-14 pr-6 py-5 bg-transparent rounded-2xl outline-none text-zinc-800 font-medium"
+              className="w-full pl-14 pr-6 py-4 md:py-5 bg-transparent rounded-2xl outline-none text-zinc-800 font-medium"
             />
           </div>
-          <div className="md:col-span-4 border-l border-zinc-100 relative group">
+          <div className="md:col-span-4 md:border-l border-zinc-100 relative group">
             <Briefcase className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-amber-500 transition-colors" size={20} />
             <input
               type="text"
               placeholder={t('people.profession')}
               value={profession}
               onChange={(e) => setProfession(e.target.value)}
-              className="w-full pl-14 pr-6 py-5 bg-transparent rounded-2xl outline-none text-zinc-800 font-medium"
+              className="w-full pl-14 pr-6 py-4 md:py-5 bg-transparent rounded-2xl outline-none text-zinc-800 font-medium"
             />
           </div>
-          <div className="md:col-span-2 border-l border-zinc-100 relative group">
+          <div className="md:col-span-2 md:border-l border-zinc-100 relative group">
             <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-amber-500 transition-colors" size={20} />
             <input
               type="text"
               placeholder={t('works.filter_location')}
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="w-full pl-14 pr-6 py-5 bg-transparent rounded-2xl outline-none text-zinc-800 font-medium"
+              className="w-full pl-14 pr-6 py-4 md:py-5 bg-transparent rounded-2xl outline-none text-zinc-800 font-medium"
             />
           </div>
           <div className="md:col-span-2 flex items-center p-2">
             <button
               onClick={() => { setSearch(""); setLocation(""); setProfession(""); }}
-              className="w-full h-full bg-zinc-900 text-white rounded-2xl font-bold hover:bg-zinc-800 transition-all flex items-center justify-center gap-2"
+              className="w-full py-3 md:h-full bg-zinc-900 text-white rounded-2xl font-bold hover:bg-zinc-800 transition-all flex items-center justify-center gap-2"
             >
               <Filter size={18} /> {t('common.filter')}
             </button>
@@ -181,36 +173,36 @@ export default function People() {
 
       {/* Listado */}
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[...Array(6)].map((_, i) => <div key={i} className="h-72 bg-white rounded-[2rem] animate-pulse border border-zinc-100" />)}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {[...Array(6)].map((_, i) => <div key={i} className="h-64 bg-white rounded-[2rem] animate-pulse border border-zinc-100" />)}
         </div>
       ) : filteredUsers.length === 0 ? (
-        <div className="text-center py-32 bg-white rounded-[3rem] border-2 border-dashed border-zinc-200">
+        <div className="text-center py-16 md:py-32 bg-white rounded-[3rem] border-2 border-dashed border-zinc-200">
           <User size={48} className="mx-auto text-zinc-200 mb-4" />
           <p className="text-zinc-500 font-bold">{t('people.no_people')}</p>
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
             {currentUsers.map((u) => <UserCard key={u._id} u={u} onClick={setSelectedUser} t={t} />)}
           </div>
 
           {/* Paginación */}
           {totalPages > 1 && (
-            <div className="flex justify-center items-center mt-20 gap-3">
+            <div className="flex justify-center items-center mt-12 md:mt-20 gap-2 md:gap-3 flex-wrap">
               <button
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage(prev => prev - 1)}
-                className="px-6 py-3 rounded-2xl font-bold bg-white border border-zinc-200 disabled:opacity-20 transition-all flex items-center gap-2"
+                className="px-4 md:px-6 py-3 rounded-2xl font-bold bg-white border border-zinc-200 disabled:opacity-20 transition-all flex items-center gap-2 text-sm"
               >
-                ⬅ {t('common.back')}
+                ← {t('common.back')}
               </button>
               <div className="flex gap-2">
                 {[...Array(totalPages)].map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setCurrentPage(i + 1)}
-                    className={`w-12 h-12 rounded-2xl font-black transition-all ${currentPage === i + 1 ? 'bg-amber-400 text-black shadow-lg shadow-amber-400/20' : 'bg-white text-zinc-400 border border-zinc-100'}`}
+                    className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl font-black transition-all text-sm ${currentPage === i + 1 ? 'bg-amber-400 text-black shadow-lg shadow-amber-400/20' : 'bg-white text-zinc-400 border border-zinc-100'}`}
                   >
                     {i + 1}
                   </button>
@@ -219,16 +211,16 @@ export default function People() {
               <button
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage(prev => prev + 1)}
-                className="px-6 py-3 rounded-2xl font-bold bg-white border border-zinc-200 disabled:opacity-20 transition-all flex items-center gap-2"
+                className="px-4 md:px-6 py-3 rounded-2xl font-bold bg-white border border-zinc-200 disabled:opacity-20 transition-all flex items-center gap-2 text-sm"
               >
-                Next ➡
+                {t('common.next')} →
               </button>
             </div>
           )}
         </>
       )}
 
-      {/* Sidebar de Perfil Premium */}
+      {/* Sidebar de Perfil — full screen en móvil, 450px en desktop */}
       <div
         onClick={() => setSelectedUser(null)}
         className={`fixed inset-0 bg-zinc-950/80 backdrop-blur-sm z-[100] transition-opacity duration-500 ${selectedUser ? "opacity-100" : "opacity-0 pointer-events-none"}`}
@@ -239,19 +231,14 @@ export default function People() {
         >
           {selectedUser && (
             <>
-              {/* Header con Banner - QUITAMOS overflow-hidden para que permita ver lo que sobresale */}
               <div className="relative h-32 bg-zinc-900 shrink-0 z-0">
                 <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/graphy-dark.png')]"></div>
-
-                {/* BOTÓN CERRAR - Subimos su z-index */}
                 <button
                   onClick={() => setSelectedUser(null)}
-                  className="absolute top-6 right-6 bg-white/10 hover:bg-white/30 backdrop-blur-md text-white w-10 h-10 rounded-full flex items-center justify-center transition-all z-50"
+                  className="absolute top-4 right-4 bg-white/10 hover:bg-white/30 backdrop-blur-md text-white w-10 h-10 rounded-full flex items-center justify-center transition-all z-50"
                 >
                   <X size={20} />
                 </button>
-
-                {/* LA FOTO: Ahora vive dentro del div del banner pero posicionada absolutamente para flotar encima de la unión */}
                 <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 z-40">
                   <img
                     src={selectedUser.avatar || `https://ui-avatars.com/api/?name=${selectedUser.name}&background=random`}
@@ -261,28 +248,24 @@ export default function People() {
                 </div>
               </div>
 
-              {/* CONTENIDO - Agregamos padding top extra para compensar que la foto ya no ocupa espacio aquí */}
-              <div className="relative z-10 px-10 pb-10 pt-16 flex-grow overflow-y-auto">
-                {/* Info de Perfil */}
+              <div className="relative z-10 px-6 md:px-10 pb-10 pt-16 flex-grow overflow-y-auto">
                 <div className="mb-8 text-center flex flex-col items-center">
                   <div className="flex items-center gap-2 mb-1">
-                    <h2 className="text-3xl font-black text-zinc-950 tracking-tighter uppercase">{selectedUser.name}</h2>
-                    {selectedUser.verified && <Award className="text-amber-500" size={24} />}
+                    <h2 className="text-2xl md:text-3xl font-black text-zinc-950 tracking-tighter uppercase">{selectedUser.name}</h2>
+                    {selectedUser.verified && <Award className="text-amber-500 shrink-0" size={24} />}
                   </div>
                   <p className="text-amber-600 font-black text-xs uppercase tracking-widest">{selectedUser.profession || "Especialista"}</p>
                   <p className="text-zinc-400 text-sm mt-2 flex items-center gap-1.5"><MapPin size={14} /> {selectedUser.location || "Ubicación no disponible"}</p>
                 </div>
 
-                {/* Sobre mí */}
-                <div className="mb-10 p-6 bg-zinc-50 rounded-[2rem] border border-zinc-100">
+                <div className="mb-8 p-6 bg-zinc-50 rounded-[2rem] border border-zinc-100">
                   <h4 className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em] mb-3">{t('profile.about')}</h4>
                   <p className="text-zinc-600 leading-relaxed italic">
                     "{selectedUser.bio || "Este profesional aún no ha redactado su biografía, pero está disponible para nuevos proyectos."}"
                   </p>
                 </div>
 
-                {/* Habilidades */}
-                <div className="mb-10">
+                <div className="mb-8">
                   <h4 className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em] mb-4">{t('people.skills')}</h4>
                   <div className="flex flex-wrap gap-2">
                     {selectedUser.skills?.map((skill, i) => (
@@ -293,20 +276,18 @@ export default function People() {
                   </div>
                 </div>
 
-                {/* Acciones */}
                 <div className="space-y-4">
                   {currentUser?._id !== selectedUser._id && (
                     <button
                       onClick={() => handleContactUser(selectedUser._id)}
-                      className="w-full py-5 bg-amber-400 text-black rounded-[2rem] font-black uppercase tracking-widest hover:bg-amber-300 transition-all flex items-center justify-center gap-3 shadow-xl shadow-amber-400/20"
+                      className="w-full py-4 md:py-5 bg-amber-400 text-black rounded-[2rem] font-black uppercase tracking-widest hover:bg-amber-300 transition-all flex items-center justify-center gap-3 shadow-xl shadow-amber-400/20"
                     >
                       <MessageSquare size={20} /> {t('profile.contact_me')}
                     </button>
                   )}
-
                   <Link
                     to={`/users/${selectedUser._id}`}
-                    className="w-full py-5 bg-zinc-950 text-white rounded-[2rem] font-black uppercase tracking-widest hover:bg-zinc-800 transition-all flex items-center justify-center gap-3"
+                    className="w-full py-4 md:py-5 bg-zinc-950 text-white rounded-[2rem] font-black uppercase tracking-widest hover:bg-zinc-800 transition-all flex items-center justify-center gap-3"
                   >
                     {t('people.view_profile')}
                   </Link>

@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="bg-white">
       {/* SECCIÓN HERO */}
-      <section className='relative w-full bg-zinc-950 py-24 overflow-hidden'>
+      <section className='relative w-full bg-zinc-950 py-12 md:py-24 overflow-hidden'>
         {/* Decoración de fondo (Efecto de luces) */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-20 pointer-events-none">
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[60%] bg-amber-500 blur-[120px] rounded-full"></div>
@@ -69,7 +69,7 @@ export default function Home() {
       </section>
 
       {/* SECCIÓN ¿CÓMO FUNCIONA? */}
-      <section className='py-24 bg-zinc-50'>
+      <section className='py-12 md:py-24 bg-zinc-50'>
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
             <div className="max-w-xl">

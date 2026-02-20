@@ -2,18 +2,18 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useAuthContext } from '../Context/AuthContext';
-import { useTranslation } from "react-i18next"; // <-- Importamos el hook
 import { Star, MapPin, Briefcase, User, MessageCircle, Calendar, ArrowLeft, Award, Image as ImageIcon } from "lucide-react";
+import { useTranslation } from 'react-i18next';
 
 const UserProfile = () => {
+  const { t } = useTranslation();
   const { userId } = useParams();
   const navigate = useNavigate();
-  const { t } = useTranslation(); // <-- Inicializamos t
   const { user: currentUser, token } = useAuthContext();
 
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const defaultAvatar = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
@@ -23,8 +23,14 @@ const UserProfile = () => {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${userId}`);
         const data = await res.json();
         setUser(data);
+
+        // Fetch Reviews
+        const resReviews = await fetch(`${import.meta.env.VITE_API_URL}/api/reviews/user/${userId}`);
+        const dataReviews = await resReviews.json();
+        setReviews(dataReviews);
+
       } catch (err) {
-        console.error("Error cargando perfil:", err);
+        console.error("Error loading profile:", err);
       } finally {
         setLoading(false);
       }
@@ -32,19 +38,7 @@ const UserProfile = () => {
     fetchUserProfile();
   }, [userId]);
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/reviews/user/${userId}`);
-        const data = await res.json();
-        setReviews(data);
-      } catch (err) {
-        console.error("Error reviews:", err);
-      }
-    };
-    fetchReviews();
-  }, [userId]);
-
+  // Función para renderizar estrellas según el puntaje
   const renderStars = (rating) => {
     return (
       <div className="flex items-center gap-0.5">
@@ -52,7 +46,8 @@ const UserProfile = () => {
           <Star
             key={star}
             size={16}
-            className={`${star <= rating ? "fill-amber-400 text-amber-400" : "text-zinc-200"}`}
+            fill={star <= Math.round(rating) ? "currentColor" : "none"}
+            className={`${star <= Math.round(rating) ? "text-amber-400" : "text-zinc-300"}`}
           />
         ))}
       </div>
@@ -86,18 +81,12 @@ const UserProfile = () => {
     <div className="min-h-screen flex items-center justify-center">
       <div className="animate-pulse flex flex-col items-center">
         <div className="w-12 h-12 bg-amber-200 rounded-full mb-4"></div>
-        <p className="text-zinc-400 font-black uppercase tracking-widest text-xs">
-          {t('userProfile.loading')}
-        </p>
+        <p className="text-zinc-400 font-black uppercase tracking-widest text-xs">{t('common.loading')}</p>
       </div>
     </div>
   );
 
-  if (!user) return (
-    <div className="text-center mt-20 font-black text-zinc-400 uppercase">
-      {t('userProfile.notFound')}
-    </div>
-  );
+  if (!user) return <div className="text-center mt-20 font-black text-zinc-400">USER NOT FOUND</div>;
 
   return (
     <div className="max-w-7xl mx-auto pb-20 px-4">
@@ -125,7 +114,7 @@ const UserProfile = () => {
               alt={user.name}
               onError={(e) => { e.target.src = defaultAvatar; }}
             />
-            {user.isVerified && (
+            {user.verified && (
               <div className="absolute bottom-4 right-4 bg-blue-500 text-white p-2 rounded-full border-4 border-white shadow-lg">
                 <Award size={20} />
               </div>
@@ -136,19 +125,20 @@ const UserProfile = () => {
             <div className="flex flex-col md:flex-row md:items-center gap-3 mb-2">
               <h1 className="text-4xl font-black text-zinc-900 tracking-tighter uppercase italic">{user.name}</h1>
               <div className="flex items-center justify-center md:justify-start gap-2 bg-zinc-100 px-3 py-1 rounded-full">
-                {renderStars(user.rating || 5)}
+                {renderStars(user.rating || 0)}
                 <span className="text-[10px] font-black text-zinc-500 uppercase tracking-tighter">
-                  ({reviews?.length || 0} {t('userProfile.reviews')})
+                  ({user.reviewsCount || 0} {t('profile.reviews')})
                 </span>
               </div>
             </div>
 
             <div className="flex flex-wrap justify-center md:justify-start gap-4">
               <p className="text-amber-500 font-black uppercase text-[11px] tracking-[0.2em] bg-amber-50 px-3 py-1 rounded-lg">
-                {user.profession || t('userProfile.defaultProfession')}
+                {/* Intento de traducción dinámica */}
+                {user.profession ? (t(`professions.${user.profession.toLowerCase()}`) !== `professions.${user.profession.toLowerCase()}` ? t(`professions.${user.profession.toLowerCase()}`) : user.profession) : "Professional"}
               </p>
               <p className="text-zinc-400 font-bold text-[11px] uppercase flex items-center gap-1">
-                <MapPin size={14} className="text-zinc-300" /> {user.location || t('userProfile.noLocation')}
+                <MapPin size={14} className="text-zinc-300" /> {user.location || t('profile.not_specified')}
               </p>
             </div>
           </div>
@@ -159,7 +149,7 @@ const UserProfile = () => {
                 onClick={handleContactUser}
                 className="bg-zinc-900 text-amber-400 px-10 py-4 rounded-2xl hover:bg-zinc-800 transition shadow-xl shadow-zinc-200 font-black text-[11px] uppercase tracking-widest flex items-center gap-2"
               >
-                <MessageCircle size={18} /> {t('userProfile.contactNow')}
+                <MessageCircle size={18} /> {t('profile.contact_me')}
               </button>
             )}
           </div>
@@ -171,29 +161,25 @@ const UserProfile = () => {
         {/* COLUMNA IZQUIERDA: STATS Y INFO (4 cols) */}
         <div className="lg:col-span-4 space-y-8">
           <div className="bg-zinc-50 p-8 rounded-[2.5rem] border border-zinc-100">
-            <h3 className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-6">
-              {t('userProfile.keySkills')}
-            </h3>
+            <h3 className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-6">{t('people.skills')}</h3>
             <div className="flex flex-wrap gap-2">
               {user.skills?.length > 0 ? user.skills.map((s, i) => (
                 <span key={i} className="bg-white text-zinc-800 px-4 py-2 rounded-xl text-[10px] font-black uppercase border border-zinc-200 shadow-sm">
                   {s}
                 </span>
-              )) : <p className="text-zinc-400 text-[10px] italic uppercase">{t('userProfile.noSkills')}</p>}
+              )) : <p className="text-zinc-400 text-[10px] italic uppercase">No skills listed</p>}
             </div>
           </div>
 
           <div className="bg-white p-8 rounded-[2.5rem] border border-zinc-100 shadow-sm">
-            <h3 className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-4">
-              {t('userProfile.stats')}
-            </h3>
+            <h3 className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-4">Stats</h3>
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-xs font-bold text-zinc-500 uppercase">{t('userProfile.memberSince')}</span>
+                <span className="text-xs font-bold text-zinc-500 uppercase">{t('profile.member_since')}</span>
                 <span className="text-xs font-black text-zinc-900">{new Date(user.createdAt).getFullYear()}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-xs font-bold text-zinc-500 uppercase">{t('userProfile.completedJobs')}</span>
+                <span className="text-xs font-bold text-zinc-500 uppercase">{t('profile.completed_jobs')}</span>
                 <span className="text-xs font-black text-zinc-900">{user.completedJobs || 0}</span>
               </div>
             </div>
@@ -206,17 +192,17 @@ const UserProfile = () => {
           {/* BIO */}
           <section>
             <h3 className="text-xs font-black text-zinc-400 uppercase tracking-[0.3em] mb-6 flex items-center gap-4">
-              {t('userProfile.aboutProfessional')} <span className="h-[1px] flex-1 bg-zinc-100"></span>
+              {t('profile.about')} <span className="h-[1px] flex-1 bg-zinc-100"></span>
             </h3>
             <div className="bg-white p-8 rounded-[2.5rem] border border-zinc-100 shadow-sm text-zinc-600 leading-relaxed font-medium">
-              {user.bio || t('userProfile.defaultBio')}
+              {user.bio || t('profile.no_bio')}
             </div>
           </section>
 
           {/* EXPERIENCIA */}
           <section>
             <h3 className="text-xs font-black text-zinc-400 uppercase tracking-[0.3em] mb-8 flex items-center gap-4">
-              {t('userProfile.workHistory')} <span className="h-[1px] flex-1 bg-zinc-100"></span>
+              {t('profile.experience')} <span className="h-[1px] flex-1 bg-zinc-100"></span>
             </h3>
             <div className="space-y-6">
               {Array.isArray(user.experience) && user.experience.length > 0 ? (
@@ -232,9 +218,7 @@ const UserProfile = () => {
                   </div>
                 ))
               ) : (
-                <div className="p-8 bg-zinc-50 rounded-[2rem] border border-dashed border-zinc-200 text-zinc-400 text-xs font-bold uppercase text-center">
-                  {t('userProfile.noHistory')}
-                </div>
+                <div className="p-8 bg-zinc-50 rounded-[2rem] border border-dashed border-zinc-200 text-zinc-400 text-xs font-bold uppercase text-center">No experience listed</div>
               )}
             </div>
           </section>
@@ -242,7 +226,7 @@ const UserProfile = () => {
           {/* PORTAFOLIO VISUAL */}
           <section>
             <h3 className="text-xs font-black text-zinc-400 uppercase tracking-[0.3em] mb-6 flex items-center gap-4">
-              {t('userProfile.portfolio')} <span className="h-[1px] flex-1 bg-zinc-100"></span>
+              {t('profile.portfolio')} <span className="h-[1px] flex-1 bg-zinc-100"></span>
             </h3>
             {user.portfolio?.length > 0 ? (
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -256,9 +240,7 @@ const UserProfile = () => {
             ) : (
               <div className="bg-zinc-50 border-2 border-dashed border-zinc-200 rounded-[2rem] p-12 text-center">
                 <ImageIcon className="mx-auto text-zinc-300 mb-2" size={32} />
-                <p className="text-zinc-400 text-[10px] font-black uppercase tracking-widest">
-                  {t('userProfile.noImages')}
-                </p>
+                <p className="text-zinc-400 text-[10px] font-black uppercase tracking-widest">No images available</p>
               </div>
             )}
           </section>
@@ -266,33 +248,25 @@ const UserProfile = () => {
           {/* RESEÑAS */}
           <section>
             <h3 className="text-xs font-black text-zinc-400 uppercase tracking-[0.3em] mb-6 flex items-center gap-4">
-              {t('userProfile.clientReviews')} <span className="h-[1px] flex-1 bg-zinc-100"></span>
+              {t('reviews.client_reviews')} <span className="h-[1px] flex-1 bg-zinc-100"></span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {reviews.length > 0 ? reviews.map((rev, i) => (
-                <div key={i} className="p-6 bg-zinc-50 rounded-[2.5rem] border border-zinc-100">
-                  <div className="flex justify-between mb-4">
+              {reviews?.length > 0 ? reviews.map((rev, i) => (
+                <div key={i} className="bg-white p-6 rounded-[2rem] border border-zinc-100 shadow-sm">
+                  <div className="flex justify-between items-start mb-4">
                     {renderStars(rev.rating)}
-                    <span className="text-[10px] font-black text-zinc-300 uppercase">
-                      {new Date(rev.createdAt).toLocaleDateString()}
-                    </span>
+                    <span className="text-[9px] font-black text-zinc-300 uppercase italic">{new Date(rev.createdAt).toLocaleDateString()}</span>
                   </div>
-                  <p className="text-zinc-600 text-sm font-medium italic mb-6">"{rev.comment}"</p>
+                  <p className="text-zinc-600 text-sm font-medium italic mb-4">"{rev.comment}"</p>
                   <div className="flex items-center gap-3">
-                    <img
-                      src={rev.author?.avatar || defaultAvatar}
-                      className="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm"
-                      alt=""
-                    />
-                    <span className="text-[10px] font-black text-zinc-900 uppercase">
-                      {rev.author?.name || t('userProfile.defaultAuthor')}
-                    </span>
+                    <div className="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center text-[10px] font-black uppercase overflow-hidden">
+                      <img src={rev.author?.avatar || defaultAvatar} className="w-full h-full object-cover" alt="" />
+                    </div>
+                    <span className="text-[10px] font-black text-zinc-900 uppercase tracking-tighter">{rev.author?.name || 'Cliente'}</span>
                   </div>
                 </div>
               )) : (
-                <div className="col-span-2 text-center py-10 bg-zinc-50 rounded-[2rem] text-zinc-400 text-[10px] font-black uppercase tracking-[0.2em]">
-                  {t('userProfile.noReviews')}
-                </div>
+                <div className="col-span-2 text-center py-10 bg-zinc-50 rounded-[2rem] text-zinc-400 text-[10px] font-black uppercase tracking-[0.2em]">{t('profile.no_reviews_yet')}</div>
               )}
             </div>
           </section>
@@ -300,7 +274,7 @@ const UserProfile = () => {
           {/* PUBLICACIONES ACTIVAS */}
           <section>
             <h3 className="text-xs font-black text-zinc-400 uppercase tracking-[0.3em] mb-6 flex items-center gap-4">
-              {t('userProfile.activePosts')} <span className="h-[1px] flex-1 bg-zinc-100"></span>
+              {t('profile.active_posts')} <span className="h-[1px] flex-1 bg-zinc-100"></span>
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {user.posts?.map((post) => (
@@ -308,9 +282,7 @@ const UserProfile = () => {
                   <img src={post.imageUrl || post.image || "/default.png"} className="w-20 h-20 rounded-2xl object-cover shadow-sm group-hover:rotate-3 transition-transform" alt="" />
                   <div>
                     <h4 className="font-black text-zinc-900 uppercase italic tracking-tighter text-sm line-clamp-1">{post.title}</h4>
-                    <p className="text-[9px] font-black text-amber-500 uppercase tracking-widest mt-1">
-                      {t('userProfile.viewDetails')}
-                    </p>
+                    <p className="text-[9px] font-black text-amber-500 uppercase tracking-widest mt-1">{t('works.details')}</p>
                   </div>
                 </Link>
               ))}

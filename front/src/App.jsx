@@ -13,18 +13,45 @@ import UserProfile from './pages/UserProfile';
 import Search from './search/Search';
 import CreatePost from './pages/CreatePost';
 import Chat from './pages/ChatPage';
-import NotFound from './pages/NotFound'; // 👈 Importamos 404
-import ProtectedRoute from './components/ProtectedRoute'; // 👈 Importamos protección
+import NotFound from './pages/NotFound';
+import ProtectedRoute from './components/ProtectedRoute';
 import { Toaster } from 'react-hot-toast';
 import MyApplications from './pages/MyApplications';
 import LeaveReview from './pages/LeaveReview';
+import usePageTracking from './hooks/usePageTracking'; // 👈 GA4
 
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { useAuthContext } from './Context/AuthContext';
+import { GA_MEASUREMENT_ID } from './utils/analytics'; // 👈 GA4
 
-// Componente envoltorio (necesario para usar useNavigate)
+// ─── Inyección del script de GA4 ──────────────────────────────
+// Se ejecuta una sola vez al montar la app.
+// Equivale a pegar el snippet de Google en el <head> del HTML.
+function injectGAScript(measurementId) {
+  if (document.getElementById('ga4-script')) return; // evitar doble inyección
+
+  const script1 = document.createElement('script');
+  script1.id = 'ga4-script';
+  script1.async = true;
+  script1.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+  document.head.appendChild(script1);
+
+  const script2 = document.createElement('script');
+  script2.innerHTML = `
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${measurementId}', {
+      send_page_view: false
+    });
+  `;
+  // send_page_view: false porque lo manejamos manualmente con usePageTracking
+  // para que funcione correctamente con React Router (SPA)
+  document.head.appendChild(script2);
+}
+
 function AppWrapper() {
   return (
     <Router>
@@ -37,6 +64,14 @@ function App() {
   const { user, loading } = useAuthContext();
   const navigate = useNavigate();
 
+  // ─── Inicializar GA4 una sola vez ──────────────────────────
+  useEffect(() => {
+    injectGAScript(GA_MEASUREMENT_ID);
+  }, []);
+
+  // ─── Trackear cada cambio de página automáticamente ────────
+  usePageTracking();
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -46,6 +81,7 @@ function App() {
       </div>
     );
   }
+
   return (
     <>
       <Toaster
@@ -71,7 +107,7 @@ function App() {
         <Route path="/users/:userId" element={<UserProfile />} />
         <Route path="/search" element={<Search />} />
 
-        {/* Rutas Protegidas (Solo usuarios logueados) */}
+        {/* Rutas Protegidas */}
         <Route element={<ProtectedRoute />}>
           <Route path="/newPost" element={<CreatePost user={user} />} />
           <Route path="/profile" element={<Profile />} />
@@ -83,7 +119,7 @@ function App() {
           <Route path="/leave-review/:postId/:recipientId" element={<LeaveReview />} />
         </Route>
 
-        {/* Ruta 404 - Siempre al final */}
+        {/* 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

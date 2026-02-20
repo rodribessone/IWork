@@ -4,7 +4,7 @@ import { useAuthContext } from '../Context/AuthContext';
 import {
   User, MapPin, Briefcase, Plus, Trash2, Edit3,
   Check, X, Camera, Image as ImageIcon, LayoutGrid, Settings, Megaphone,
-  ShieldCheck, Wrench, Truck
+  ShieldCheck, Wrench, Truck, Star
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 export default function Profile() {
   const { t } = useTranslation();
   const [posts, setPosts] = useState([]);
+  const [reviews, setReviews] = useState([]); // Nuevo estado para reseñas
   const [user, setUser] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
@@ -67,6 +68,12 @@ export default function Profile() {
         const resPosts = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/user/${userId}`);
         const dataPosts = await resPosts.json();
         setPosts(dataPosts);
+
+        // Traer reseñas recibidas
+        const resReviews = await fetch(`${import.meta.env.VITE_API_URL}/api/reviews/user/${userId}`);
+        const dataReviews = await resReviews.json();
+        setReviews(dataReviews);
+
       } catch (err) {
         console.error("Error loading profile:", err);
       }
@@ -185,17 +192,19 @@ export default function Profile() {
         <div className="bg-white rounded-[3rem] shadow-xl shadow-zinc-200/50 overflow-hidden border border-zinc-100 relative">
           <div className="h-40 bg-zinc-900 relative">
             <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-amber-400 via-transparent to-transparent"></div>
-            <div className="absolute top-6 right-8 flex gap-3">
+
+            {/* Botones de Edición - Posición Responsive Mejorada */}
+            <div className="absolute top-4 right-4 md:top-6 md:right-8 flex gap-3 z-10">
               {!editMode ? (
-                <button onClick={() => setEditMode(true)} className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-6 py-2.5 rounded-2xl border border-white/20 font-black text-[10px] uppercase tracking-widest transition-all flex items-center gap-2">
-                  <Edit3 size={14} /> {t('profile.edit_profile')}
+                <button onClick={() => setEditMode(true)} className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-4 py-2 md:px-6 md:py-2.5 rounded-2xl border border-white/20 font-black text-[10px] uppercase tracking-widest transition-all flex items-center gap-2">
+                  <Edit3 size={14} /> <span className="hidden sm:inline">{t('profile.edit_profile')}</span>
                 </button>
               ) : (
                 <div className="flex gap-2">
-                  <button onClick={handleSaveProfile} className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-2.5 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg transition-all flex items-center gap-2">
-                    <Check size={14} /> {t('common.save')}
+                  <button onClick={handleSaveProfile} className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 md:px-6 md:py-2.5 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg transition-all flex items-center gap-2">
+                    <Check size={14} /> <span className="hidden sm:inline">{t('common.save')}</span>
                   </button>
-                  <button onClick={() => setEditMode(false)} className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-6 py-2.5 rounded-2xl border border-white/20 font-black text-[10px] uppercase tracking-widest transition-all">
+                  <button onClick={() => setEditMode(false)} className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-4 py-2 md:px-6 md:py-2.5 rounded-2xl border border-white/20 font-black text-[10px] uppercase tracking-widest transition-all">
                     {t('common.cancel')}
                   </button>
                 </div>
@@ -203,9 +212,9 @@ export default function Profile() {
             </div>
           </div>
 
-          <div className="px-10 pb-10 flex flex-col md:flex-row items-center md:items-end gap-8 -mt-16 relative">
+          <div className="px-6 md:px-10 pb-10 flex flex-col md:flex-row items-center md:items-end gap-8 -mt-16 relative">
             <div className="relative group">
-              <div className="w-40 h-40 rounded-[2.5rem] border-[6px] border-white shadow-2xl overflow-hidden bg-zinc-100">
+              <div className="w-32 h-32 md:w-40 md:h-40 rounded-[2.5rem] border-[6px] border-white shadow-2xl overflow-hidden bg-zinc-100">
                 <img
                   src={formData.avatar || `https://ui-avatars.com/api/?name=${user.name}&background=18181b&color=fbbf24&size=256&bold=true`}
                   className="w-full h-full object-cover"
@@ -221,9 +230,9 @@ export default function Profile() {
               )}
             </div>
 
-            <div className="flex-1 text-center md:text-left">
+            <div className="flex-1 text-center md:text-left w-full">
               {editMode ? (
-                <div className="space-y-3 max-w-md">
+                <div className="space-y-3 max-w-md mx-auto md:mx-0">
                   <input className="text-3xl font-black text-zinc-900 border-b-2 border-amber-400 outline-none w-full bg-transparent uppercase tracking-tighter" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
                   {user.role === 'worker' && (
                     <input className="text-amber-600 font-black uppercase text-[10px] tracking-widest block border-b border-zinc-200 outline-none w-full bg-transparent" placeholder={t('profile.profession_placeholder')} value={formData.profession} onChange={(e) => setFormData({ ...formData, profession: e.target.value })} />
@@ -232,16 +241,25 @@ export default function Profile() {
                 </div>
               ) : (
                 <div className="mb-2">
-                  <h1 className="text-4xl font-black text-zinc-900 tracking-tighter uppercase">{user.name}</h1>
+                  <h1 className="text-3xl md:text-4xl font-black text-zinc-900 tracking-tighter uppercase">{user.name}</h1>
                   <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-2 items-center">
                     {user.role === 'worker' && (
                       <span className="bg-zinc-900 text-amber-400 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
-                        {user.profession || t('people.profession')}
+                        {t(`professions.${user.profession}`) !== `professions.${user.profession}` ? t(`professions.${user.profession}`) : user.profession}
                       </span>
                     )}
                     <span className="text-zinc-400 font-bold text-xs flex items-center gap-1 uppercase tracking-widest">
-                      <MapPin size={14} className="text-amber-500" /> {user.location || t('profile.no_location')}
+                      <MapPin size={14} className="text-amber-500" /> {user.location || t('profile.not_specified')}
                     </span>
+                    {/* Estrellas (Rating) */}
+                    <div className="flex items-center gap-1 bg-zinc-100 px-3 py-1 rounded-full">
+                      <div className="flex text-amber-400">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} size={12} fill={i < Math.round(user.rating || 0) ? "currentColor" : "none"} className={i < Math.round(user.rating || 0) ? "" : "text-zinc-300"} />
+                        ))}
+                      </div>
+                      <span className="text-[10px] font-black text-zinc-500">({user.reviewsCount || 0})</span>
+                    </div>
                   </div>
                 </div>
               )}
@@ -401,6 +419,39 @@ export default function Profile() {
                 ))}
               </div>
             </section>
+
+            {/* SECCIÓN DE RESEÑAS RECIBIDAS (NUEVO) */}
+            {user.role === 'worker' && (
+              <section className="bg-white p-10 rounded-[3rem] border border-zinc-100 shadow-sm">
+                <h3 className="text-xl font-black text-zinc-900 mb-6 uppercase tracking-tighter flex items-center gap-3">
+                  <Star className="text-amber-500" /> {t('reviews.client_reviews')}
+                </h3>
+
+                {reviews.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {reviews.map((rev, i) => (
+                      <div key={i} className="bg-zinc-50 p-6 rounded-[2rem] border border-zinc-100">
+                        <div className="flex justify-between items-start mb-2">
+                          <div className="flex text-amber-400 gap-0.5">
+                            {[...Array(rev.rating)].map((_, idx) => <Star key={idx} size={12} fill="currentColor" />)}
+                          </div>
+                          <span className="text-[10px] text-zinc-400 font-bold">{new Date(rev.createdAt).toLocaleDateString()}</span>
+                        </div>
+                        <p className="text-sm text-zinc-600 italic mb-3">"{rev.comment}"</p>
+                        <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 rounded-full bg-zinc-200 overflow-hidden">
+                            <img src={rev.author?.avatar || defaultAvatar} className="w-full h-full object-cover" alt="" />
+                          </div>
+                          <span className="text-xs font-black text-zinc-800 uppercase">{rev.author?.name || "Cliente"}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-zinc-400 text-sm font-medium italic">{t('profile.no_reviews_yet') || "No reviews yet."}</p>
+                )}
+              </section>
+            )}
 
             <section className="bg-white p-10 rounded-[3rem] border border-zinc-100 shadow-sm">
               <div className="flex items-center justify-between mb-8">
