@@ -88,14 +88,18 @@
     "apply": "Postuler Maintenant",
     "posted_by": "Publié par",
     "salary": "Budget/Salaire",
-    "details": "Voir les Détails"
+    "details": "Voir les Détails",
+    "showing": "Affichage de",
+    "results": "résultats"
   },
   "people": {
     "title": "Trouver des Professionnels",
     "skills": "Compétences",
     "view_profile": "Voir le Profil",
     "no_people": "Aucun professionnel trouvé.",
-    "profession": "Profession"
+    "profession": "Profession",
+    "showing": "Affichage de",
+    "experts": "experts"
   },
   "profile": {
     "loading_panel": "Chargement du Tableau de Bord...",
@@ -135,7 +139,10 @@
     "about": "À propos de moi",
     "experience": "Expérience",
     "skills": "Compétences",
-    "contact_me": "Me Contacter"
+    "contact_me": "Me Contacter",
+    "no_images": "Aucune image disponible",
+    "no_skills": "Aucune compétence répertoriée",
+    "no_experience": "Aucune expérience enregistrée"
   },
   "userProfile": {
     "loading": "Chargement du Profil...",
@@ -164,7 +171,21 @@
     "notFound": "Annonce introuvable",
     "keyInfo": "Informations Clés",
     "ownPostTitle": "C'est votre annonce",
-    "ownPostDesc": "Gérez les candidats depuis le tableau de bord."
+    "ownPostDesc": "Gérez les candidats depuis le tableau de bord.",
+    "boost_subtitle": "Boostez votre offre aujourd'hui",
+    "cover_image": "Image de couverture",
+    "click_to_upload": "Cliquez pour télécharger",
+    "upload_hint": "JPG, PNG (Max 5 Mo)",
+    "edit_subtitle": "Mettez à jour vos informations pour attirer plus de clients.",
+    "select_category": "Sélectionner une catégorie...",
+    "categories": {
+      "carpintería": "Menuiserie",
+      "pintura": "Peinture",
+      "jardinería": "Jardinage",
+      "mudanza": "Déménagement",
+      "electricidad": "Électricité",
+      "limpieza": "Nettoyage"
+    }
   },
   "postDetail": {
     "notFound": "Annonce introuvable",
@@ -297,7 +318,8 @@
       "missingIds": "Informations manquantes. Veuillez réessayer.",
       "ratingRequired": "Veuillez sélectionner une note en étoiles.",
       "generic": "Une erreur est survenue. Veuillez réessayer."
-    }
+    },
+    "already_sent": "Vous avez déjà soumis un avis pour ce travail !"
   },
   "chat": {
     "sidebarTitle": "Conversations",

@@ -88,14 +88,18 @@
     "apply": "Candidatar-se Agora",
     "posted_by": "Publicado por",
     "salary": "Orçamento/Salário",
-    "details": "Ver Detalhes"
+    "details": "Ver Detalhes",
+    "showing": "Mostrando",
+    "results": "resultados"
   },
   "people": {
     "title": "Encontrar Profissionais",
     "skills": "Habilidades",
     "view_profile": "Ver Perfil",
     "no_people": "Nenhum profissional encontrado.",
-    "profession": "Profissão"
+    "profession": "Profissão",
+    "showing": "Mostrando",
+    "experts": "especialistas"
   },
   "profile": {
     "loading_panel": "Carregando Painel...",
@@ -135,7 +139,10 @@
     "about": "Sobre mim",
     "experience": "Experiência",
     "skills": "Habilidades",
-    "contact_me": "Entre em Contato"
+    "contact_me": "Entre em Contato",
+    "no_images": "Sem imagens disponíveis",
+    "no_skills": "Sem habilidades cadastradas",
+    "no_experience": "Sem experiência cadastrada"
   },
   "userProfile": {
     "loading": "Carregando Perfil...",
@@ -164,7 +171,21 @@
     "notFound": "Anúncio não encontrado",
     "keyInfo": "Informações Chave",
     "ownPostTitle": "Este é o seu anúncio",
-    "ownPostDesc": "Gerencie os candidatos pelo painel."
+    "ownPostDesc": "Gerencie os candidatos pelo painel.",
+    "boost_subtitle": "Impulsione seu trabalho hoje",
+    "cover_image": "Imagem de capa",
+    "click_to_upload": "Clique para enviar",
+    "upload_hint": "JPG, PNG (Máx. 5MB)",
+    "edit_subtitle": "Atualize suas informações para atrair mais clientes.",
+    "select_category": "Selecionar categoria...",
+    "categories": {
+      "carpintería": "Carpintaria",
+      "pintura": "Pintura",
+      "jardinería": "Jardinagem",
+      "mudanza": "Mudanças",
+      "electricidad": "Eletricidade",
+      "limpieza": "Limpeza"
+    }
   },
   "postDetail": {
     "notFound": "Anúncio não encontrado",
@@ -297,7 +318,8 @@
       "missingIds": "Informações necessárias ausentes. Por favor, tente novamente.",
       "ratingRequired": "Por favor, selecione uma avaliação em estrelas.",
       "generic": "Algo deu errado. Por favor, tente novamente."
-    }
+    },
+    "already_sent": "Você já enviou uma avaliação para este trabalho!"
   },
   "chat": {
     "sidebarTitle": "Conversas",
@@ -342,5 +364,20 @@
     "comment_placeholder": "Escreva seu comentário aqui...",
     "submit": "Enviar Avaliação",
     "client_reviews": "Avaliações dos Clientes"
+  },
+  "validation": {
+    "email_invalid": "Por favor, insira um endereço de e-mail válido.",
+    "password_short": "A senha deve ter pelo menos 8 caracteres.",
+    "password_weak": "A senha deve incluir letras e números.",
+    "phone_invalid": "Insira um número de telefone válido (mínimo 7 dígitos).",
+    "name_short": "O nome deve ter pelo menos 2 caracteres.",
+    "name_invalid": "O nome só pode conter letras e espaços.",
+    "field_required": "Este campo é obrigatório."
+  },
+  "register": {
+    "client_desc": "Quero contratar profissionais.",
+    "worker_desc": "Ofereço meus serviços.",
+    "continue_client": "Continuar como Cliente",
+    "continue_worker": "Continuar como Profissional"
   }
 }

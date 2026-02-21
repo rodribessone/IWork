@@ -466,14 +466,12 @@ export default function Profile() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {posts.length > 0 ? posts.map((post) => (
                   <div key={post._id} className="group bg-zinc-50 border border-zinc-100 p-4 rounded-[2rem] hover:bg-white hover:shadow-xl hover:shadow-zinc-200/50 transition-all">
-                    <div className="flex gap-4 items-center mb-4">
-                      <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-md">
-                        <img src={post.imageUrl || "/default-product.png"} className="w-full h-full object-cover" alt="" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-black text-zinc-900 text-sm uppercase truncate tracking-tight">{post.title}</h4>
-                        <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest">{post.category}</span>
-                      </div>
+                    <div className="w-full h-40 overflow-hidden">
+                      <img src={post.imageUrl || "/default-product.png"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="" />
+                    </div>
+                    <div className="p-4 pb-3">
+                      <h4 className="font-black text-zinc-900 text-sm uppercase truncate tracking-tight mb-1">{post.title}</h4>
+                      <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest">{post.category}</span>
                     </div>
                     <div className="flex gap-2">
                       <button onClick={() => navigate(`/ownerPostView/${post._id}`)} className="flex-[2] bg-zinc-900 text-white text-[10px] font-black uppercase py-3 rounded-xl tracking-widest hover:bg-zinc-800 transition-colors">{t('profile.manage')}</button>

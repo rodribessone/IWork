@@ -6,6 +6,9 @@ import { Camera, MapPin, Tag, MessageSquare, Mail, Type, X } from 'lucide-react'
 import toast from "react-hot-toast";
 import { useTranslation } from 'react-i18next';
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_REGEX = /^[\+\d][\d\s\-\(\)]{6,}$/;
+
 export default function CreatePost() {
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -24,6 +27,7 @@ export default function CreatePost() {
     const [image, setImage] = useState(null);
     const [preview, setPreview] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [fieldErrors, setFieldErrors] = useState({});
 
     useEffect(() => {
         if (user) {
@@ -50,12 +54,22 @@ export default function CreatePost() {
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFieldErrors(prev => ({ ...prev, [e.target.name]: '' }));
+    };
+
+    const validate = () => {
+        const errors = {};
+        if (formData.whatsapp && !PHONE_REGEX.test(formData.whatsapp))
+            errors.whatsapp = t('validation.phone_invalid');
+        setFieldErrors(errors);
+        return Object.keys(errors).length === 0;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!token) return toast.error(t('common.error'));
         if (!image) return toast.error(t('common.required'));
+        if (!validate()) return;
 
         setLoading(true);
         const loadingToast = toast.loading(t('common.loading'));
@@ -96,7 +110,7 @@ export default function CreatePost() {
                         <Mail size={32} />
                     </div>
                     <h2 className="text-xl font-black text-zinc-900 uppercase tracking-tighter mb-2">{t('auth.login_button')}</h2>
-                    <p className="text-zinc-500 text-sm font-medium mb-6">Required access.</p>
+                    <p className="text-zinc-500 text-sm font-medium mb-6">{t('validation.field_required')}</p>
                     <button onClick={() => navigate("/login")} className="w-full bg-zinc-900 text-amber-400 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-zinc-800 transition-all">{t('auth.login_button')}</button>
                 </div>
             </div>
@@ -109,15 +123,15 @@ export default function CreatePost() {
                 <h1 className="text-4xl md:text-5xl font-black text-zinc-900 tracking-tighter uppercase italic">{t('post.create_title')}</h1>
                 <p className="text-zinc-500 font-bold text-sm mt-2 uppercase tracking-widest flex items-center gap-2">
                     <span className="w-8 h-[2px] bg-amber-400"></span>
-                    Boost your work today
+                    {t('post.boost_subtitle')}
                 </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <form onSubmit={handleSubmit} noValidate className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                 {/* COLUMNA IZQUIERDA: CARGA DE IMAGEN */}
                 <div className="lg:col-span-1">
-                    <label className="block text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-3 ml-2">Cover Image</label>
+                    <label className="block text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-3 ml-2">{t('post.cover_image')}</label>
                     <div
                         onClick={() => !preview && fileInputRef.current.click()}
                         className={`relative aspect-[4/5] rounded-[2.5rem] border-4 border-dashed transition-all overflow-hidden flex flex-col items-center justify-center cursor-pointer
@@ -139,8 +153,8 @@ export default function CreatePost() {
                                 <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mx-auto mb-4 text-zinc-400">
                                     <Camera size={32} />
                                 </div>
-                                <p className="text-zinc-900 font-black text-[10px] uppercase tracking-widest">Click to upload</p>
-                                <p className="text-zinc-400 text-[9px] font-bold mt-1 uppercase">JPG, PNG (Max 5MB)</p>
+                                <p className="text-zinc-900 font-black text-[10px] uppercase tracking-widest">{t('post.click_to_upload')}</p>
+                                <p className="text-zinc-400 text-[9px] font-bold mt-1 uppercase">{t('post.upload_hint')}</p>
                             </div>
                         )}
                     </div>
@@ -178,13 +192,10 @@ export default function CreatePost() {
                                     className="w-full bg-zinc-50 border-2 border-zinc-50 rounded-2xl px-6 py-4 focus:border-amber-400 focus:bg-white outline-none transition-all font-bold text-zinc-700 appearance-none cursor-pointer"
                                     onChange={handleChange}
                                 >
-                                    <option value="">Select...</option>
-                                    <option value="carpintería">Carpintería</option>
-                                    <option value="pintura">Pintura</option>
-                                    <option value="jardinería">Jardinería</option>
-                                    <option value="mudanza">Mudanza</option>
-                                    <option value="electricidad">Electricidad</option>
-                                    <option value="limpieza">Limpieza</option>
+                                    <option value="">{t('post.select_category')}</option>
+                                    {Object.entries(t('post.categories', { returnObjects: true })).map(([value, label]) => (
+                                        <option key={value} value={value}>{label}</option>
+                                    ))}
                                 </select>
                             </div>
 
@@ -224,12 +235,13 @@ export default function CreatePost() {
                             <div className="relative">
                                 <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-2 ml-2 block">WhatsApp</label>
                                 <input
-                                    type="text"
+                                    type="tel"
                                     name="whatsapp"
-                                    placeholder="+54 9 11 ..."
-                                    className="w-full bg-zinc-50 border-2 border-zinc-50 rounded-2xl px-6 py-4 focus:border-amber-400 focus:bg-white outline-none transition-all font-bold text-zinc-700 placeholder:text-zinc-300"
+                                    placeholder="+61 4XX XXX XXX"
+                                    className={`w-full bg-zinc-50 border-2 rounded-2xl px-6 py-4 focus:bg-white outline-none transition-all font-bold text-zinc-700 placeholder:text-zinc-300 ${fieldErrors.whatsapp ? 'border-red-400 bg-red-50' : 'border-zinc-50 focus:border-amber-400'}`}
                                     onChange={handleChange}
                                 />
+                                {fieldErrors.whatsapp && <p className="text-red-500 text-xs mt-1 ml-2">{fieldErrors.whatsapp}</p>}
                             </div>
 
                             {/* Email */}

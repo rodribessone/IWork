@@ -3,12 +3,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_REGEX = /^[\+\d][\d\s\-\(\)]{6,}$/;
+const NAME_REGEX = /^[a-zA-ZÀ-ÿ\s'\-]{2,}$/;
+const PWD_REGEX = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
+
 export default function Register() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [role, setRole] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const [formData, setFormData] = useState({
     name: '',
@@ -22,6 +28,23 @@ export default function Register() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFieldErrors(prev => ({ ...prev, [e.target.name]: '' }));
+  };
+
+  const validate = () => {
+    const errors = {};
+    if (!NAME_REGEX.test(formData.name))
+      errors.name = formData.name.length < 2 ? t('validation.name_short') : t('validation.name_invalid');
+    if (!EMAIL_REGEX.test(formData.email))
+      errors.email = t('validation.email_invalid');
+    if (!PWD_REGEX.test(formData.password))
+      errors.password = formData.password.length < 8 ? t('validation.password_short') : t('validation.password_weak');
+    if (role === 'worker' && !formData.phone)
+      errors.phone = t('validation.field_required');
+    else if (role === 'worker' && formData.phone && !PHONE_REGEX.test(formData.phone))
+      errors.phone = t('validation.phone_invalid');
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
   };
 
   const handleRoleSelect = (selectedRole) => {
@@ -31,6 +54,7 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validate()) return;
     setIsSubmitting(true);
 
     try {
@@ -74,9 +98,9 @@ export default function Register() {
               🤝
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('home.cta_hire')}</h3>
-            <p className="text-gray-500 mb-6">Quiero contratar profesionales.</p>
+            <p className="text-gray-500 mb-6">{t('register.client_desc') || 'Quiero contratar profesionales.'}</p>
             <button className="w-full py-3 rounded-xl font-bold bg-gray-50 hover:bg-yellow-400 transition-colors">
-              Continuar como Cliente
+              {t('register.continue_client') || 'Continuar como Cliente'}
             </button>
           </div>
 
@@ -89,9 +113,9 @@ export default function Register() {
               👷
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('home.cta_find_work')}</h3>
-            <p className="text-gray-500 mb-6">Ofrezco mis servicios.</p>
+            <p className="text-gray-500 mb-6">{t('register.worker_desc') || 'Ofrezco mis servicios.'}</p>
             <button className="w-full py-3 rounded-xl font-bold bg-gray-50 hover:bg-blue-500 hover:text-white transition-colors">
-              Continuar como Profesional
+              {t('register.continue_worker') || 'Continuar como Profesional'}
             </button>
           </div>
         </div>
@@ -115,18 +139,25 @@ export default function Register() {
           {t('auth.register_button')}
         </h1>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} noValidate className="space-y-5">
           <div>
             <label className="block text-sm font-bold text-gray-700 mb-1">{t('auth.name')}</label>
-            <input name="name" onChange={handleChange} required className="w-full px-4 py-2 border rounded-xl" placeholder="Ej. Juan Pérez" />
+            <input name="name" onChange={handleChange} required placeholder="Ej. Juan Pérez"
+              className={`w-full px-4 py-2 border rounded-xl outline-none focus:ring-2 transition-colors ${fieldErrors.name ? 'border-red-400 bg-red-50 focus:ring-red-300' : 'border-gray-200 focus:ring-yellow-400'}`} />
+            {fieldErrors.name && <p className="text-red-500 text-xs mt-1">{fieldErrors.name}</p>}
           </div>
           <div>
             <label className="block text-sm font-bold text-gray-700 mb-1">{t('auth.email')}</label>
-            <input name="email" type="email" onChange={handleChange} required className="w-full px-4 py-2 border rounded-xl" placeholder="tu@email.com" />
+            <input name="email" type="email" onChange={handleChange} required placeholder="tu@email.com"
+              className={`w-full px-4 py-2 border rounded-xl outline-none focus:ring-2 transition-colors ${fieldErrors.email ? 'border-red-400 bg-red-50 focus:ring-red-300' : 'border-gray-200 focus:ring-yellow-400'}`} />
+            {fieldErrors.email && <p className="text-red-500 text-xs mt-1">{fieldErrors.email}</p>}
           </div>
           <div>
             <label className="block text-sm font-bold text-gray-700 mb-1">{t('auth.password')}</label>
-            <input name="password" type="password" onChange={handleChange} required className="w-full px-4 py-2 border rounded-xl" placeholder="••••••••" />
+            <input name="password" type="password" onChange={handleChange} required placeholder="Mínimo 8 caracteres, letras y números"
+              className={`w-full px-4 py-2 border rounded-xl outline-none focus:ring-2 transition-colors ${fieldErrors.password ? 'border-red-400 bg-red-50 focus:ring-red-300' : 'border-gray-200 focus:ring-yellow-400'}`} />
+            {fieldErrors.password && <p className="text-red-500 text-xs mt-1">{fieldErrors.password}</p>}
+            {!fieldErrors.password && <p className="text-gray-400 text-[10px] mt-1">Mínimo 8 caracteres, debe incluir letras y números.</p>}
           </div>
           <div>
             <label className="block text-sm font-bold text-gray-700 mb-1">{t('profile.location')}</label>
@@ -154,14 +185,10 @@ export default function Register() {
 
               <div>
                 <label className="block text-sm font-bold text-blue-700 mb-1">Teléfono / WhatsApp</label>
-                <input
-                  name="phone"
-                  type="tel"
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-400"
-                  placeholder="Ej. 11 1234 5678"
-                />
+                <input name="phone" type="tel" onChange={handleChange} required placeholder="+61 4XX XXX XXX"
+                  className={`w-full px-4 py-2 border rounded-xl outline-none focus:ring-2 transition-colors ${fieldErrors.phone ? 'border-red-400 bg-red-50 focus:ring-red-300' : 'border-gray-200 focus:ring-blue-400'}`} />
+                {fieldErrors.phone && <p className="text-red-500 text-xs mt-1">{fieldErrors.phone}</p>}
+                {!fieldErrors.phone && <p className="text-gray-400 text-[10px] mt-1">Incluya el código de país. Ej: +61 412 345 678</p>}
               </div>
             </>
           )}

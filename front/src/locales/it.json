@@ -88,14 +88,18 @@
     "apply": "Candidati Ora",
     "posted_by": "Pubblicato da",
     "salary": "Budget/Stipendio",
-    "details": "Vedi Dettagli"
+    "details": "Vedi Dettagli",
+    "showing": "Mostrando",
+    "results": "risultati"
   },
   "people": {
     "title": "Trova Professionisti",
     "skills": "Competenze",
     "view_profile": "Vedi Profilo",
     "no_people": "Nessun professionista trovato.",
-    "profession": "Professione"
+    "profession": "Professione",
+    "showing": "Mostrando",
+    "experts": "esperti"
   },
   "profile": {
     "loading_panel": "Caricamento Pannello...",
@@ -135,7 +139,10 @@
     "about": "Chi sono",
     "experience": "Esperienza",
     "skills": "Competenze",
-    "contact_me": "Contattami"
+    "contact_me": "Contattami",
+    "no_images": "Nessuna immagine disponibile",
+    "no_skills": "Nessuna competenza elencata",
+    "no_experience": "Nessuna esperienza registrata"
   },
   "userProfile": {
     "loading": "Caricamento Profilo...",
@@ -164,7 +171,21 @@
     "notFound": "Annuncio non trovato",
     "keyInfo": "Informazioni Chiave",
     "ownPostTitle": "Questo è il tuo annuncio",
-    "ownPostDesc": "Gestisci i candidati dal pannello."
+    "ownPostDesc": "Gestisci i candidati dal pannello.",
+    "boost_subtitle": "Promuovi il tuo lavoro oggi",
+    "cover_image": "Immagine di copertina",
+    "click_to_upload": "Clicca per caricare",
+    "upload_hint": "JPG, PNG (Max 5MB)",
+    "edit_subtitle": "Aggiorna le tue informazioni per attrarre più clienti.",
+    "select_category": "Seleziona categoria...",
+    "categories": {
+      "carpintería": "Falegnameria",
+      "pintura": "Pittura",
+      "jardinería": "Giardinaggio",
+      "mudanza": "Traslochi",
+      "electricidad": "Elettricità",
+      "limpieza": "Pulizie"
+    }
   },
   "postDetail": {
     "notFound": "Annuncio non trovato",
@@ -297,7 +318,8 @@
       "missingIds": "Informazioni mancanti. Riprova.",
       "ratingRequired": "Seleziona una valutazione a stelle.",
       "generic": "Qualcosa è andato storto. Riprova."
-    }
+    },
+    "already_sent": "Hai già inviato una recensione per questo lavoro!"
   },
   "chat": {
     "sidebarTitle": "Conversazioni",
@@ -342,5 +364,20 @@
     "comment_placeholder": "Scrivi il tuo commento qui...",
     "submit": "Invia Recensione",
     "client_reviews": "Recensioni dei Clienti"
+  },
+  "validation": {
+    "email_invalid": "Inserire un indirizzo email valido.",
+    "password_short": "La password deve avere almeno 8 caratteri.",
+    "password_weak": "La password deve contenere lettere e numeri.",
+    "phone_invalid": "Inserire un numero di telefono valido (minimo 7 cifre).",
+    "name_short": "Il nome deve avere almeno 2 caratteri.",
+    "name_invalid": "Il nome può contenere solo lettere e spazi.",
+    "field_required": "Questo campo è obbligatorio."
+  },
+  "register": {
+    "client_desc": "Voglio assumere professionisti.",
+    "worker_desc": "Offro i miei servizi.",
+    "continue_client": "Continua come Cliente",
+    "continue_worker": "Continua come Professionista"
   }
 }

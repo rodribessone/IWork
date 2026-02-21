@@ -161,7 +161,7 @@ export default function ChatWindow({ conversation, token }) {
 
                 <div className="hidden sm:block text-right">
                     <p className="text-xs text-gray-400 uppercase font-bold">{t('post.title_label')}</p>
-                    <p className="text-sm text-amber-600 font-semibold truncate max-w-[200px]">
+                    <p className="text-sm text-amber-600 font-semibold truncate max-w-[120px] sm:max-w-[200px]">
                         {conversation.postId?.title || t('post.notFound')}
                     </p>
                 </div>

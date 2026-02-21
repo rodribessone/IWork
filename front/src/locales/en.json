@@ -88,14 +88,18 @@
     "apply": "Apply Now",
     "posted_by": "Posted by",
     "salary": "Budget/Salary",
-    "details": "View Details"
+    "details": "View Details",
+    "showing": "Showing",
+    "results": "results"
   },
   "people": {
     "title": "Find Professionals",
     "skills": "Skills",
     "view_profile": "View Profile",
     "no_people": "No professionals found.",
-    "profession": "Profession"
+    "profession": "Profession",
+    "showing": "Showing",
+    "experts": "experts"
   },
   "profile": {
     "loading_panel": "Loading Dashboard...",
@@ -135,7 +139,10 @@
     "about": "About me",
     "experience": "Experience",
     "skills": "Skills",
-    "contact_me": "Contact Me"
+    "contact_me": "Contact Me",
+    "no_images": "No images available",
+    "no_skills": "No skills listed",
+    "no_experience": "No experience listed"
   },
   "userProfile": {
     "loading": "Loading Profile...",
@@ -164,7 +171,21 @@
     "notFound": "Job post not found",
     "keyInfo": "Key Information",
     "ownPostTitle": "This is your post",
-    "ownPostDesc": "Manage candidates from the dashboard."
+    "ownPostDesc": "Manage candidates from the dashboard.",
+    "boost_subtitle": "Boost your job today",
+    "cover_image": "Cover Image",
+    "click_to_upload": "Click to upload",
+    "upload_hint": "JPG, PNG (Max 5MB)",
+    "edit_subtitle": "Update your information to attract more clients.",
+    "select_category": "Select category...",
+    "categories": {
+      "carpintería": "Carpentry",
+      "pintura": "Painting",
+      "jardinería": "Gardening",
+      "mudanza": "Moving",
+      "electricidad": "Electrical",
+      "limpieza": "Cleaning"
+    }
   },
   "postDetail": {
     "notFound": "Post not found",
@@ -297,7 +318,8 @@
       "missingIds": "Missing required information. Please try again.",
       "ratingRequired": "Please select a star rating.",
       "generic": "Something went wrong. Please try again."
-    }
+    },
+    "already_sent": "You have already submitted a review for this job!"
   },
   "chat": {
     "sidebarTitle": "Conversations",
@@ -342,5 +364,20 @@
     "comment_placeholder": "Write your comment here...",
     "submit": "Submit Review",
     "client_reviews": "Client Reviews"
+  },
+  "validation": {
+    "email_invalid": "Please enter a valid email address.",
+    "password_short": "Password must be at least 8 characters.",
+    "password_weak": "Password must include letters and numbers.",
+    "phone_invalid": "Enter a valid phone number (minimum 7 digits).",
+    "name_short": "Name must be at least 2 characters.",
+    "name_invalid": "Name can only contain letters and spaces.",
+    "field_required": "This field is required."
+  },
+  "register": {
+    "client_desc": "I want to hire professionals.",
+    "worker_desc": "I offer my services.",
+    "continue_client": "Continue as Client",
+    "continue_worker": "Continue as Professional"
   }
 }

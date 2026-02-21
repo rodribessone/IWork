@@ -86,14 +86,14 @@ const UserProfile = () => {
     </div>
   );
 
-  if (!user) return <div className="text-center mt-20 font-black text-zinc-400">USER NOT FOUND</div>;
+  if (!user) return <div className="text-center mt-20 font-black text-zinc-400">{t('userProfile.notFound') || 'Usuario no encontrado'}</div>;
 
   return (
     <div className="max-w-7xl mx-auto pb-20 px-4">
 
       {/* HEADER / COVER AREA */}
-      <div className="relative mt-6 mb-24">
-        <div className="h-48 md:h-64 bg-zinc-900 rounded-[3rem] overflow-hidden relative">
+      <div className="relative mt-6 mb-8">
+        <div className="h-52 md:h-60 bg-zinc-900 rounded-[3rem] overflow-hidden relative">
           <div className="absolute inset-0 opacity-30 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
           <div className="absolute inset-0 bg-gradient-to-tr from-zinc-900 via-zinc-900/50 to-amber-500/20"></div>
 
@@ -106,11 +106,11 @@ const UserProfile = () => {
         </div>
 
         {/* INFO DE PERFIL FLOTANTE */}
-        <div className="relative -mt-20 md:-mt-24 px-8 flex flex-col md:flex-row items-center md:items-end gap-6 z-20">
+        <div className="relative -mt-12 md:-mt-16 px-4 md:px-8 flex flex-col md:flex-row items-center md:items-end gap-6 z-20">
           <div className="relative shrink-0">
             <img
               src={user.avatar || `https://ui-avatars.com/api/?name=${user.name}&background=random&size=256`}
-              className="w-40 h-40 md:w-48 md:h-48 rounded-[2.5rem] border-8 border-white shadow-2xl object-cover bg-white transition-transform group-hover:scale-[1.02]"
+              className="w-36 h-36 md:w-44 md:h-44 rounded-[2rem] border-4 border-white shadow-2xl object-cover bg-white"
               alt={user.name}
               onError={(e) => { e.target.src = defaultAvatar; }}
             />
@@ -156,7 +156,7 @@ const UserProfile = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-20">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-8">
 
         {/* COLUMNA IZQUIERDA: STATS Y INFO (4 cols) */}
         <div className="lg:col-span-4 space-y-8">
@@ -167,7 +167,7 @@ const UserProfile = () => {
                 <span key={i} className="bg-white text-zinc-800 px-4 py-2 rounded-xl text-[10px] font-black uppercase border border-zinc-200 shadow-sm">
                   {s}
                 </span>
-              )) : <p className="text-zinc-400 text-[10px] italic uppercase">No skills listed</p>}
+              )) : <p className="text-zinc-400 text-[10px] italic uppercase">{t('profile.no_skills')}</p>}
             </div>
           </div>
 
@@ -218,7 +218,7 @@ const UserProfile = () => {
                   </div>
                 ))
               ) : (
-                <div className="p-8 bg-zinc-50 rounded-[2rem] border border-dashed border-zinc-200 text-zinc-400 text-xs font-bold uppercase text-center">No experience listed</div>
+                <div className="p-8 bg-zinc-50 rounded-[2rem] border border-dashed border-zinc-200 text-zinc-400 text-xs font-bold uppercase text-center">{t('profile.no_experience')}</div>
               )}
             </div>
           </section>
@@ -240,7 +240,7 @@ const UserProfile = () => {
             ) : (
               <div className="bg-zinc-50 border-2 border-dashed border-zinc-200 rounded-[2rem] p-12 text-center">
                 <ImageIcon className="mx-auto text-zinc-300 mb-2" size={32} />
-                <p className="text-zinc-400 text-[10px] font-black uppercase tracking-widest">No images available</p>
+                <p className="text-zinc-400 text-[10px] font-black uppercase tracking-widest">{t('profile.no_images')}</p>
               </div>
             )}
           </section>

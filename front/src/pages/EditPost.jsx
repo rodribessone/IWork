@@ -8,6 +8,9 @@ import {
 import toast from "react-hot-toast";
 import { useTranslation } from 'react-i18next';
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_REGEX = /^[\+\d][\d\s\-\(\)]{6,}$/;
+
 export default function EditPost() {
   const { t } = useTranslation();
   const { id } = useParams();
@@ -16,6 +19,7 @@ export default function EditPost() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const { token } = useAuthContext();
 
@@ -37,6 +41,17 @@ export default function EditPost() {
 
   const handleChange = (e) => {
     setPost({ ...post, [e.target.name]: e.target.value });
+    setFieldErrors(prev => ({ ...prev, [e.target.name]: '' }));
+  };
+
+  const validate = () => {
+    const errors = {};
+    if (post.email && !EMAIL_REGEX.test(post.email))
+      errors.email = t('validation.email_invalid');
+    if (post.whatsapp && !PHONE_REGEX.test(post.whatsapp))
+      errors.whatsapp = t('validation.phone_invalid');
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = async (e) => {
@@ -46,6 +61,7 @@ export default function EditPost() {
       return;
     }
 
+    if (!validate()) return;
     setSaving(true);
     const loadingToast = toast.loading(t('common.loading'));
 
@@ -106,11 +122,11 @@ export default function EditPost() {
             <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
             <div className="relative z-10">
               <h1 className="text-4xl font-black tracking-tighter uppercase mb-2">{t('post.edit_title')}</h1>
-              <p className="text-zinc-400 font-medium">Update your service information to attract more clients.</p>
+              <p className="text-zinc-400 font-medium">{t('post.edit_subtitle')}</p>
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="p-10">
+          <form onSubmit={handleSubmit} noValidate className="p-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
               {/* Columna Izquierda: Info Principal */}
@@ -183,12 +199,14 @@ export default function EditPost() {
                       <Phone size={14} /> WhatsApp
                     </label>
                     <input
-                      type="text"
+                      type="tel"
                       name="whatsapp"
                       value={post.whatsapp || ""}
                       onChange={handleChange}
-                      className="w-full bg-zinc-50 border border-zinc-200 rounded-2xl px-4 py-3.5 focus:ring-2 focus:ring-amber-400 outline-none transition-all font-medium text-zinc-800"
+                      placeholder="+61 4XX XXX XXX"
+                      className={`w-full bg-zinc-50 border rounded-2xl px-4 py-3.5 focus:ring-2 outline-none transition-all font-medium text-zinc-800 ${fieldErrors.whatsapp ? 'border-red-400 bg-red-50 focus:ring-red-300' : 'border-zinc-200 focus:ring-amber-400'}`}
                     />
+                    {fieldErrors.whatsapp && <p className="text-red-500 text-xs mt-1">{fieldErrors.whatsapp}</p>}
                   </div>
 
                   <div>
@@ -200,8 +218,9 @@ export default function EditPost() {
                       name="email"
                       value={post.email || ""}
                       onChange={handleChange}
-                      className="w-full bg-zinc-50 border border-zinc-200 rounded-2xl px-4 py-3.5 focus:ring-2 focus:ring-amber-400 outline-none transition-all font-medium text-zinc-800"
+                      className={`w-full bg-zinc-50 border rounded-2xl px-4 py-3.5 focus:ring-2 outline-none transition-all font-medium text-zinc-800 ${fieldErrors.email ? 'border-red-400 bg-red-50 focus:ring-red-300' : 'border-zinc-200 focus:ring-amber-400'}`}
                     />
+                    {fieldErrors.email && <p className="text-red-500 text-xs mt-1">{fieldErrors.email}</p>}
                   </div>
                 </div>
 
@@ -209,7 +228,7 @@ export default function EditPost() {
                 <div className="p-4 bg-amber-50 rounded-2xl border border-amber-100 flex gap-3 mt-6">
                   <AlertCircle size={20} className="text-amber-600 shrink-0" />
                   <p className="text-[11px] text-amber-800 leading-relaxed">
-                    Updating your info helps you get more clients.
+                    {t('post.edit_subtitle')}
                   </p>
                 </div>
               </div>

@@ -15,8 +15,14 @@ export const createPost = async (req, res) => {
       location,
       whatsapp,
       email,
-      imageUrl
     } = req.body;
+
+    // La URL la pone Cloudinary en req.file, NO en req.body
+    const imageUrl = req.file?.path || req.file?.secure_url || null;
+
+    if (!imageUrl) {
+      return res.status(400).json({ error: "La imagen es obligatoria" });
+    }
 
     const newPost = new Post({
       title,
