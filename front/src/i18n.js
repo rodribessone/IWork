@@ -21,6 +21,15 @@ i18n
             it: { translation: it },
         },
         fallbackLng: "en", // Si no encuentra el idioma, usa inglés
+        detection: {
+            // Orden de detección: primero localStorage (idioma elegido por el usuario),
+            // luego el idioma del navegador, luego la URL
+            order: ['localStorage', 'navigator', 'htmlTag'],
+            // Clave en localStorage donde se guarda la elección del usuario
+            lookupLocalStorage: 'iwork-language',
+            // Guardar la detección automática en localStorage para próximas visitas
+            caches: ['localStorage'],
+        },
         interpolation: {
             escapeValue: false, // React ya protege contra XSS
         },
