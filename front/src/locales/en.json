@@ -185,7 +185,8 @@
       "mudanza": "Moving",
       "electricidad": "Electrical",
       "limpieza": "Cleaning"
-    }
+    },
+    "general_info": "General Info"
   },
   "postDetail": {
     "notFound": "Post not found",

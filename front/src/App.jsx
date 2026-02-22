@@ -32,24 +32,19 @@ import { GA_MEASUREMENT_ID } from './utils/analytics'; // 👈 GA4
 function injectGAScript(measurementId) {
   if (document.getElementById('ga4-script')) return; // evitar doble inyección
 
-  const script1 = document.createElement('script');
-  script1.id = 'ga4-script';
-  script1.async = true;
-  script1.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
-  document.head.appendChild(script1);
+  // Paso 1: Preparar dataLayer y gtag() ANTES de cargar el script externo
+  // Así los eventos que llegan temprano quedan encolados y no se pierden
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { window.dataLayer.push(arguments); };
+  window.gtag('js', new Date());
+  window.gtag('config', measurementId, { send_page_view: false });
 
-  const script2 = document.createElement('script');
-  script2.innerHTML = `
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', '${measurementId}', {
-      send_page_view: false
-    });
-  `;
-  // send_page_view: false porque lo manejamos manualmente con usePageTracking
-  // para que funcione correctamente con React Router (SPA)
-  document.head.appendChild(script2);
+  // Paso 2: Cargar el script de Google (ya hay cola, nada se pierde)
+  const script = document.createElement('script');
+  script.id = 'ga4-script';
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+  document.head.appendChild(script);
 }
 
 function AppWrapper() {

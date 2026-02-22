@@ -185,7 +185,8 @@
       "mudanza": "Traslochi",
       "electricidad": "Elettricità",
       "limpieza": "Pulizie"
-    }
+    },
+    "general_info": "Informazioni Generali"
   },
   "postDetail": {
     "notFound": "Annuncio non trovato",

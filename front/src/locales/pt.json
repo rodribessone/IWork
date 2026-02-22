@@ -185,7 +185,8 @@
       "mudanza": "Mudanças",
       "electricidad": "Eletricidade",
       "limpieza": "Limpeza"
-    }
+    },
+    "general_info": "Informações Gerais"
   },
   "postDetail": {
     "notFound": "Anúncio não encontrado",

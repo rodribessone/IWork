@@ -131,7 +131,7 @@ export default function EditPost() {
 
               {/* Columna Izquierda: Info Principal */}
               <div className="space-y-6">
-                <h3 className="text-xs font-black text-amber-600 uppercase tracking-widest border-b border-zinc-100 pb-2">General Info</h3>
+                <h3 className="text-xs font-black text-amber-600 uppercase tracking-widest border-b border-zinc-100 pb-2">{t('post.general_info')}</h3>
 
                 <div className="space-y-4">
                   <div>

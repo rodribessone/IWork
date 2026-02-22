@@ -41,6 +41,25 @@ export default function usePageTracking() {
 
     useEffect(() => {
         const title = getPageTitle(location.pathname);
-        trackPageView(location.pathname + location.search, title);
+        const path = location.pathname + location.search;
+
+        // Si gtag ya está lista, trackear inmediatamente
+        if (window.gtag) {
+            trackPageView(path, title);
+            return;
+        }
+
+        // Si no está lista aún (primer render), reintentar hasta que cargue
+        // Esto cubre el caso donde el script externo de Google todavía no terminó
+        let attempts = 0;
+        const interval = setInterval(() => {
+            if (window.gtag) {
+                trackPageView(path, title);
+                clearInterval(interval);
+            }
+            if (++attempts > 20) clearInterval(interval); // timeout a los 2s
+        }, 100);
+
+        return () => clearInterval(interval);
     }, [location]);
 }
