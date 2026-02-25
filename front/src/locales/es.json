@@ -380,5 +380,12 @@
         "worker_desc": "Ofrezco mis servicios.",
         "continue_client": "Continuar como Cliente",
         "continue_worker": "Continuar como Profesional"
+    },
+    "footer": {
+        "slogan": "Conectando talento local",
+        "report_bug": "Reportar un error",
+        "contact": "Contacto",
+        "built_by": "Hecho con",
+        "rights": "© 2026 iWork. Todos los derechos reservados."
     }
 }

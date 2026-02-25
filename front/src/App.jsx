@@ -19,6 +19,7 @@ import { Toaster } from 'react-hot-toast';
 import MyApplications from './pages/MyApplications';
 import LeaveReview from './pages/LeaveReview';
 import usePageTracking from './hooks/usePageTracking'; // 👈 GA4
+import Footer from './components/Footer';
 
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -117,6 +118,7 @@ function App() {
         {/* 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer />
     </>
   );
 }

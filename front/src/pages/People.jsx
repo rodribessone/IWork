@@ -221,7 +221,7 @@ export default function People() {
                 onClick={() => setCurrentPage(prev => prev + 1)}
                 className="px-6 py-3 rounded-2xl font-bold bg-white border border-zinc-200 disabled:opacity-20 transition-all flex items-center gap-2"
               >
-                Next →
+                {t('common.next')} →
               </button>
             </div>
           )}
